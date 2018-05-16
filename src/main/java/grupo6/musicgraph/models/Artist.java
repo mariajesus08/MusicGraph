@@ -24,6 +24,12 @@ public class Artist {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name="genre_id")
+    private Genre genre;
+
+
+
     public Artist(String name) {
         this.name = name;
     }

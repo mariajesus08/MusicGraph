@@ -6,9 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "genres")
@@ -25,6 +23,8 @@ public class Genre {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+  @OneToMany (mappedBy = "genre")
+    private List<Artist> artists = new ArrayList<Artist>();;
 
     public Genre(String name) {
         this.name = name;

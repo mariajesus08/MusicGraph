@@ -5,9 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -39,6 +37,9 @@ public class User {
     @Column(name = "lastAccess")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastAccess;
+
+    @OneToMany (mappedBy = "user")
+    private List<KeyWord> artists = new ArrayList<KeyWord>();;
 
 
     public User(String name, String email, String password, Boolean isActive, Date registerDate, Date lastAccess) {

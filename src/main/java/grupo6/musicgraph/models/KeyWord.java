@@ -25,6 +25,11 @@ public class KeyWord {
     private String word;
 
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+
     public KeyWord(String word) {
         this.word = word;
     }
