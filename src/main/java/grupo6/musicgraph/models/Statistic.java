@@ -23,11 +23,11 @@ public class Statistic {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @Column(name = "emotion", nullable = false)
-    private Boolean emotion;
+    @Column(name = "positive_tweets", nullable = false)
+    private int positiveTweets;
 
-    @Column(name = "quantity", nullable = false)
-    private Float quantity;
+    @Column(name = "negative_tweets", nullable = false)
+    private int negativeTweets;
 
     @Column(name = "date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -35,11 +35,10 @@ public class Statistic {
 
 
 
-
-    public Statistic(String name, Boolean emotion, Float quantity, Date date) {
+    public Statistic(String name, Integer positiveTweets, Integer negativeTweets, Date date) {
         this.name = name;
-        this.emotion = emotion;
-        this.quantity = quantity;
+        this.positiveTweets = positiveTweets;
+        this.negativeTweets = negativeTweets;
         this.date = date;
 
     }
@@ -49,12 +48,12 @@ public class Statistic {
         return name;
     }
 
-    public Boolean getEmotion() {
-        return emotion;
+    public Integer getPositiveTweets() {
+        return positiveTweets;
     }
 
-    public Float getQuantity() {
-        return quantity;
+    public Integer getNegativeTweets() {
+        return negativeTweets;
     }
 
     public Date getDate() {
