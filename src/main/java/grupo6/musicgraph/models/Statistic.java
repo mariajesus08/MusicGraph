@@ -3,62 +3,89 @@ package grupo6.musicgraph.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "statistics")
-@NamedNativeQueries({
-        @NamedNativeQuery(name = "Statistic.findAll", query = "SELECT s FROM Statistic s")})
 
 public class Statistic {
     @Id
-    @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
-
-    @Column(name = "name", unique = true, nullable = false)
     private String name;
-
-    @Column(name = "positive_tweets", nullable = false)
-    private int positiveTweets;
-
-    @Column(name = "negative_tweets", nullable = false)
-    private int negativeTweets;
-
-    @Column(name = "date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    private int positive_tweets;
+    private int negative_tweets;
     private Date date;
 
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_artist", nullable = false)
+    @JsonIgnore
+    private Artist artist;
 
-    public Statistic(String name, Integer positiveTweets, Integer negativeTweets, Date date) {
-        this.name = name;
-        this.positiveTweets = positiveTweets;
-        this.negativeTweets = negativeTweets;
-        this.date = date;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_genre", nullable = false)
+    @JsonIgnore
+    private Genre genre;
 
+
+    public Artist getArtist() {
+        return artist;
     }
 
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
     }
 
-    public Integer getPositiveTweets() {
-        return positiveTweets;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getNegativeTweets() {
-        return negativeTweets;
+    public int getPositive_tweets() {
+        return positive_tweets;
+    }
+
+    public void setPositive_tweets(int positive_tweets) {
+        this.positive_tweets = positive_tweets;
+    }
+
+    public int getNegative_tweets() {
+        return negative_tweets;
+    }
+
+    public void setNegative_tweets(int negative_tweets) {
+        this.negative_tweets = negative_tweets;
     }
 
     public Date getDate() {
         return date;
     }
 
-
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

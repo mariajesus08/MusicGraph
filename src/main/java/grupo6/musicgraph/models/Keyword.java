@@ -10,11 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "KeyWords")
-@NamedNativeQueries({
-        @NamedNativeQuery(name = "KeyWord.findAll", query = "SELECT k FROM KeyWord k")})
-
-public class KeyWord {
+@Table(name = "Keywords")
+public class Keyword {
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -25,12 +22,9 @@ public class KeyWord {
     private String word;
 
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
 
 
-    public KeyWord(String word) {
+    public Keyword(String word) {
         this.word = word;
     }
 

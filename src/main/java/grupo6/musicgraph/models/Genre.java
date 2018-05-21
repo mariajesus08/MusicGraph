@@ -10,8 +10,6 @@ import java.util.*;
 
 @Entity
 @Table(name = "genres")
-@NamedNativeQueries({
-        @NamedNativeQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g")})
 
 public class Genre {
 
@@ -20,17 +18,46 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-  @OneToMany (mappedBy = "genre")
-    private List<Artist> artists = new ArrayList<Artist>();;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_artist", nullable = false)
+    @JsonIgnore
+    private Artist artist;
 
-    public Genre(String name) {
-        this.name = name;
+    @OneToMany(mappedBy = "genre")
+
+    private List<Statistic> statistic;
+
+    public List<Statistic> getStatistic() {
+        return statistic;
+    }
+
+    public void setStatistic(List<Statistic> statistic) {
+        this.statistic = statistic;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 }
