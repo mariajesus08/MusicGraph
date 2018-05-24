@@ -1,12 +1,12 @@
 # MusicGraph
 
 TBD - Primer semestre 2018
-Grupo 6 : Ricardo Álvarez, Juan Barrera, Maria Jesús Campos, Sebastián Garay, Natalia Guzmán
+Grupo 6 : Ricardo Álvarez, Juan Barrera, María Jesús Campos, Sebastián Garay, Natalia Guzmán
 
 ## Configuración
 
-* Crear base de datos mysql y modificar archivo `aplication.properties` acorde a la base de datos.
-* Dentro del gestor de base de datos (se recomienda usar **Valentina Studio**), ejecutar el archivo `BaseDeDatos.sql` para poblar la base de datos.
+* Crear base de datos mysql y modificar archivo **aplication.properties** acorde a la base de datos.
+* Dentro del gestor de base de datos (se recomienda usar **Valentina Studio**), ejecutar el archivo **BaseDeDatos.sql** para poblar la base de datos.
 
 ## Ejecutar
 
