@@ -19,6 +19,7 @@ public class Statistic {
     private String name;
     private int positive_tweets;
     private int negative_tweets;
+    private int total_tweets;
     private Date date;
 
 
@@ -87,5 +88,13 @@ public class Statistic {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getTotal_tweets() {
+        return total_tweets;
+    }
+
+    public void setTotal_tweets(int total_tweets) {
+        this.total_tweets = total_tweets;
     }
 }

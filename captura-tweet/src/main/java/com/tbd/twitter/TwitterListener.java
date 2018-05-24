@@ -38,9 +38,9 @@ public class TwitterListener {
 		twitterStream.addListener(new StatusListener() {
 			public void onStatus(Status status) {
                 Document tweet = new Document("id", status.getId())
-                        //por ahora solo se guarda el contenido del tweet
-                        .append("text", status.getText());
+                        .append("text", status.getText()); //por ahora solo se guarda el contenido del tweet
                 mongo.getCollection("statusJSONImpl").insertOne(tweet);
+                //mongo.insert(status);
 	        }
 
 			@Override
@@ -74,7 +74,7 @@ public class TwitterListener {
             bolsaPalabras.addAll(IOUtils.readLines(classLoader.getResourceAsStream("palabras.dat"), "UTF-8"));
             FilterQuery filter = new FilterQuery();
             filter.track(bolsaPalabras.toArray(new String[0]));
-        filter.track(bolsaPalabras.toArray(new String[0]));
+            filter.track(bolsaPalabras.toArray(new String[0]));
             filter.language(new String[]{"es"});
             twitterStream.filter(filter);
         }catch (IOException e){

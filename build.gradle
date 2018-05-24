@@ -27,7 +27,6 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
-    compile('org.springframework.boot:spring-boot-starter-data-neo4j')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-devtools')
@@ -38,5 +37,6 @@ dependencies {
     compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.0.1'
     compile group: 'org.apache.lucene', name: 'lucene-codecs', version: '7.0.1'
     compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '7.0.1'
+    compile group: 'commons-io',name: 'commons-io',version: '2.5'
     compile group: 'org.json', name: 'json', version: '20090211'
 }
