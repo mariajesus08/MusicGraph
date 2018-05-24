@@ -6,6 +6,7 @@ Grupo 6 : Ricardo Álvarez, Juan Barrera, Maria Jesús Campos, Sebastián Garay,
 ## Configuración
 
 * Crear base de datos mysql y modificar archivo `aplication.properties` acorde a la base de datos.
+* Dentro del gestor de base de datos (se recomienda usar **Valentina Studio**), ejecutar el archivo `BaseDeDatos.sql` para poblar la base de datos.
 
 ## Ejecutar
 
@@ -21,7 +22,7 @@ Para correr:
 
 Se recomienda utilizar **MongoDB Compass Community** para visualizar los tweets obtenidos.
 
-### 2- Indexación de Tweets
+### 2- Indexación de Tweets 
 
 Requisitos: 
 * Correr mongo con `$ mongod`.
