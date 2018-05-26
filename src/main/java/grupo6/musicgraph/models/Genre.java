@@ -20,10 +20,13 @@ public class Genre {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_artist", nullable = false)
-    @JsonIgnore
-    private Artist artist;
+
+
+
+
+    @OneToMany(mappedBy = "genre")
+    private List<Artist> artists;
+
 
     @OneToMany(mappedBy = "genre")
 
@@ -53,11 +56,6 @@ public class Genre {
         this.name = name;
     }
 
-    public Artist getArtist() {
-        return artist;
-    }
 
-    public void setArtist(Artist artist) {
-        this.artist = artist;
-    }
+
 }

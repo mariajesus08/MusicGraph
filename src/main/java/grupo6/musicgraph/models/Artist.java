@@ -19,13 +19,16 @@ public class Artist {
 
     private String name;
 
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_genre", nullable = false)
+    @JsonIgnore
+    private Genre genre;
+
+
+
+
     @OneToMany(mappedBy = "artist")
-
-    private List<Genre> genres;
-
-
-    @OneToMany(mappedBy = "artist")
-
     private List<Statistic> statistic;
 
     public List<Statistic> getStatistic() {
@@ -46,14 +49,6 @@ public class Artist {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
     }
 
     public String getName() {
