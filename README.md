@@ -15,6 +15,7 @@ Grupo 6 : Ricardo Álvarez, Juan Barrera, María Jesús Campos, Sebastián Garay
 Requisitos: 
 * Correr mongo con `$ mongod`.
 * Inicializar servicio de mongo, ejecutar el comando `$ mongo --host localhost:27017` en una nueva terminal.
+* Crear archivo **aplication.properties** a partir del archivo **aplication.properties.default**
 
 Para correr:
 * Ubicarse en la carpeta **captura-tweet**.
