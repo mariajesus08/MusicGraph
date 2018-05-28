@@ -1,34 +1,22 @@
 package grupo6.musicgraph.lucene;
 
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.io.IOUtils;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
+import java.text.Normalizer;
 
-//TODO: terminar esta clase
+
 public class Analisis {
-    private Integer comentariosTotales;
-    private Integer comentariosPositivos;
-    private Integer comentariosNegativos;
+    private Integer palabrasPositivos;
+    private Integer palabrasNegativos;
     public Set<String> bolsaPalabrasPositivas = new HashSet<>();
     public Set<String> bolsaPalabrasNegativas = new HashSet<>();
 
     public Analisis() {
-        comentariosTotales = 0;
-        comentariosPositivos = 0;
-        comentariosNegativos = 0;
+        palabrasPositivos = 0;
+        palabrasNegativos = 0;
         ClassLoader classLoader = getClass().getClassLoader();
         try {
             bolsaPalabrasPositivas.addAll(IOUtils.readLines(classLoader.getResourceAsStream("positivas.dat"), "UTF-8"));
@@ -38,34 +26,30 @@ public class Analisis {
         }
     }
 
+    //TODO: ver porqué ningun tweet coincide con uno negativo
+    //[]
     public String analisisSentimientoTweet(String tweet){
-        int contadorPositivas = 0;
-        int contadorNegativas = 0;
-
-        return "Return";
-    }
-
-    public Integer getComentariosTotales() {
-        return comentariosTotales;
-    }
-
-    public void setComentariosTotales(Integer comentariosTotales) {
-        this.comentariosTotales = comentariosTotales;
-    }
-
-    public Integer getComentariosPositivos() {
-        return comentariosPositivos;
-    }
-
-    public void setComentariosPositivos(Integer comentariosPositivos) {
-        this.comentariosPositivos = comentariosPositivos;
-    }
-
-    public Integer getComentariosNegativos() {
-        return comentariosNegativos;
-    }
-
-    public void setComentariosNegativos(Integer comentariosNegativos) {
-        this.comentariosNegativos = comentariosNegativos;
+        palabrasPositivos = 0;
+        palabrasNegativos = 0;
+        //se quitan las mayusculas y acentos
+        tweet = tweet.toLowerCase();
+        tweet = Normalizer.normalize(tweet, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
+        String[] palabras = tweet.split(" ");
+        for(int i= 0; i < palabras.length; i++){
+            for(String palabraP: bolsaPalabrasPositivas){
+                if(palabras[i].matches(".*"+palabraP+".*"))
+                    palabrasPositivos++;
+            }
+            for(String palabraN : bolsaPalabrasNegativas){
+                if(palabras[i].matches(".*"+palabraN+".*"))
+                    palabrasNegativos++;
+            }
+        }
+        if(palabrasPositivos > palabrasNegativos)
+            return "Positivo";
+        else if(palabrasNegativos > palabrasPositivos)
+            return "Negativo";
+        return "Neutro";
     }
 }
