@@ -7,6 +7,7 @@ public class AlmacenadorMysql {
 
     public void insertarEstadistica(String artista, Integer positivos, Integer negativos, Integer totales){
         Connection connection = null;
+        //TODO: cambiar según nombre de la base de datos
         String username = "root";
         String password = "secret1234";
         String host = "jdbc:mysql://localhost:3306/";

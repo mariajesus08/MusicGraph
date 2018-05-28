@@ -27,6 +27,7 @@ public class Analisis {
     }
 
     //TODO: ver porqué ningun tweet coincide con uno negativo
+    //[]
     public String analisisSentimientoTweet(String tweet){
         palabrasPositivos = 0;
         palabrasNegativos = 0;
