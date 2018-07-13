@@ -1,0 +1,42 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'Grupo6'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('mysql:mysql-connector-java')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.3.0.Final'
+    compile group: 'org.apache.lucene', name: 'lucene-core', version: '7.0.1'
+    compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.0.1'
+    compile group: 'org.apache.lucene', name: 'lucene-codecs', version: '7.0.1'
+    compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '7.0.1'
+    compile group: 'commons-io',name: 'commons-io',version: '2.5'
+    compile group: 'org.json', name: 'json', version: '20090211'
+}
