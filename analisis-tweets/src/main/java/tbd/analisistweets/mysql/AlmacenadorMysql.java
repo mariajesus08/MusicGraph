@@ -20,23 +20,10 @@ public class AlmacenadorMysql {
             e.printStackTrace();
 
         }
-        //TODO: falta guardar el id_artist y id_genre
-        /* String queryId = "SELECT id FROM genres WHERE id_artist = ?";
-        Integer idGenero = new Integer(0);
-        try{
-            PreparedStatement ps = connection.prepareStatement(queryId);
-            ps.setString(1, artista);
-            ResultSet resultSet = ps.executeQuery();
-            idGenero = resultSet.getInt("id");
-         }catch (SQLException e) {
-            e.printStackTrace();
-        } */
 
         String query = "INSERT INTO statistics (name,negative_tweets,positive_tweets, total_tweets) VALUES (?,?,?,?)";
         String setIds =  "UPDATE statistics, artists SET statistics.id_artist = artists.id WHERE artists.name = statistics.name;";
         String setGenres =  "UPDATE statistics, artists SET statistics.id_genre = artists.id_genre WHERE artists.id = statistics.id_artist;";
-
-//       "UPDATE statistics, artists SET statistics.id_artist = artists.id WHERE artists.name = statistics.name;"
 
         try{
             PreparedStatement ps = connection.prepareStatement(query);

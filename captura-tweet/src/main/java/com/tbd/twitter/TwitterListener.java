@@ -2,6 +2,8 @@ package com.tbd.twitter;
 
 import javax.annotation.PostConstruct;
 
+import com.tbd.twitter.words.Keyword;
+import com.tbd.twitter.words.KeywordRepository;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -21,6 +23,7 @@ import twitter4j.json.DataObjectFactory;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -33,7 +36,8 @@ public class TwitterListener {
 	private TwitterStream twitterStream;
 	@Autowired
 	private MongoTemplate mongo;
-
+	@Autowired
+	private KeywordRepository keywordRepository;
 	private Set<String> bolsaPalabras;
 		
 	@PostConstruct
@@ -104,17 +108,15 @@ public class TwitterListener {
 								
 			}			
 		});
+		Iterable<Keyword> keywords = keywordRepository.findAll();
 		bolsaPalabras = new HashSet<>();
+		for(Keyword key: keywords)
+			bolsaPalabras.add(key.getWord());
 		ClassLoader classLoader = getClass().getClassLoader();
-		try {
-            bolsaPalabras.addAll(IOUtils.readLines(classLoader.getResourceAsStream("palabras.dat"), "UTF-8"));
-            FilterQuery filter = new FilterQuery();
-			filter.track(bolsaPalabras.toArray(new String[0]));
-			filter.language(new String[]{"es"});
-			twitterStream.filter(filter);
-        }catch (IOException e){
-		    e.printStackTrace();
-        }
+		FilterQuery filter = new FilterQuery();
+		filter.track(bolsaPalabras.toArray(new String[0]));
+		filter.language(new String[]{"es"});
+		twitterStream.filter(filter);
 	}
 
 	public boolean analizarPais(String informacion){
