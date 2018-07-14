@@ -75,7 +75,8 @@ public class TwitterListener {
 						.append("user_description",user_description) // descripcion del usuario
 						.append("user_friend_count",status.getUser().getFriendsCount()); // amigos del usuario
 				if(verificarPais == true || verificarCoordenadas == true || verificarDescripcion == true)
-					mongo.getCollection("statusJSONImpl").insertOne(tweet);
+					//mongo.getCollection("statusJSONImpl").insertOne(tweet);
+					mongo.insert(status);
 	        }
 
 			@Override
