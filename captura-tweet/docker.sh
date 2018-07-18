@@ -4,8 +4,8 @@
 
 TAG=captura-tweet #tag de la imagen a crear, puede incluir version en formato nombre:version
 API=captura-tweet #nombre del contenedor en tiempo de ejecucion
-PORT=8080 #puerto que se quiere exponer hacia el host
-HOSTPORT=8080 #puerto del host, mediante el cual se accede al contenedor
+PORT=9090 #puerto que se quiere exponer hacia el host
+HOSTPORT=9090 #puerto del host, mediante el cual se accede al contenedor
 
 echo "building image"
 docker build -t $TAG .
