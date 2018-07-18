@@ -23,4 +23,4 @@ fi
 echo "launching container"
 ## si se quiere agregar volumenes se debe hacer en esta luego de docker run y antes de --name
 ## importante que ya incluye volumen para la carpeta .gradle, lo cual hace que las construcciones posteriores demoren menos
-docker run --name $API -d --restart unless-stopped -p $HOSTPORT:$PORT $TAG
+docker run -v gradle-cache:/home/gradle/.gradle --name $API -d --restart unless-stopped -p $HOSTPORT:$PORT $TAG
