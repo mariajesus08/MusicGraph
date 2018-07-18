@@ -9,6 +9,6 @@ COPY ./ /home/gradle/project
 
 WORKDIR /home/gradle/project
 
-EXPOSE 8080
+EXPOSE 9090
 
 CMD [ "gradle", "bootRun" ]
