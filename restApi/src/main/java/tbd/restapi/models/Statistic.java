@@ -17,8 +17,10 @@ public class Statistic {
     @Column(name = "id")
     private int id;
     private String name;
-    private int positive_tweets;
-    private int negative_tweets;
+    @Column(name = "positive_tweets")
+    private int positiveTweets;
+    @Column(name = "negative_tweets")
+    private int negativeTweets;
     private int total_tweets;
     private Date date;
 
@@ -66,20 +68,20 @@ public class Statistic {
         this.name = name;
     }
 
-    public int getPositive_tweets() {
-        return positive_tweets;
+    public int getPositiveTweets() {
+        return positiveTweets;
     }
 
-    public void setPositive_tweets(int positive_tweets) {
-        this.positive_tweets = positive_tweets;
+    public void setPositiveTweets(int positiveTweets) {
+        this.positiveTweets = positiveTweets;
     }
 
-    public int getNegative_tweets() {
-        return negative_tweets;
+    public int getNegativeTweets() {
+        return negativeTweets;
     }
 
-    public void setNegative_tweets(int negative_tweets) {
-        this.negative_tweets = negative_tweets;
+    public void setNegativeTweets(int negativeTweets) {
+        this.negativeTweets = negativeTweets;
     }
 
     public Date getDate() {
