@@ -8,7 +8,7 @@ import java.util.List;
 public interface StatisticRepository extends JpaRepository<Statistic,Integer> {
 
     Statistic findStatisticById(Integer id);
-    List <Statistic> findTop10ByGenreOrderByPositiveTweetsDesc(Genre genre);
-    List <Statistic> findTop10ByGenreOrderByNegativeTweetsDesc(Genre genre);
+    List <Statistic> findByGenreOrderByPositiveTweetsDesc(Genre genre);
+    List <Statistic> findByGenreOrderByNegativeTweetsDesc(Genre genre);
 
 }

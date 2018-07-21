@@ -13,19 +13,20 @@ import java.util.List;
 public class ArtistService {
     @Autowired
     private ArtistRepository artistRepository;
-
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Artist> getAllArtists(){
         return this.artistRepository.findAll();
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Artist getArtist(@PathVariable int id)
     {
         return artistRepository.findArtistById(id);
     }
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Artist createArtist(@RequestBody Artist artist){

@@ -13,19 +13,20 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<User> getAllUsers(){
         return this.userRepository.findAll();
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public User getUser(@PathVariable int id)
     {
         return userRepository.findUserById(id);
     }
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public User createUser(@RequestBody User user){

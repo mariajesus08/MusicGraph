@@ -13,19 +13,20 @@ import java.util.List;
 public class KeywordService {
     @Autowired
     private KeywordRepository keywordRepository;
-
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Keyword> getAllKeywords(){
         return this.keywordRepository.findAll();
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Keyword getKeyword(@PathVariable int id)
     {
         return keywordRepository.findKeywordById(id);
     }
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Keyword createKeyword(@RequestBody Keyword keyword){

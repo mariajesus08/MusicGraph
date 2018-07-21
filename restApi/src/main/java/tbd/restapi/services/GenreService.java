@@ -13,19 +13,20 @@ import java.util.List;
 public class GenreService {
     @Autowired
     private GenreRepository genreRepository;
-
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<Genre> getAllGenres(){
         return this.genreRepository.findAll();
     }
-
+    @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Genre getGenre(@PathVariable int id)
     {
         return genreRepository.findGenreById(id);
     }
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Genre createGenre(@RequestBody Genre genre){
