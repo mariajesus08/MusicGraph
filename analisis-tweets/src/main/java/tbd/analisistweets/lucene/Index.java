@@ -16,7 +16,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-
+import java.util.Arrays;
 public class Index {
     public void crearIndice(){
         try {
@@ -30,7 +30,8 @@ public class Index {
             //// Add new documents to an existing index: OpenMode.CREATE_OR_APPEND
 
             IndexWriter writer = new IndexWriter(dir, iwc);
-            MongoClient mongoClient = new MongoClient("165.227.12.119", 27017);
+            MongoCredential credential = MongoCredential.createCredential("root", "admin", "secret1234".toCharArray());
+            MongoClient mongoClient = new MongoClient(new ServerAddress("165.227.12.119", 27017), Arrays.asList(credential));
             DB baseDeDatos = mongoClient.getDB("musicgraphdb");
             DBCollection coleccion = baseDeDatos.getCollection("statusJSONImpl");
             DBCursor cursorInicial = coleccion.find();
