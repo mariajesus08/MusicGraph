@@ -1,7 +1,7 @@
-twitter.consumerKey=7sNVml6gVNsd0SpGfSpLKWBtx
-twitter.consumerSecret=cNnOKN7Bn9QTb5BjqtEYFcFUW3BRXRWd0OeCbo84kW7dxvb4o4
-twitter.accessToken=162854075-Vb8Dqst5eCgWysR9FyIvowptAK1uPafW4EDNEAJV
-twitter.accessTokenSecret=kpxrGtViiGOXskZqy2QnPujkIP7BLdOSu3s8wfUCusI8J
+twitter.consumerKey=u7zsgXNMzxLqhHbncFwymuI6H
+twitter.consumerSecret=	C5vfGOs99TBwLP7K1oD2eKf94a8wdshYWzkfvjJCtjJi7jakIH
+twitter.accessToken=162854075-03j26OsWvXYNTyeTzTGv0i2VkxQ9fzR6nxwuKeCF
+twitter.accessTokenSecret=HQqqqZhNz7P3LJgDKjwIVT746jjPmHponsb8uOO6hbob6
 
 spring.data.mongodb.host=165.227.12.119
 spring.data.mongodb.port=27017
