@@ -43,7 +43,9 @@ public class TwitterAppConfiguration {
     }
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
-		MongoTemplate mongo=new MongoTemplate(new MongoClient(properties.getMongo().getHost()),"musicgraphdb");
+    System.out.println(properties.getTwitter().getConsumerKey());
+    System.out.println(properties.getMongo().getHost());
+		MongoTemplate mongo=new MongoTemplate(new MongoClient("165.227.12.119"),"musicgraphdb");
 		return mongo;	
 	}
 }
