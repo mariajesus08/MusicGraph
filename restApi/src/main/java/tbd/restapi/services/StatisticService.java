@@ -49,6 +49,51 @@ public class StatisticService {
 
 
     @CrossOrigin
+    @RequestMapping(value = "/best10/popularArtist", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Statistic> obtenerArtistasMasPopulares()
+    {
+        List<Artist> allArtists= artistRepository.findAll();
+        List<Statistic> response = new ArrayList<Statistic>();
+        List<Statistic> statisticsAux = new ArrayList<Statistic>();
+        List<Float> totalTweetsList = new ArrayList<Float>();
+        for(Artist artista : allArtists){
+            String name = artista.getName();
+            float totalTweets = 0;
+            List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
+            if(artistStatistic.size()>0){
+                totalTweets = artistStatistic.get(0).getTotal_tweets();
+                statisticsAux.add(artistStatistic.get(0));
+                totalTweetsList.add(totalTweets);
+            }
+        }
+        int aux = 0;
+        for(int i = 0; i<totalTweetsList.size(); i++){
+            float maximo = 0;
+            int index = 0;
+            Statistic estadistica = new Statistic();
+            for(int j = 0; j<totalTweetsList.size(); j++){
+                if(totalTweetsList.get(j)>maximo){
+                    maximo = totalTweetsList.get(j);
+                    index = j;
+                    estadistica = statisticsAux.get(j);
+                }
+            }
+            totalTweetsList.remove(index);
+            
+            response.add(estadistica);
+            aux = aux + 1 ;
+            if(aux == 10){
+                break;
+            }
+        }
+        
+       
+        return response;
+
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/best10/artistIncrease", method = RequestMethod.GET)
     @ResponseBody
     public List<Statistic> obtenerArtistaMayorCrecimiento()
