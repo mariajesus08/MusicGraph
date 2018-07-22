@@ -27,6 +27,10 @@ public class Artist {
     @OneToMany(mappedBy = "artist")
     private List<Statistic> statistic;
 
+
+    public Genre getGenre(){
+        return this.genre;
+    }
     public List<Statistic> getStatistic() {
         return statistic;
     }

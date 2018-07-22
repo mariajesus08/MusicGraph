@@ -1,15 +1,20 @@
 package tbd.restapi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.awt.Stroke;
 import java.util.ArrayList;
 import org.springframework.web.bind.annotation.*;
 import tbd.restapi.models.Genre;
 import tbd.restapi.models.Statistic;
+import tbd.restapi.models.Artist;
 import tbd.restapi.repositories.ArtistRepository;
 import tbd.restapi.repositories.GenreRepository;
 import tbd.restapi.repositories.StatisticRepository;
 import org.springframework.data.domain.Sort;
 import java.util.List;
+
+import javax.validation.constraints.Null;
 
 @RestController
 @RequestMapping(value = "/statistics")
@@ -23,6 +28,7 @@ public class StatisticService {
 
     @Autowired
     private ArtistRepository artistRepository;
+    
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
@@ -42,6 +48,240 @@ public class StatisticService {
     public Statistic createUser(@RequestBody Statistic statistic){ return statisticRepository.save(statistic); }
 
     @CrossOrigin
+    @RequestMapping(value = "/worst10/genres", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Statistic> obtenerDiezPeoresGenerosTotales()
+    {
+        List<Artist> allArtists= artistRepository.findAll();
+        List<Statistic> response = new ArrayList<Statistic>();
+        List<Statistic> statisticsAux = new ArrayList<Statistic>();
+        List<Float> divitions = new ArrayList<Float>();
+
+
+        
+        for(Artist element : allArtists) {
+            String name = element.getName();
+            List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
+            if(artistStatistic.size()>0){
+                float totalTweetsNegativos = artistStatistic.get(0).getNegativeTweets();
+                //float totalTweetsNegativos = artistStatistic.get(0).getNegativeTweets();
+                
+                divitions.add(totalTweetsNegativos);
+                statisticsAux.add(artistStatistic.get(0));
+            
+            }
+            
+        
+        }
+        
+        int aux = 0;
+        System.out.println(divitions.size());
+        System.out.println(statisticsAux.size());
+        List<Float> divisionesFinal = new ArrayList<Float>();
+        for(int i = 0; i<divitions.size(); i++){
+            float maximo = 0;
+            int index = 0;
+            Statistic estadistica = new Statistic();
+            for(int j = 0; j<divitions.size(); j++){
+                if(divitions.get(j)>maximo){
+                    maximo = divitions.get(j);
+                    index = j;
+                    estadistica = statisticsAux.get(j);
+                }
+            }
+            divitions.remove(index);
+            response.add(estadistica);
+            divisionesFinal.add(maximo);
+            aux = aux + 1 ;
+            if(aux == 10){
+                break;
+            }
+        }
+        for(Statistic elemento : response){
+            elemento.setName(artistRepository.findArtistByName(elemento.getName()).getGenre().getName());
+        }
+        
+       
+        return response;
+
+    }
+    @CrossOrigin
+    @RequestMapping(value = "/best10/genres", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Statistic> obtenerDiezMejoresGenerosTotales()
+    {
+        List<Artist> allArtists= artistRepository.findAll();
+        List<Statistic> response = new ArrayList<Statistic>();
+        List<Statistic> statisticsAux = new ArrayList<Statistic>();
+        List<Float> divitions = new ArrayList<Float>();
+
+
+        
+        for(Artist element : allArtists) {
+            String name = element.getName();
+            List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
+            if(artistStatistic.size()>0){
+                float totalTweetsPositivos = artistStatistic.get(0).getPositiveTweets();
+                //float totalTweetsNegativos = artistStatistic.get(0).getNegativeTweets();
+                
+                divitions.add(totalTweetsPositivos);
+                statisticsAux.add(artistStatistic.get(0));
+            
+            }
+            
+        
+        }
+        
+        int aux = 0;
+        System.out.println(divitions.size());
+        System.out.println(statisticsAux.size());
+        List<Float> divisionesFinal = new ArrayList<Float>();
+        for(int i = 0; i<divitions.size(); i++){
+            float maximo = 0;
+            int index = 0;
+            Statistic estadistica = new Statistic();
+            for(int j = 0; j<divitions.size(); j++){
+                if(divitions.get(j)>maximo){
+                    maximo = divitions.get(j);
+                    index = j;
+                    estadistica = statisticsAux.get(j);
+                }
+            }
+            divitions.remove(index);
+            response.add(estadistica);
+            divisionesFinal.add(maximo);
+            aux = aux + 1 ;
+            if(aux == 10){
+                break;
+            }
+        }
+        for(Statistic elemento : response){
+            elemento.setName(artistRepository.findArtistByName(elemento.getName()).getGenre().getName());
+        }
+        
+       
+        return response;
+
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(value = "/worst10/artistAllGenres", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Statistic> obtenerDiezPeoresTotales()
+    {
+        List<Artist> allArtists= artistRepository.findAll();
+        List<Statistic> response = new ArrayList<Statistic>();
+        List<Statistic> statisticsAux = new ArrayList<Statistic>();
+        List<Float> divitions = new ArrayList<Float>();
+
+
+        
+        for(Artist element : allArtists) {
+            String name = element.getName();
+            List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
+            if(artistStatistic.size()>0){
+                float totalTweetsNegativos = artistStatistic.get(0).getNegativeTweets();
+                //float totalTweetsNegativos = artistStatistic.get(0).getNegativeTweets();
+                
+                divitions.add(totalTweetsNegativos);
+                statisticsAux.add(artistStatistic.get(0));
+            
+            }
+            
+        
+        }
+        
+        int aux = 0;
+        System.out.println(divitions.size());
+        System.out.println(statisticsAux.size());
+        List<Float> divisionesFinal = new ArrayList<Float>();
+        for(int i = 0; i<divitions.size(); i++){
+            float maximo = 0;
+            int index = 0;
+            Statistic estadistica = new Statistic();
+            for(int j = 0; j<divitions.size(); j++){
+                if(divitions.get(j)>maximo){
+                    maximo = divitions.get(j);
+                    index = j;
+                    estadistica = statisticsAux.get(j);
+                }
+            }
+            divitions.remove(index);
+            response.add(estadistica);
+            divisionesFinal.add(maximo);
+            aux = aux + 1 ;
+            if(aux == 10){
+                break;
+            }
+        }
+        
+        
+       
+        return response;
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/best10/artistAllGenres", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Statistic> obtenerDiezMejoresTotales()
+    {
+        List<Artist> allArtists= artistRepository.findAll();
+        List<Statistic> response = new ArrayList<Statistic>();
+        List<Statistic> statisticsAux = new ArrayList<Statistic>();
+        List<Float> divitions = new ArrayList<Float>();
+
+
+        
+        for(Artist element : allArtists) {
+            String name = element.getName();
+            List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
+            if(artistStatistic.size()>0){
+                float totalTweetsPositivos = artistStatistic.get(0).getPositiveTweets();
+                //float totalTweetsNegativos = artistStatistic.get(0).getNegativeTweets();
+                
+                divitions.add(totalTweetsPositivos);
+                statisticsAux.add(artistStatistic.get(0));
+            
+            }
+            
+        
+        }
+
+        
+        
+        int aux = 0;
+        System.out.println(divitions.size());
+        System.out.println(statisticsAux.size());
+        List<Float> divisionesFinal = new ArrayList<Float>();
+        for(int i = 0; i<divitions.size(); i++){
+            float maximo = 0;
+            int index = 0;
+            Statistic estadistica = new Statistic();
+            for(int j = 0; j<divitions.size(); j++){
+                if(divitions.get(j)>maximo){
+                    maximo = divitions.get(j);
+                    index = j;
+                    estadistica = statisticsAux.get(j);
+                }
+            }
+            divitions.remove(index);
+            response.add(estadistica);
+            divisionesFinal.add(maximo);
+            aux = aux + 1 ;
+            if(aux == 10){
+                break;
+            }
+        }
+        
+        
+       
+        return response;
+
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/best10/genre/{genre_name}", method = RequestMethod.GET)
     @ResponseBody
     public List<Statistic> obtenerDiezMejorValoradosPorGenero( @PathVariable("genre_name") String genre_name)
@@ -53,8 +293,6 @@ public class StatisticService {
         for(Statistic element : allStatistics) {
             int flag = 0;
             for(Statistic artist : response){
-                System.out.println(artist.getName());
-                System.out.println(element.getName());
                 if(artist.getName().equals(element.getName())){
                    flag = 1;
                 }
@@ -83,8 +321,6 @@ public class StatisticService {
         for(Statistic element : allStatistics) {
             int flag = 0;
             for(Statistic artist : response){
-                System.out.println(artist.getName());
-                System.out.println(element.getName());
                 if(artist.getName().equals(element.getName())){
                    flag = 1;
                 }

@@ -3,6 +3,7 @@ package tbd.restapi.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tbd.restapi.models.Artist;
+import tbd.restapi.models.Genre;
 import tbd.restapi.repositories.ArtistRepository;
 
 import java.util.List;
@@ -26,6 +27,17 @@ public class ArtistService {
     {
         return artistRepository.findArtistById(id);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/getGenre/{name}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getGenreArtist(@PathVariable String name)
+    {
+        Artist artista = artistRepository.findArtistByName(name);
+
+        return artista.getGenre().getName();
+    }
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody

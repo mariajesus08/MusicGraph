@@ -10,5 +10,6 @@ public interface StatisticRepository extends JpaRepository<Statistic,Integer> {
     Statistic findStatisticById(Integer id);
     List <Statistic> findByGenreOrderByPositiveTweetsDesc(Genre genre);
     List <Statistic> findByGenreOrderByNegativeTweetsDesc(Genre genre);
+    List <Statistic> findStatisticsByNameOrderByDateDesc(String name);
 
 }

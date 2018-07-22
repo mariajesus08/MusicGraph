@@ -6,4 +6,5 @@ import tbd.restapi.models.Artist;
 
 public interface ArtistRepository extends JpaRepository<Artist,Integer> {
     public Artist findArtistById(Integer id);
+    public Artist findArtistByName(String name);
 }
