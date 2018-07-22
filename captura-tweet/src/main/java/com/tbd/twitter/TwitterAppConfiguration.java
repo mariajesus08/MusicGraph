@@ -43,7 +43,7 @@ public class TwitterAppConfiguration {
     }
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
-		MongoTemplate mongo=new MongoTemplate(new MongoClient(properties.getMongo().getHost()),properties.getMongo().getDatabase());
+		MongoTemplate mongo=new MongoTemplate(new MongoClient(properties.getMongo().getHost()),"musicgraphdb");
 		return mongo;	
 	}
 }

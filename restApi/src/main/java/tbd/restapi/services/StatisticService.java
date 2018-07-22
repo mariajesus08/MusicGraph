@@ -47,6 +47,31 @@ public class StatisticService {
     @ResponseBody
     public Statistic createUser(@RequestBody Statistic statistic){ return statisticRepository.save(statistic); }
 
+
+    @CrossOrigin
+    @RequestMapping(value = "/best10/artistIncrease", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Statistic> obtenerArtistaMayorCrecimiento()
+    {
+        List<Artist> allArtists= artistRepository.findAll();
+        List<Statistic> response = new ArrayList<Statistic>();
+        List<Statistic> statisticsAux = new ArrayList<Statistic>();
+        List<Float> divitions = new ArrayList<Float>();
+        for(Artist artista : allArtists){
+            String name = artista.getName();
+            float crecimiento = 0;
+            List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
+            if(artistStatistic.size()>0){
+                crecimiento = artistStatistic.get(artistStatistic.size() - 1).getTotal_tweets() - artistStatistic.get(0).getTotal_tweets();
+            }
+            System.out.println(crecimiento);
+        }
+        
+       
+        return response;
+
+    }
+
     @CrossOrigin
     @RequestMapping(value = "/worst10/genres", method = RequestMethod.GET)
     @ResponseBody
