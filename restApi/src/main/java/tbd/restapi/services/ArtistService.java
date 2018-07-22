@@ -33,7 +33,7 @@ public class ArtistService {
     @ResponseBody
     public String getGenreArtist(@PathVariable String name)
     {
-        Artist artista = artistRepository.findArtistByName(name);
+        Artist artista = artistRepository.findFirstArtistByName(name);
 
         return artista.getGenre().getName();
     }

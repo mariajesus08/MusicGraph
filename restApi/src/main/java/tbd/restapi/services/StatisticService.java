@@ -75,8 +75,6 @@ public class StatisticService {
         }
         
         int aux = 0;
-        System.out.println(divitions.size());
-        System.out.println(statisticsAux.size());
         List<Float> divisionesFinal = new ArrayList<Float>();
         for(int i = 0; i<divitions.size(); i++){
             float maximo = 0;
@@ -90,15 +88,26 @@ public class StatisticService {
                 }
             }
             divitions.remove(index);
-            response.add(estadistica);
-            divisionesFinal.add(maximo);
+            int flag = 0;
+            for(Statistic elemento : response){
+                if(artistRepository.findFirstArtistByName(elemento.getName()).getGenre().getName().equals(artistRepository.findFirstArtistByName(estadistica.getName()).getGenre().getName())){
+                    aux = aux -1;
+                    flag = 1;
+                    break;
+                }
+            }
+            if(flag == 0){
+                response.add(estadistica);
+                divisionesFinal.add(maximo);
+            }
             aux = aux + 1 ;
             if(aux == 10){
                 break;
             }
         }
+       
         for(Statistic elemento : response){
-            elemento.setName(artistRepository.findArtistByName(elemento.getName()).getGenre().getName());
+            elemento.setName(artistRepository.findFirstArtistByName(elemento.getName()).getGenre().getName());
         }
         
        
@@ -148,15 +157,25 @@ public class StatisticService {
                 }
             }
             divitions.remove(index);
-            response.add(estadistica);
-            divisionesFinal.add(maximo);
+            int flag = 0;
+            for(Statistic elemento : response){
+                if(artistRepository.findFirstArtistByName(elemento.getName()).getGenre().getName().equals(artistRepository.findFirstArtistByName(estadistica.getName()).getGenre().getName())){
+                    aux = aux -1;
+                    flag = 1;
+                    break;
+                }
+            }
+            if(flag == 0){
+                response.add(estadistica);
+                divisionesFinal.add(maximo);
+            }
             aux = aux + 1 ;
             if(aux == 10){
                 break;
             }
         }
         for(Statistic elemento : response){
-            elemento.setName(artistRepository.findArtistByName(elemento.getName()).getGenre().getName());
+            elemento.setName(artistRepository.findFirstArtistByName(elemento.getName()).getGenre().getName());
         }
         
        
