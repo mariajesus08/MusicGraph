@@ -13,7 +13,9 @@ import tbd.restapi.repositories.GenreRepository;
 import tbd.restapi.repositories.StatisticRepository;
 import org.springframework.data.domain.Sort;
 import java.util.List;
-
+import java.util.HashMap;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import javax.validation.constraints.Null;
 
 @RestController
@@ -94,25 +96,56 @@ public class StatisticService {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/best10/artistIncrease", method = RequestMethod.GET)
+    @RequestMapping(value = "/best10/artistIncrease", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Statistic> obtenerArtistaMayorCrecimiento()
+    public List<HashMap> obtenerArtistaMayorCrecimiento()
     {
+        List<HashMap> response = new ArrayList<HashMap>();
+        HashMap<String, Object> responseAux = new LinkedHashMap<String, Object>();
         List<Artist> allArtists= artistRepository.findAll();
-        List<Statistic> response = new ArrayList<Statistic>();
-        List<Statistic> statisticsAux = new ArrayList<Statistic>();
-        List<Float> divitions = new ArrayList<Float>();
+        List<List<Statistic>> statisticsAux = new ArrayList<List<Statistic>>();
+        List<Float> crecimientoList = new ArrayList<Float>();
         for(Artist artista : allArtists){
             String name = artista.getName();
             float crecimiento = 0;
             List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
             if(artistStatistic.size()>0){
-                crecimiento = artistStatistic.get(artistStatistic.size() - 1).getTotal_tweets() - artistStatistic.get(0).getTotal_tweets();
+                crecimiento = artistStatistic.get(0).getTotal_tweets() - artistStatistic.get(10).getTotal_tweets();
+                crecimientoList.add(crecimiento);
+                statisticsAux.add(artistStatistic);
             }
-            System.out.println(crecimiento);
+            
+            
+        }
+        List<Integer> listaIndices = new ArrayList<Integer>();
+        int aux = 0;
+        for(int i = 0; i < crecimientoList.size(); i++){
+            float maximo = 0;
+            int index = 0;
+            for(int j = 0; j < crecimientoList.size(); j++){
+                if(crecimientoList.get(j)>maximo){
+                    index = j;
+                    maximo = crecimientoList.get(j);
+                }
+            }
+            listaIndices.add(index);
+            crecimientoList.remove(index);        
+            aux = aux+1;
+            if(aux == 10){
+                break;
+            }
+        }
+        for(int j = 9; j >= 0; j--){
+            responseAux.put("fecha", statisticsAux.get(0).get(j).getDate());
+            for(int i = 0; i < listaIndices.size(); i++){
+                System.out.println(statisticsAux.get(i).get(j).getDate());
+                System.out.println(statisticsAux.get(i).get(j).getName());
+                responseAux.put(statisticsAux.get(i).get(j).getName(),statisticsAux.get(i).get(j).getTotal_tweets());
+            }
+            response.add(responseAux);
+
         }
         
-       
         return response;
 
     }
@@ -261,7 +294,7 @@ public class StatisticService {
     @RequestMapping(value = "/worst10/artistAllGenres", method = RequestMethod.GET)
     @ResponseBody
     public List<Statistic> obtenerDiezPeoresTotales()
-    {
+    {   
         List<Artist> allArtists= artistRepository.findAll();
         List<Statistic> response = new ArrayList<Statistic>();
         List<Statistic> statisticsAux = new ArrayList<Statistic>();
@@ -380,22 +413,39 @@ public class StatisticService {
     @ResponseBody
     public List<Statistic> obtenerDiezMejorValoradosPorGenero( @PathVariable("genre_name") String genre_name)
     {
-        Genre genre = genreRepository.findGenreByName(genre_name);
-        List<Statistic> allStatistics = statisticRepository.findByGenreOrderByPositiveTweetsDesc(genre);
+        List<Artist> allArtists= artistRepository.findAll();
         List<Statistic> response = new ArrayList<Statistic>();
-        int aux = 0;
-        for(Statistic element : allStatistics) {
-            int flag = 0;
-            for(Statistic artist : response){
-                if(artist.getName().equals(element.getName())){
-                   flag = 1;
+        List<Statistic> statisticsAux = new ArrayList<Statistic>();
+        List<Integer> positiveTweets = new ArrayList<Integer>();
+        for(Artist artista: allArtists){
+            if(artista.getGenre().getName().equals(genre_name)){
+                String name = artista.getName();
+                
+                List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
+                if(artistStatistic.size()>0){
+
+                    positiveTweets.add(artistStatistic.get(0).getPositiveTweets());
+                    statisticsAux.add(artistStatistic.get(0));
                 }
-            }    
-            if(flag == 0){
-                response.add(response.size(), element);
-                aux = aux+1;
             }
-            
+        }
+        int aux = 0;
+
+        for(int i = 0; i<positiveTweets.size(); i++){
+            float maximo = 0;
+            int index = 0;
+            Statistic estadistica = new Statistic();
+            for(int j = 0; j<positiveTweets.size(); j++){
+                if(positiveTweets.get(j)>maximo){
+                    maximo = positiveTweets.get(j);
+                    index = j;
+                    estadistica = statisticsAux.get(j);
+                }
+            }
+            positiveTweets.remove(index);
+            statisticsAux.remove(index);
+            response.add(estadistica);
+            aux = aux + 1 ;
             if(aux == 10){
                 break;
             }
@@ -408,26 +458,46 @@ public class StatisticService {
     @ResponseBody
     public List<Statistic> obtenerDiezPeorValoradosPorGenero( @PathVariable("genre_name") String genre_name)
     {
-        Genre genre = genreRepository.findGenreByName(genre_name);
-        List<Statistic> allStatistics = statisticRepository.findByGenreOrderByNegativeTweetsDesc(genre);
+        List<Artist> allArtists= artistRepository.findAll();
         List<Statistic> response = new ArrayList<Statistic>();
-        int aux = 0;
-        for(Statistic element : allStatistics) {
-            int flag = 0;
-            for(Statistic artist : response){
-                if(artist.getName().equals(element.getName())){
-                   flag = 1;
+        List<Statistic> statisticsAux = new ArrayList<Statistic>();
+        List<Integer> negativeTweets = new ArrayList<Integer>();
+        for(Artist artista: allArtists){
+            if(artista.getGenre().getName().equals(genre_name)){
+                String name = artista.getName();
+                
+                List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
+                if(artistStatistic.size()>0){
+
+                    negativeTweets.add(artistStatistic.get(0).getNegativeTweets());
+                    statisticsAux.add(artistStatistic.get(0));
                 }
-            }    
-            if(flag == 0){
-                response.add(response.size(), element);
-                aux = aux+1;
             }
-            
+        }
+        int aux = 0;
+
+        for(int i = 0; i<negativeTweets.size(); i++){
+            float maximo = 0;
+            int index = 0;
+            Statistic estadistica = new Statistic();
+            for(int j = 0; j<negativeTweets.size(); j++){
+                if(negativeTweets.get(j)>maximo){
+                    maximo = negativeTweets.get(j);
+                    index = j;
+                    estadistica = statisticsAux.get(j);
+                }
+            }
+            negativeTweets.remove(index);
+            statisticsAux.remove(index);
+            response.add(estadistica);
+            aux = aux + 1 ;
             if(aux == 10){
                 break;
             }
         }
+        
+        
+       
         return response;
 
     }
