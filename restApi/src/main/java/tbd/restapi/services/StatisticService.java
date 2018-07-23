@@ -80,7 +80,7 @@ public class StatisticService {
                 }
             }
             totalTweetsList.remove(index);
-            
+            statisticsAux.remove(index);
             response.add(estadistica);
             aux = aux + 1 ;
             if(aux == 10){
@@ -158,6 +158,7 @@ public class StatisticService {
                 }
             }
             divitions.remove(index);
+            statisticsAux.remove(index);
             int flag = 0;
             for(Statistic elemento : response){
                 if(artistRepository.findFirstArtistByName(elemento.getName()).getGenre().getName().equals(artistRepository.findFirstArtistByName(estadistica.getName()).getGenre().getName())){
@@ -227,6 +228,8 @@ public class StatisticService {
                 }
             }
             divitions.remove(index);
+            statisticsAux.remove(index);
+
             int flag = 0;
             for(Statistic elemento : response){
                 if(artistRepository.findFirstArtistByName(elemento.getName()).getGenre().getName().equals(artistRepository.findFirstArtistByName(estadistica.getName()).getGenre().getName())){
@@ -282,8 +285,7 @@ public class StatisticService {
         }
         
         int aux = 0;
-        System.out.println(divitions.size());
-        System.out.println(statisticsAux.size());
+
         List<Float> divisionesFinal = new ArrayList<Float>();
         for(int i = 0; i<divitions.size(); i++){
             float maximo = 0;
@@ -297,6 +299,7 @@ public class StatisticService {
                 }
             }
             divitions.remove(index);
+            statisticsAux.remove(index);
             response.add(estadistica);
             divisionesFinal.add(maximo);
             aux = aux + 1 ;
@@ -356,6 +359,8 @@ public class StatisticService {
                 }
             }
             divitions.remove(index);
+            statisticsAux.remove(index);
+            
             response.add(estadistica);
             divisionesFinal.add(maximo);
             aux = aux + 1 ;
