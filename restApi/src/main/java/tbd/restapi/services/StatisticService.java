@@ -110,7 +110,7 @@ public class StatisticService {
             float crecimiento = 0;
             List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
             if(artistStatistic.size()>0){
-                crecimiento = artistStatistic.get(0).getTotal_tweets() - artistStatistic.get(10).getTotal_tweets();
+                crecimiento = artistStatistic.get(0).getTotal_tweets() - artistStatistic.get(5).getTotal_tweets();
                 crecimientoList.add(crecimiento);
                 statisticsAux.add(artistStatistic);
             }
@@ -135,14 +135,13 @@ public class StatisticService {
                 break;
             }
         }
-        for(int j = 9; j >= 0; j--){
+        for(int j = 5; j >= 0; j--){
             responseAux.put("fecha", statisticsAux.get(0).get(j).getDate());
             for(int i = 0; i < listaIndices.size(); i++){
-                System.out.println(statisticsAux.get(i).get(j).getDate());
-                System.out.println(statisticsAux.get(i).get(j).getName());
                 responseAux.put(statisticsAux.get(i).get(j).getName(),statisticsAux.get(i).get(j).getTotal_tweets());
             }
             response.add(responseAux);
+            responseAux = new LinkedHashMap<String, Object>();  
 
         }
         
