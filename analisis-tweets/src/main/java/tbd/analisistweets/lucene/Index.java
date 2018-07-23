@@ -2,24 +2,23 @@ package tbd.analisistweets.lucene;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-
 import com.mongodb.*;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
+import org.apache.lucene.document.*;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import java.util.Arrays;
+
 public class Index {
+
     public void crearIndice(){
         try {
+            System.out.println("Se está creando el índice con lucene");
             Directory dir = FSDirectory.open(Paths.get("indice"));
             Analyzer analyzer = new StandardAnalyzer();
             IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
@@ -30,17 +29,25 @@ public class Index {
             //// Add new documents to an existing index: OpenMode.CREATE_OR_APPEND
 
             IndexWriter writer = new IndexWriter(dir, iwc);
-            MongoCredential credential = MongoCredential.createCredential("root", "admin", "secret1234".toCharArray());
-            MongoClient mongoClient = new MongoClient(new ServerAddress("165.227.12.119", 27017), Arrays.asList(credential));
+           // MongoClient mongoClient = new MongoClient("165.227.12.119", 27017);
+            MongoClient mongoClient = new MongoClient("localhost",  27017);
             DB baseDeDatos = mongoClient.getDB("musicgraphdb");
             DBCollection coleccion = baseDeDatos.getCollection("statusJSONImpl");
             DBCursor cursorInicial = coleccion.find();
+
             while(cursorInicial.hasNext()){
                 DBObject cursor = cursorInicial.next();
+                Object user = cursor.get("user");
+                String userString = user.toString();
+                String location = getLocation(userString);
+
+
                 Document doc = new Document();
                 doc.add(new TextField("text", cursor.get("text").toString(), Field.Store.YES));
                 doc.add(new StringField("_id", cursor.get("_id").toString(), Field.Store.YES));
-                doc.add(new StringField("id", cursor.get("id").toString(), Field.Store.YES));
+                doc.add(new StringField("createdAt", cursor.get("createdAt").toString(),Field.Store.YES));
+                doc.add(new StringField("location", location, Field.Store.YES));
+
                 if(writer.getConfig().getOpenMode() == OpenMode.CREATE) {
                     writer.addDocument(doc);
                 }
@@ -53,6 +60,15 @@ public class Index {
         catch(IOException ioe) {
             ioe.printStackTrace();
         }
-        System.out.println("Creado indice Lucene");
+        System.out.println("Creado índice Lucene");
+    }
+
+
+    public String getLocation(String userInformation){
+        String location = "";
+        Integer indiceLocation = userInformation.indexOf("location");
+        Integer indiceEndLocation = userInformation.indexOf("\"", indiceLocation+13);
+        location = userInformation.substring(indiceLocation+13, indiceEndLocation);
+        return location;
     }
 }

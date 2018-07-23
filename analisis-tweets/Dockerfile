@@ -5,7 +5,7 @@ FROM gradle:latest
 
 RUN mkdir -p /home/gradle/project
 
-COPY ./ /home/gradle/project
+COPY --chown=gradle:gradle ./ /home/gradle/project
 
 WORKDIR /home/gradle/project
 

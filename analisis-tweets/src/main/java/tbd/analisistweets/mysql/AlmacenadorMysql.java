@@ -11,7 +11,8 @@ public class AlmacenadorMysql {
         //TODO: cambiar según nombre de la base de datos
         String username = "root";
         String password = "secret1234";
-        String host = "jdbc:mysql://165.227.12.119:3306/";
+        //String host = "jdbc:mysql://165.227.12.119:3306/";
+        String host = "jdbc:mysql://localhost:3306/";
         String db_name = "musicgraphdb?useSSL=false";
         try {
             Class.forName("com.mysql.jdbc.Driver");

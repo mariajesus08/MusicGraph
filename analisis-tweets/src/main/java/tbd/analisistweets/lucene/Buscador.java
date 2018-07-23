@@ -13,6 +13,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -24,54 +25,47 @@ public class Buscador {
     private Integer cantidadComentarios;
     private Integer nroComentariosPositivos;
     private Integer nroComentariosNegativos;
-    public List<String> ComentariosArtista;
+    public List<Integer> idTweetsArtista;
     private Analisis analisis;
+    private IndexReader reader;
+    private IndexSearcher searcher;
+    private Analyzer analyzer;
 
-    public Buscador() {
+    public Buscador() throws Exception{
         cantidadComentarios = 0;
         nroComentariosPositivos = 0;
         nroComentariosNegativos = 0;
-        ComentariosArtista = new ArrayList<>();
+        idTweetsArtista = new ArrayList<>();
         analisis = new Analisis();
+        reader = DirectoryReader.open(FSDirectory.open(Paths.get("indice")));
+        searcher = new IndexSearcher(reader);
+        analyzer = new StandardAnalyzer();
     }
 
-    public void buscarArtista(String artista){
+    public void buscarArtista(String artista) throws Exception {
         cantidadComentarios = 0;
-        try {
-            IndexReader reader = DirectoryReader.open(FSDirectory.open(Paths.get("indice")));
-            IndexSearcher searcher = new IndexSearcher(reader);
-            Analyzer analyzer = new StandardAnalyzer();
-
-            QueryParser parser = new QueryParser("text", analyzer);
-            Query query = parser.parse(artista);
-
-            TopDocs results = searcher.search(query, 25000);
-            ScoreDoc[] hits = results.scoreDocs;
-            for(int i = 0; i < hits.length; i++) {
-                Document doc = searcher.doc(hits[i].doc);
-                ComentariosArtista.add(doc.get("text"));
-            }
-            cantidadComentarios = ComentariosArtista.size();
-            reader.close();
-        }
-        catch(IOException ioe) {
-            Logger.getLogger(Buscador.class.getName()).log(Level.SEVERE, null, ioe);
-        }
-        catch(ParseException pe) {
-            Logger.getLogger(Buscador.class.getName()).log(Level.SEVERE, null, pe);
-        }
+        QueryParser parser = new QueryParser("text", analyzer);
+        Query query = parser.parse(artista);
+        TopDocs results = searcher.search(query, 50000);
+        ScoreDoc[] hits = results.scoreDocs;
+        for(int i = 0; i < hits.length; i++)
+            idTweetsArtista.add(hits[i].doc);
+        cantidadComentarios = hits.length;
     }
 
-    public void obtenerValoracionArtista(){
+    public void obtenerValoracionArtista() throws Exception{
         nroComentariosPositivos = 0;
         nroComentariosNegativos = 0;
-        for(int i = 0; i < ComentariosArtista.size(); i++){
-            String resultado = analisis.analisisSentimientoTweet(ComentariosArtista.get(i));
+        for(int i = 0; i < cantidadComentarios; i++){
+            Document d = searcher.doc(idTweetsArtista.get(i));
+            String tweet = d.get("text");
+            String resultado = analisis.analisisSentimientoTweet(tweet);
             if(resultado.equals("Positivo"))
                 nroComentariosPositivos++;
             if(resultado.equals("Negativo"))
                 nroComentariosNegativos++;
         }
+        reader.close();
     }
 
     public Integer getCantidadComentarios() {
