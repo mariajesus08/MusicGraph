@@ -52,8 +52,6 @@ public class Analisis {
                     palabrasNegativos++;
             }
         }
-        if(palabrasNegativos>0)
-            System.out.println("NEG:"+palabrasNegativos);
         if(palabrasPositivos > palabrasNegativos){
             return "Positivo";
         }
