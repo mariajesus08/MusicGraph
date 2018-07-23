@@ -2,6 +2,8 @@ package tbd.analisistweets.lucene;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Arrays;
+
 import com.mongodb.*;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -30,7 +32,9 @@ public class Index {
 
             IndexWriter writer = new IndexWriter(dir, iwc);
            // MongoClient mongoClient = new MongoClient("165.227.12.119", 27017);
-            MongoClient mongoClient = new MongoClient("localhost",  27017);
+           MongoCredential mongoCredential = MongoCredential.createCredential("root", "admin","secret1234".toCharArray());
+           ServerAddress address = new ServerAddress("165.227.12.119", 27017);
+            MongoClient mongoClient = new MongoClient(address, Arrays.asList(mongoCredential));
             DB baseDeDatos = mongoClient.getDB("musicgraphdb");
             DBCollection coleccion = baseDeDatos.getCollection("statusJSONImpl");
             DBCursor cursorInicial = coleccion.find();
