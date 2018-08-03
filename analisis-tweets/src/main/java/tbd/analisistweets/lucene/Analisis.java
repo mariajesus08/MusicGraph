@@ -27,7 +27,7 @@ public class Analisis {
         tweet = Normalizer.normalize(tweet, Normalizer.Form.NFD)
                 .replaceAll("[^\\p{ASCII}]", "");
 
-        String url = "http://localhost:8080/classify";
+        String url = "http://165.227.12.119:8989/classify";
         String urlParameters = "text="+tweet;
         byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
 
