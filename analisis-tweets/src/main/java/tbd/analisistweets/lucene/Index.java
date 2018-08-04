@@ -18,8 +18,7 @@ import org.apache.lucene.store.FSDirectory;
 
 public class Index {
 
-    public void crearIndice(){
-        try {
+    public void crearIndice() throws Exception{
             System.out.println("Se está creando el índice con lucene");
             Directory dir = FSDirectory.open(Paths.get("indice"));
             Analyzer analyzer = new StandardAnalyzer();
@@ -31,9 +30,8 @@ public class Index {
             //// Add new documents to an existing index: OpenMode.CREATE_OR_APPEND
 
             IndexWriter writer = new IndexWriter(dir, iwc);
-           // MongoClient mongoClient = new MongoClient("165.227.12.119", 27017);
            MongoCredential mongoCredential = MongoCredential.createCredential("root", "admin","secret1234".toCharArray());
-           ServerAddress address = new ServerAddress("165.227.12.119", 27017);
+            ServerAddress address = new ServerAddress("165.227.12.119", 27017);
             MongoClient mongoClient = new MongoClient(address, Arrays.asList(mongoCredential));
             DB baseDeDatos = mongoClient.getDB("musicgraphdb");
             DBCollection coleccion = baseDeDatos.getCollection("statusJSONImpl");
@@ -60,11 +58,9 @@ public class Index {
                 }
             }
             writer.close();
-        }
-        catch(IOException ioe) {
-            ioe.printStackTrace();
-        }
+            coleccion.drop();
         System.out.println("Creado índice Lucene");
+
     }
 
 

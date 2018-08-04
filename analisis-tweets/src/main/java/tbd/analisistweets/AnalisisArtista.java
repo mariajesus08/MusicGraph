@@ -12,7 +12,6 @@ import tbd.analisistweets.mysql.AlmacenadorMysql;
 public class AnalisisArtista {
 
     public void analizarTodos() throws Exception {
-        //TODO: Ver porqué algunos artista marcan con tantos falsos comentarios (ej: franco de vita) (alcance de nombre?)
         System.out.println("Empezó análisis de tweets");
         Index index = new Index();
         index.crearIndice();
@@ -20,7 +19,6 @@ public class AnalisisArtista {
         //TODO: cambiar según nombre de la base de datos
         String username = "root";
         String password = "secret1234";
-        //String host = "jdbc:mysql://165.227.12.119:3306/";
         String host = "jdbc:mysql://165.227.12.119:3306/";
         String db_name = "musicgraphdb?useSSL=false";
         try {
@@ -51,6 +49,7 @@ public class AnalisisArtista {
                     comentariosNegativos, buscador.getCantidadComentarios());
 
         }
+
         System.out.println("Finalizó análisis de tweets");
 
     }

@@ -2,6 +2,7 @@ package tbd.analisistweets.lucene;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,8 +11,8 @@ import java.text.Normalizer;
 
 
 public class Analisis {
-    private Integer porcentajePositivo;
-    private Integer porcentajeNegativo;
+    private float porcentajePositivo;
+    private float porcentajeNegativo;
     private static HttpURLConnection con;
 
     public Analisis() throws Exception{
@@ -60,37 +61,41 @@ public class Analisis {
             }
             String positivos = getPositivos(content.toString());
             String negativos = getNegativos(content.toString());
-            porcentajePositivo = Integer.parseInt(positivos);
-            porcentajeNegativo = Integer.parseInt(negativos);
+            porcentajePositivo = Float.valueOf(positivos);
+            porcentajeNegativo = Float.valueOf(negativos);
 
+        }
+
+        catch (IOException | StringIndexOutOfBoundsException | NumberFormatException a) {
+            porcentajeNegativo = Float.valueOf("0.5");
+            porcentajePositivo = Float.valueOf("0.5");
         } finally {
 
             con.disconnect();
         }
 
         if(porcentajePositivo > porcentajeNegativo){
-            System.out.println("positivo");
             return "Positivo";
         }
         else if(porcentajeNegativo > porcentajePositivo) {
-            System.out.println("negativo");
             return "Negativo";
         }
-        System.out.println("neutro");
         return "Neutro";
     }
-    public static String getPositivos(String tweet){
+    public static String getNegativos(String tweet){
         String positivos = "";
+        Integer tamano = (tweet.length() / 2) - 13 ;
         Integer indice = tweet.indexOf(":");
         Integer indiceEnd = tweet.indexOf(",");
-        positivos = tweet.substring(indice+1, indiceEnd);
+        positivos = tweet.substring(indice+2, indice+tamano);
         return positivos;
     }
 
-    public static String getNegativos(String tweet){
+    public static String getPositivos(String tweet){
         String negativos = "";
+        Integer tamano = (tweet.length() / 2) - 13 ;
         Integer indice = tweet.indexOf(",");
-        negativos = tweet.substring(indice+12, indice+30);
+        negativos = tweet.substring(indice+14, indice+tamano);
         return negativos;
     }
 }
