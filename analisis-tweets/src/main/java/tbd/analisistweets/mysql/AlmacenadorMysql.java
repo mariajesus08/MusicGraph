@@ -43,7 +43,10 @@ public class AlmacenadorMysql {
             
         }catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+            try { connection.close(); } catch (Exception e) { /* ignored */ }
         }
+
         
     }
 }
