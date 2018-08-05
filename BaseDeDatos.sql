@@ -65,12 +65,12 @@ CREATE TABLE IF NOT EXISTS `statistics` (
 
 DROP TABLE IF EXISTS `user_statistics` ;
 
-CREATE TABLE IF NOT EXISTS `userStatistics` (
+CREATE TABLE IF NOT EXISTS `user_statistics` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `retweets` INT NULL,
   `followers` INT NULL,
-  `lastTweet` VARCHAR(255) NULL,
+  `last_tweet` VARCHAR(255) NULL,
   `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(`id`)
   );
@@ -104,8 +104,6 @@ INSERT INTO genres (name) VALUES ("Ska");
 INSERT INTO genres (name) VALUES ("Salsa");
 INSERT INTO genres (name) VALUES ("Bossa Nova");
 INSERT INTO genres (name) VALUES ("Balada");
-INSERT INTO genres (name) VALUES ("K-Pop");
-INSERT INTO genres (name) VALUES ("Bachata");
 
 INSERT INTO artists (name, id_genre) VALUES ("The Beatles", 1);
 INSERT INTO artists (name, id_genre) VALUES ("Queen", 1);
@@ -127,9 +125,6 @@ INSERT INTO artists (name, id_genre) VALUES ("Foo Fighters", 1);
 INSERT INTO artists (name, id_genre) VALUES ("Thirty Seconds To Mars", 1);
 INSERT INTO artists (name, id_genre) VALUES ("Paramore", 1);
 INSERT INTO artists (name, id_genre) VALUES ("Avril Lavigne", 1);
-INSERT INTO artists (name, id_genre) VALUES ("Soda Stereo", 1);
-INSERT INTO artists (name, id_genre) VALUES ("Enanitos Verdes", 1);
-INSERT INTO artists (name, id_genre) VALUES ("Los Bunkers", 1);
 
 
 INSERT INTO artists (name, id_genre) VALUES ("Iron Maiden", 2);
@@ -218,10 +213,6 @@ INSERT INTO artists (name, id_genre) VALUES ("OneRepublic", 5);
 INSERT INTO artists (name, id_genre) VALUES ("Maroon 5", 5);
 INSERT INTO artists (name, id_genre) VALUES ("Charlie Puth", 5);
 INSERT INTO artists (name, id_genre) VALUES ("Shawn Mendes", 5);
-INSERT INTO artists (name, id_genre) VALUES ("One Direction", 5);
-INSERT INTO artists (name, id_genre) VALUES ("Harry Styles", 5);
-INSERT INTO artists (name, id_genre) VALUES ("Maná", 5);
-INSERT INTO artists (name, id_genre) VALUES ("Los Vásquez", 5);
 
 
 INSERT INTO artists (name, id_genre) VALUES ("Eminem", 6);
@@ -552,18 +543,7 @@ INSERT INTO artists (name, id_genre) VALUES ("Sebastián Yatra", 22);
 INSERT INTO artists (name, id_genre) VALUES ("Sin Bandera", 22);
 
 
-INSERT INTO artists (name, id_genre) VALUES ("BTS", 23);
-INSERT INTO artists (name, id_genre) VALUES ("PSY", 23);
-INSERT INTO artists (name, id_genre) VALUES ("BoA", 23);
-INSERT INTO artists (name, id_genre) VALUES ("Rain", 23);
-INSERT INTO artists (name, id_genre) VALUES ("Big Bang", 23);
-INSERT INTO artists (name, id_genre) VALUES ("Super Junior", 23);
-INSERT INTO artists (name, id_genre) VALUES ("EXO", 23);
 
-INSERT INTO artists (name, id_genre) VALUES ("Prince Roy", 23);
-INSERT INTO artists (name, id_genre) VALUES ("Romeo Santos", 23);
-INSERT INTO artists (name, id_genre) VALUES ("Juan Luis Guerra", 23);
-INSERT INTO artists (name, id_genre) VALUES ("Aventura", 23);
 
 
 
@@ -964,21 +944,3 @@ INSERT INTO keywords (word) VALUES ("Ricardo Arjona");
 INSERT INTO keywords (word) VALUES ("Ricardo Montaner");
 INSERT INTO keywords (word) VALUES ("Sebastián Yatra");
 INSERT INTO keywords (word) VALUES ("Sin Bandera");
-INSERT INTO keywords (word) VALUES ("BTS");
-INSERT INTO keywords (word) VALUES ("PSY");
-INSERT INTO keywords (word) VALUES ("BoA");
-INSERT INTO keywords (word) VALUES ("Rain");
-INSERT INTO keywords (word) VALUES ("Big Bang");
-INSERT INTO keywords (word) VALUES ("Super Junior");
-INSERT INTO keywords (word) VALUES ("EXO");
-INSERT INTO keywords (word) VALUES ("One Direction");
-INSERT INTO keywords (word) VALUES ("Harry Styles");
-INSERT INTO keywords (word) VALUES ("Soda Stereo");
-INSERT INTO keywords (word) VALUES ("Enanitos Verdes");
-INSERT INTO keywords (word) VALUES ("Maná");
-INSERT INTO keywords (word) VALUES ("Prince Roy");
-INSERT INTO keywords (word) VALUES ("Romeo Santos");
-INSERT INTO keywords (word) VALUES ("Juan Luis Guerra");
-INSERT INTO keywords (word) VALUES ("Aventura");
-INSERT INTO keywords (word) VALUES ("Los Vásquez");
-INSERT INTO keywords (word) VALUES ("Los Bunkers");

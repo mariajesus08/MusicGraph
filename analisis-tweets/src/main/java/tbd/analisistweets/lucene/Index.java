@@ -43,7 +43,6 @@ public class Index {
                 String userString = user.toString();
                 String location = getLocation(userString);
 
-                
 
                 Document doc = new Document();
                 doc.add(new TextField("text", cursor.get("text").toString(), Field.Store.YES));
