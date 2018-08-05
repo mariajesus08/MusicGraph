@@ -431,11 +431,11 @@ public class StatisticService {
         int aux = 0;
 
         for(int i = 0; i<positiveTweets.size(); i++){
-            float maximo = 0;
+            float maximo = 0f;
             int index = 0;
             Statistic estadistica = new Statistic();
             for(int j = 0; j<positiveTweets.size(); j++){
-                if(positiveTweets.get(j)>maximo){
+                if(positiveTweets.get(j)>=maximo){
                     maximo = positiveTweets.get(j);
                     index = j;
                     estadistica = statisticsAux.get(j);
@@ -476,11 +476,11 @@ public class StatisticService {
         int aux = 0;
 
         for(int i = 0; i<negativeTweets.size(); i++){
-            float maximo = 0;
+            float maximo = 0f;
             int index = 0;
             Statistic estadistica = new Statistic();
             for(int j = 0; j<negativeTweets.size(); j++){
-                if(negativeTweets.get(j)>maximo){
+                if(negativeTweets.get(j)>=maximo){
                     maximo = negativeTweets.get(j);
                     index = j;
                     estadistica = statisticsAux.get(j);

@@ -70,9 +70,12 @@ CREATE TABLE IF NOT EXISTS `user_statistics` (
   `name` VARCHAR(255) NOT NULL,
   `retweets` INT NULL,
   `followers` INT NULL,
+  `id_artist` INT NULL,
   `last_tweet` VARCHAR(255) NULL,
   `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY(`id`)
+  PRIMARY KEY(`id`),
+  FOREIGN KEY (`id_artist`)
+  references artists(`id`)
   );
 
 SET SQL_MODE=@OLD_SQL_MODE;
