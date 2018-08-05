@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AlmacenadorMysql {
-    public void insertarEstadistica(String artista, Integer positivos, Integer negativos, Integer totales){
+    public void insertarEstadistica(String artista, Float positivos, Float negativos, Integer totales){
+        System.out.println("Porcentaje:");
+        System.out.println(positivos);
+        System.out.println(negativos);
+        
         Connection connection = null;
         //TODO: cambiar según nombre de la base de datos
         String username = "root";
@@ -29,15 +33,19 @@ public class AlmacenadorMysql {
             PreparedStatement ps = connection.prepareStatement(query);
             PreparedStatement ps2 = connection.prepareStatement(setIds);
             PreparedStatement ps3 = connection.prepareStatement(setGenres);
+            
+            
             ps.setString(1, artista);
-            ps.setInt(2, negativos);
-            ps.setInt(3, positivos);
+            ps.setFloat(2, negativos);
+            ps.setFloat(3, positivos);
             ps.setInt(4, totales);
             ps.execute();
             ps2.execute();
             ps3.execute();
+            
         }catch (SQLException e) {
             e.printStackTrace();
         }
+        
     }
 }

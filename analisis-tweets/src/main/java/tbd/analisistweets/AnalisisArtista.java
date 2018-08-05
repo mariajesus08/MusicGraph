@@ -44,9 +44,8 @@ public class AnalisisArtista {
             buscador.buscarArtista(artista);
             buscador.obtenerValoracionArtista();
             AlmacenadorMysql almacenadorMysql = new AlmacenadorMysql();
-            int comentariosNegativos = buscador.getCantidadComentarios() - buscador.getNroComentariosPositivos();
             almacenadorMysql.insertarEstadistica(artista, buscador.getNroComentariosPositivos(),
-                    comentariosNegativos, buscador.getCantidadComentarios());
+            buscador.getNroComentariosNegativos(), buscador.getCantidadComentarios());
 
         }
 

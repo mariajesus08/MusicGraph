@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Analisis {
@@ -20,7 +22,7 @@ public class Analisis {
         porcentajeNegativo = 0;
     }
 
-    public String analisisSentimientoTweet(String tweet) throws Exception{
+    public List<Float> analisisSentimientoTweet(String tweet) throws Exception{
         porcentajePositivo = 0;
         porcentajeNegativo = 0;
         //se quitan las mayusculas y acentos
@@ -28,7 +30,7 @@ public class Analisis {
         tweet = Normalizer.normalize(tweet, Normalizer.Form.NFD)
                 .replaceAll("[^\\p{ASCII}]", "");
 
-        String url = "http://165.227.12.119:8989/classify";
+        String url = "http://localhost:8989/classify";
         String urlParameters = "text="+tweet;
         byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
 
@@ -63,6 +65,7 @@ public class Analisis {
             String negativos = getNegativos(content.toString());
             porcentajePositivo = Float.valueOf(positivos);
             porcentajeNegativo = Float.valueOf(negativos);
+          
 
         }
 
@@ -73,14 +76,10 @@ public class Analisis {
 
             con.disconnect();
         }
-
-        if(porcentajePositivo > porcentajeNegativo){
-            return "Positivo";
-        }
-        else if(porcentajeNegativo > porcentajePositivo) {
-            return "Negativo";
-        }
-        return "Neutro";
+        List<Float> lista = new ArrayList<Float>();
+        lista.add(1-porcentajeNegativo);
+        lista.add(porcentajeNegativo);
+        return lista;
     }
     public static String getNegativos(String tweet){
         String positivos = "";

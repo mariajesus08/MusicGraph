@@ -23,8 +23,8 @@ import java.util.logging.Logger;
 
 public class Buscador {
     private Integer cantidadComentarios;
-    private Integer nroComentariosPositivos;
-    private Integer nroComentariosNegativos;
+    private Float nroComentariosPositivos;
+    private Float nroComentariosNegativos;
     public List<Integer> idTweetsArtista;
     private Analisis analisis;
     private IndexReader reader;
@@ -33,8 +33,8 @@ public class Buscador {
 
     public Buscador() throws Exception{
         cantidadComentarios = 0;
-        nroComentariosPositivos = 0;
-        nroComentariosNegativos = 0;
+        nroComentariosPositivos = 0f;
+        nroComentariosNegativos = 0f;
         idTweetsArtista = new ArrayList<>();
         analisis = new Analisis();
         reader = DirectoryReader.open(FSDirectory.open(Paths.get("indice")));
@@ -54,17 +54,26 @@ public class Buscador {
     }
 
     public void obtenerValoracionArtista() throws Exception{
-        nroComentariosPositivos = 0;
-        nroComentariosNegativos = 0;
+        float auxPositivos = 0f;
+        float auxNegativos = 0f;
         for(int i = 0; i < cantidadComentarios; i++){
             Document d = searcher.doc(idTweetsArtista.get(i));
             String tweet = d.get("text");
-            String resultado = analisis.analisisSentimientoTweet(tweet);
-            if(resultado.equals("Positivo"))
-                nroComentariosPositivos++;
-            if(resultado.equals("Negativo"))
-                nroComentariosNegativos++;
+            List<Float> resultado = new ArrayList<Float>();
+            resultado = analisis.analisisSentimientoTweet(tweet);
+            if(auxPositivos == 0f){
+                auxPositivos = resultado.get(0);
+            } else {
+                auxPositivos = (auxPositivos + resultado.get(0))/2;
+            }
+            if(auxNegativos == 0f){
+                auxNegativos = resultado.get(1);
+            } else {
+                auxNegativos = (auxNegativos + resultado.get(1))/2;
+            }
         }
+        this.nroComentariosNegativos = auxNegativos;
+        this.nroComentariosPositivos = auxPositivos;
         reader.close();
     }
 
@@ -76,19 +85,19 @@ public class Buscador {
         this.cantidadComentarios = cantidadComentarios;
     }
 
-    public Integer getNroComentariosPositivos() {
+    public Float getNroComentariosPositivos() {
         return nroComentariosPositivos;
     }
 
-    public void setNroComentariosPositivos(Integer nroComentariosPositivos) {
+    public void setNroComentariosPositivos(Float nroComentariosPositivos) {
         this.nroComentariosPositivos = nroComentariosPositivos;
     }
 
-    public Integer getNroComentariosNegativos() {
+    public Float getNroComentariosNegativos() {
         return nroComentariosNegativos;
     }
 
-    public void setNroComentariosNegativos(Integer nroComentariosNegativos) {
+    public void setNroComentariosNegativos(Float nroComentariosNegativos) {
         this.nroComentariosNegativos = nroComentariosNegativos;
     }
 }
