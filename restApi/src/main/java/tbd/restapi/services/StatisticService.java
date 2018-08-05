@@ -415,7 +415,7 @@ public class StatisticService {
         List<Artist> allArtists= artistRepository.findAll();
         List<Statistic> response = new ArrayList<Statistic>();
         List<Statistic> statisticsAux = new ArrayList<Statistic>();
-        List<Integer> positiveTweets = new ArrayList<Integer>();
+        List<Float> positiveTweets = new ArrayList<Float>();
         for(Artist artista: allArtists){
             if(artista.getGenre().getName().equals(genre_name)){
                 String name = artista.getName();
@@ -460,7 +460,7 @@ public class StatisticService {
         List<Artist> allArtists= artistRepository.findAll();
         List<Statistic> response = new ArrayList<Statistic>();
         List<Statistic> statisticsAux = new ArrayList<Statistic>();
-        List<Integer> negativeTweets = new ArrayList<Integer>();
+        List<Float> negativeTweets = new ArrayList<Float>();
         for(Artist artista: allArtists){
             if(artista.getGenre().getName().equals(genre_name)){
                 String name = artista.getName();
