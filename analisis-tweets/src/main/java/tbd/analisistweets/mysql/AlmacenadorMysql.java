@@ -11,6 +11,18 @@ public class AlmacenadorMysql {
     public void insertarEstadistica(String artista, Float positivos, Float negativos, Integer totales){
 
         System.out.println("Ingresando estadisticas de: "+artista);
+        if(artista.equals("Shawn Mendes")){
+            System.out.println("** Artista N°100, quedan 295 **");
+        }
+        if(artista.equals("Ray Charles")){
+            System.out.println("** Artista N°200, quedan 195 **");
+        }
+        if(artista.equals("Inna de Yard")){
+            System.out.println("** Artista N°300, quedan 95 **");
+        }
+        if(artista.equals("La India")){
+            System.out.println("** Artista N°350, quedan 45 **");
+        }
         Connection connection = null;
         //TODO: cambiar según nombre de la base de datos
         String username = "root";
@@ -29,12 +41,11 @@ public class AlmacenadorMysql {
         String setIds =  "UPDATE statistics, artists SET statistics.id_artist = artists.id WHERE artists.name = statistics.name;";
         String setGenres =  "UPDATE statistics, artists SET statistics.id_genre = artists.id_genre WHERE artists.id = statistics.id_artist;";
         String queryGet = "SELECT * FROM statistics WHERE statistics.name = \""+artista+"\";";
-        System.out.println(queryGet);
         try{
 
             PreparedStatement ps = connection.prepareStatement(query);
-            PreparedStatement ps2 = connection.prepareStatement(setIds);
-            PreparedStatement ps3 = connection.prepareStatement(setGenres);
+            Statement ps2 = connection.createStatement();
+            Statement ps3 = connection.createStatement();
             
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(queryGet);
@@ -58,8 +69,8 @@ public class AlmacenadorMysql {
             ps.setFloat(3, positivos);
             ps.setInt(4, totales);
             ps.execute();
-            ps2.execute();
-            ps3.execute();
+            ps2.executeUpdate(setIds);
+            ps3.executeUpdate(setGenres);
             
         }catch (SQLException e) {
             e.printStackTrace();
