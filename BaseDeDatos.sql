@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `statistics` (
   );
 
 
-DROP TABLE IF EXISTS `userStatistics` ;
+DROP TABLE IF EXISTS `user_statistics` ;
 
 CREATE TABLE IF NOT EXISTS `userStatistics` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -81,6 +81,31 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 INSERT INTO users (name, password, email, is_active) VALUES ("admin", "tbd", "admin@usach.cl", 1);
+
+INSERT INTO genres (name) VALUES ("Rock");
+INSERT INTO genres (name) VALUES ("Metal");
+INSERT INTO genres (name) VALUES ("Punk");
+INSERT INTO genres (name) VALUES ("Jazz");
+INSERT INTO genres (name) VALUES ("Pop");
+INSERT INTO genres (name) VALUES ("Rap");
+INSERT INTO genres (name) VALUES ("Electronica");
+INSERT INTO genres (name) VALUES ("Cumbia");
+INSERT INTO genres (name) VALUES ("Clasica");
+INSERT INTO genres (name) VALUES ("Reggaeton");
+INSERT INTO genres (name) VALUES ("Trova");
+INSERT INTO genres (name) VALUES ("Blues");
+INSERT INTO genres (name) VALUES ("Country");
+INSERT INTO genres (name) VALUES ("Disco");
+INSERT INTO genres (name) VALUES ("Folcklorica");
+INSERT INTO genres (name) VALUES ("Funk");
+INSERT INTO genres (name) VALUES ("Indie");
+INSERT INTO genres (name) VALUES ("Reggae");
+INSERT INTO genres (name) VALUES ("Ska");
+INSERT INTO genres (name) VALUES ("Salsa");
+INSERT INTO genres (name) VALUES ("Bossa Nova");
+INSERT INTO genres (name) VALUES ("Balada");
+INSERT INTO genres (name) VALUES ("K-Pop");
+INSERT INTO genres (name) VALUES ("Bachata");
 
 INSERT INTO artists (name, id_genre) VALUES ("The Beatles", 1);
 INSERT INTO artists (name, id_genre) VALUES ("Queen", 1);
@@ -541,30 +566,7 @@ INSERT INTO artists (name, id_genre) VALUES ("Juan Luis Guerra", 23);
 INSERT INTO artists (name, id_genre) VALUES ("Aventura", 23);
 
 
-INSERT INTO genres (name) VALUES ("Rock");
-INSERT INTO genres (name) VALUES ("Metal");
-INSERT INTO genres (name) VALUES ("Punk");
-INSERT INTO genres (name) VALUES ("Jazz");
-INSERT INTO genres (name) VALUES ("Pop");
-INSERT INTO genres (name) VALUES ("Rap");
-INSERT INTO genres (name) VALUES ("Electronica");
-INSERT INTO genres (name) VALUES ("Cumbia");
-INSERT INTO genres (name) VALUES ("Clasica");
-INSERT INTO genres (name) VALUES ("Reggaeton");
-INSERT INTO genres (name) VALUES ("Trova");
-INSERT INTO genres (name) VALUES ("Blues");
-INSERT INTO genres (name) VALUES ("Country");
-INSERT INTO genres (name) VALUES ("Disco");
-INSERT INTO genres (name) VALUES ("Folcklorica");
-INSERT INTO genres (name) VALUES ("Funk");
-INSERT INTO genres (name) VALUES ("Indie");
-INSERT INTO genres (name) VALUES ("Reggae");
-INSERT INTO genres (name) VALUES ("Ska");
-INSERT INTO genres (name) VALUES ("Salsa");
-INSERT INTO genres (name) VALUES ("Bossa Nova");
-INSERT INTO genres (name) VALUES ("Balada");
-INSERT INTO genres (name) VALUES ("K-Pop");
-INSERT INTO genres (name) VALUES ("Bachata");
+
 
 INSERT INTO keywords (word) VALUES ("The Beatles");
 INSERT INTO keywords (word) VALUES ("Queen");

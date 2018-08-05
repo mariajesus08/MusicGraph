@@ -21,7 +21,7 @@ public class UserStatistic {
     private int retweets ;
     @Column(name = "followers")
     private int followers;
-    private String lastTweet;
+    private String last_tweet;
     private Date date;
 
 
@@ -54,6 +54,13 @@ public class UserStatistic {
 
     public void setFollowers(int followers) {
         this.followers = followers;
+    }
+    public String geLast_tweet() {
+        return last_tweet;
+    }
+
+    public void setLast_tweet(String last_tweet) {
+        this.last_tweet = last_tweet;
     }
 
    
