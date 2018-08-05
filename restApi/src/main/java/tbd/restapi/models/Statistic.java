@@ -18,9 +18,9 @@ public class Statistic {
     private int id;
     private String name;
     @Column(name = "positive_tweets")
-    private int positiveTweets;
+    private Float positiveTweets;
     @Column(name = "negative_tweets")
-    private int negativeTweets;
+    private Float negativeTweets;
     private int total_tweets;
     private Date date;
 
@@ -68,19 +68,19 @@ public class Statistic {
         this.name = name;
     }
 
-    public int getPositiveTweets() {
+    public Float getPositiveTweets() {
         return positiveTweets;
     }
 
-    public void setPositiveTweets(int positiveTweets) {
+    public void setPositiveTweets(Float positiveTweets) {
         this.positiveTweets = positiveTweets;
     }
 
-    public int getNegativeTweets() {
+    public Float getNegativeTweets() {
         return negativeTweets;
     }
 
-    public void setNegativeTweets(int negativeTweets) {
+    public void setNegativeTweets(Float negativeTweets) {
         this.negativeTweets = negativeTweets;
     }
 

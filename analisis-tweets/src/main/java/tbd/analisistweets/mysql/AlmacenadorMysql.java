@@ -7,10 +7,8 @@ import java.sql.SQLException;
 
 public class AlmacenadorMysql {
     public void insertarEstadistica(String artista, Float positivos, Float negativos, Integer totales){
-        System.out.println("Porcentaje:");
-        System.out.println(positivos);
-        System.out.println(negativos);
-        
+
+        System.out.println("Ingresando estadisticas de: "+artista);
         Connection connection = null;
         //TODO: cambiar según nombre de la base de datos
         String username = "root";
