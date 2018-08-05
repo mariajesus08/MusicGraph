@@ -22,6 +22,7 @@ public class UserStatisticService {
     private UserStatisticRepository UserStatisticRepository ;
 
    
+    
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
