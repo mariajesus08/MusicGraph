@@ -21,7 +21,12 @@ public class UserStatistic {
     private int retweets ;
     @Column(name = "followers")
     private int followers;
+    @Column(name = "last_tweet")
     private String last_tweet;
+    @Column(name = "verified")
+    private int verified;
+    @Column(name = "relevant")
+    private int relevant;
     private Date date;
 
 
@@ -40,7 +45,20 @@ public class UserStatistic {
     public void setName(String name) {
         this.name = name;
     }
+    public int getRelevant() {
+        return retweets;
+    }
 
+    public void setRelevant(int relevant) {
+        this.relevant = relevant;
+    }
+    public int getVerified() {
+        return retweets;
+    }
+
+    public void setVerified(int verified) {
+        this.verified = verified;
+    }
     public int getRetweets() {
         return retweets;
     }
