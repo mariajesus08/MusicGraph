@@ -1,6 +1,8 @@
 package tbd.restapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.neo4j.ogm.annotation.NodeEntity;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -15,17 +17,14 @@ public class Artist {
 
     private String name;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_genre", nullable = false)
     @JsonIgnore
     private Genre genre;
 
-
-
-
     @OneToMany(mappedBy = "artist")
     private List<Statistic> statistic;
+
 
 
     public Genre getGenre(){
