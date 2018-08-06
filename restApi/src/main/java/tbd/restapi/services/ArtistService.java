@@ -17,7 +17,7 @@ public class ArtistService {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<Artist> getAllArtists(){
+    public Iterable<Artist> getAllArtists(){
         return this.artistRepository.findAll();
     }
     @CrossOrigin

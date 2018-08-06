@@ -17,6 +17,10 @@ public class Artist {
 
     private String name;
 
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_genre", nullable = false)
     @JsonIgnore
