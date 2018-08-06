@@ -125,7 +125,34 @@ public class UserStatisticService {
     @ResponseBody
     public List<Map<String, String>> getRelationsGraph() {
         List<Map<String, String>> out = new ArrayList<>();
-        List<UserStatistic> userStatistics = UserStatisticRepository.findAll();
+        Connection connection = null;
+        String username = "root";
+        String password = "secret1234";
+        String host = "jdbc:mysql://165.227.12.119:3306/";
+        String db_name = "musicgraphdb?useSSL=false";
+        List<UserStatistic> userStatistics = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(host + db_name, username, password);
+            String query = "SELECT name, retweets, followers, lastTweet, date, artist, verified, relevant FROM userStatistics";
+            java.sql.Statement st = connection.createStatement();
+            ResultSet resultset = st.executeQuery(query);
+            while (resultset.next()) {
+                UserStatistic userStatistic = new UserStatistic();
+                userStatistic.setName(resultset.getString("name"));
+                userStatistic.setRetweets(resultset.getInt("retweets"));
+                userStatistic.setFollowers(resultset.getInt("followers"));
+                userStatistic.setLast_tweet(resultset.getString("lastTweet"));
+                userStatistic.setDate(resultset.getDate("date"));
+                userStatistic.setArtist(resultset.getString("artist"));
+                userStatistic.setVerified(resultset.getInt("verified"));
+                //userStatistic.setRelevant(resultset.getInt("relevant"));
+                userStatistic.relevant = resultset.getInt("relevant");
+                userStatistics.add(userStatistic);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
      /*   List<UserStatistic> userStatistics = new ArrayList<>();
         UserStatistic u = new UserStatistic();
         u.setName("pepe_23");
