@@ -40,16 +40,26 @@ public class Neo4j {
         }
 
         List<UserStatistic> userStatistics = new ArrayList<>();
-        UserStatistic uno = new UserStatistic();
-        uno.setId(1);
-        uno.setName("pepe_hola");
-        uno.setRetweets(1000);
-        uno.setDate(new Date());
-        uno.setLast_tweet("Me gusta la cancion de Maluma");
-        uno.setRelevant(1);
-        uno.setVerified(2);
-        uno.setArtist("Maluma");
-        userStatistics.add(uno);
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(host + db_name, username, password);
+            String query = "SELECT name, retweets, followers, lastTweet, date, artist FROM userStatistics";
+            Statement st = connection.createStatement();
+            ResultSet resultset = st.executeQuery(query);
+            while (resultset.next()) {
+                UserStatistic userStatistic = new UserStatistic();
+                userStatistic.setName(resultset.getString("name"));
+                userStatistic.setRetweets(resultset.getInt("retweets"));
+                userStatistic.setFollowers(resultset.getInt("followers"));
+                userStatistic.setLast_tweet(resultset.getString("lastTweet"));
+                userStatistic.setDate(resultset.getDate("date"));
+                userStatistic.setArtist(resultset.getString("artist"));
+                userStatistics.add(userStatistic);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
         Driver driver = GraphDatabase.driver("bolt://165.227.12.119:7687", AuthTokens.basic("neo4j", "root123"));
         Session session = driver.session();
         session.run("match (a)-[r]->(b) delete r");
@@ -75,7 +85,6 @@ public class Neo4j {
         for(UserStatistic userStatistic : userStatistics) {
             String nombreUsuario = userStatistic.getName();
             String nombreArtista = userStatistic.getArtist();
-            System.out.println(nombreArtista);
             nombreArtista = nombreArtista.replace("'", "");
             session.run("match (u:User) where u.name='"+ nombreUsuario+ "' "
                     + "  match (a:Artist) where a.name='" + nombreArtista + "' "
