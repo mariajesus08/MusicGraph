@@ -64,7 +64,7 @@ public class UserStatisticService {
         u.setRelevant(1);
         u.setFollowers(200);
         u.setId(1);
-
+        userStatistics.add(u);
         for(UserStatistic userStatistic : userStatistics){
             HashMap<String, String> map = new HashMap<>();
             map.put("tipo", "user");
@@ -74,18 +74,18 @@ public class UserStatisticService {
             map.put("lastTweet", userStatistic.geLast_tweet());
             map.put("size", Integer.toString(userStatistic.getRelevant()));
             out.add(map);
-            for(String artista : artistas) {
-                if (artista == userStatistic.getArtist())
+          //  for(String artista : artistas) {
+            //    if (artista == userStatistic.getArtist())
                     ;
-                else {
+              //  else {
                     HashMap<String, String> map2 = new HashMap<>();
                     map2.put("tipo", "artist");
                     map2.put("name", userStatistic.getArtist());
                     map2.put("genre", artistRepository.findFirstArtistByName(userStatistic.getArtist()).getGenre().getName());
                     map2.put("size", "10");
                     out.add(map2);
-                }
-            }
+               // }
+          //  }
         }
         return out;
     }
@@ -106,6 +106,7 @@ public class UserStatisticService {
         u.setRelevant(1);
         u.setFollowers(200);
         u.setId(1);
+        userStatistics.add(u);
         for (UserStatistic userStatistic : userStatistics) {
             HashMap<String, String> map = new HashMap<>();
             map.put("source", userStatistic.getName());
