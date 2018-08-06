@@ -48,6 +48,7 @@ public class Neo4j {
         uno.setLast_tweet("Me gusta la cancion de Maluma");
         uno.setRelevant(1);
         uno.setVerified(2);
+        uno.setArtist("Maluma");
         userStatistics.add(uno);
         Driver driver = GraphDatabase.driver("bolt://165.227.12.119:7687", AuthTokens.basic("neo4j", "root123"));
         Session session = driver.session();
@@ -61,6 +62,7 @@ public class Neo4j {
                     + ", verified:\""+ userStatistic.getVerified() +"\""
                     + ", relevant:\""+ userStatistic.getRelevant() +"\""
                     + ", date:\""+ userStatistic.getDate() +"\""
+                    + ", artist:\""+ userStatistic.getArtist() +"\""
                     + "})");
         }
 
@@ -70,6 +72,15 @@ public class Neo4j {
                     "})");
         }
 
+        for(UserStatistic userStatistic : userStatistics) {
+            String nombreUsuario = userStatistic.getName();
+            String nombreArtista = userStatistic.getArtist();
+            System.out.println(nombreArtista);
+            nombreArtista = nombreArtista.replace("'", "");
+            session.run("match (u:User) where u.name='"+ nombreUsuario+ "' "
+                    + "  match (a:Artist) where a.name='" + nombreArtista + "' "
+                    + "  create (u)-[r:comenta]->(a)");
+        }
         session.close();
         driver.close();
     }
