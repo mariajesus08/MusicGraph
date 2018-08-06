@@ -6,7 +6,8 @@ import java.awt.Stroke;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
+
 import org.springframework.web.bind.annotation.*;
 import tbd.restapi.models.Artist;
 import tbd.restapi.models.Statistic;
@@ -14,10 +15,6 @@ import tbd.restapi.models.UserStatistic;
 import tbd.restapi.repositories.ArtistRepository;
 import tbd.restapi.repositories.UserStatisticRepository;
 import org.springframework.data.domain.Sort;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.neo4j.driver.v1.*;
 import org.neo4j.driver.v1.Driver;
@@ -56,7 +53,18 @@ public class UserStatisticService {
     public List<Map<String, String>> getNodesGraph() {
         List<Map<String, String>> out = new ArrayList<>();
         List<String> artistas = new ArrayList<>();
-        List<UserStatistic> userStatistics = UserStatisticRepository.findAll();
+       // List<UserStatistic> userStatistics = UserStatisticRepository.findAll();
+        List<UserStatistic> userStatistics = new ArrayList<>();
+        UserStatistic u = new UserStatistic();
+        u.setName("pepe_23");
+        u.setArtist("Maluma");
+        u.setDate(new Date());
+        u.setLast_tweet("Me gusta la cancion de Maluma");
+        u.setVerified(2);
+        u.setRelevant(1);
+        u.setFollowers(200);
+        u.setId(1);
+
         for(UserStatistic userStatistic : userStatistics){
             HashMap<String, String> map = new HashMap<>();
             map.put("tipo", "user");
@@ -64,7 +72,7 @@ public class UserStatisticService {
             map.put("retweets", Integer.toString(userStatistic.getRetweets()));
             map.put("followers", Integer.toString(userStatistic.getFollowers()));
             map.put("lastTweet", userStatistic.geLast_tweet());
-            map.put("size", "10");
+            map.put("size", Integer.toString(userStatistic.getRelevant()));
             out.add(map);
             for(String artista : artistas) {
                 if (artista == userStatistic.getArtist())
@@ -87,7 +95,17 @@ public class UserStatisticService {
     @ResponseBody
     public List<Map<String, String>> getRelationsGraph() {
         List<Map<String, String>> out = new ArrayList<>();
-        List<UserStatistic> userStatistics = UserStatisticRepository.findAll();
+        //List<UserStatistic> userStatistics = UserStatisticRepository.findAll();
+        List<UserStatistic> userStatistics = new ArrayList<>();
+        UserStatistic u = new UserStatistic();
+        u.setName("pepe_23");
+        u.setArtist("Maluma");
+        u.setDate(new Date());
+        u.setLast_tweet("Me gusta la cancion de Maluma");
+        u.setVerified(2);
+        u.setRelevant(1);
+        u.setFollowers(200);
+        u.setId(1);
         for (UserStatistic userStatistic : userStatistics) {
             HashMap<String, String> map = new HashMap<>();
             map.put("source", userStatistic.getName());

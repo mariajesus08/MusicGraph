@@ -20,6 +20,7 @@ public class UserStatistic {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
+    @Column(name = "name")
     private String name;
     @Column(name = "retweets")
     private int retweets ;
@@ -31,6 +32,7 @@ public class UserStatistic {
     private int verified;
     @Column(name = "relevant")
     private int relevant;
+    @Column(name = "date")
     private Date date;
     @Column(name = "artist")
     private String artist;
