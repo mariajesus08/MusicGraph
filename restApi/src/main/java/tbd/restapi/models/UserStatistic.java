@@ -29,13 +29,18 @@ public class UserStatistic {
     @Column(name = "last_tweet")
     private String last_tweet;
     @Column(name = "verified")
-    private int verified;
+    public int verified;
     @Column(name = "relevant")
-    private int relevant;
+    public int relevant;
     @Column(name = "date")
     private Date date;
     @Column(name = "artist")
     private String artist;
+
+    public UserStatistic() {
+        verified = 1;
+        relevant = 10;
+    }
 
     public String getArtist() {
         return artist;

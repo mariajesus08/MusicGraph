@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.awt.Stroke;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -52,24 +53,53 @@ public class UserStatisticService {
     @ResponseBody
     public List<Map<String, String>> getNodesGraph() {
         List<Map<String, String>> out = new ArrayList<>();
-        List<String> artistas = new ArrayList<>();
-       // List<UserStatistic> userStatistics = UserStatisticRepository.findAll();
-        List<UserStatistic> userStatistics = new ArrayList<>();
-        UserStatistic u = new UserStatistic();
+        //List<String> artistas = new ArrayList<>();
+        //List<UserStatistic> userStatistics ;
+        //= UserStatisticRepository.findAll();
+      //  List<UserStatistic> userStatistics = new ArrayList<>();
+       /* UserStatistic u = new UserStatistic();
         u.setName("pepe_23");
         u.setArtist("Maluma");
         u.setDate(new Date());
         u.setLast_tweet("Me gusta la cancion de Maluma");
         u.setVerified(2);
-        u.setRelevant(1);
+        u.setRelevant(10);
         u.setFollowers(200);
         u.setId(1);
-        userStatistics.add(u);
+        userStatistics.add(u);*/
+        Connection connection = null;
+        String username = "root";
+        String password = "secret1234";
+        String host = "jdbc:mysql://165.227.12.119:3306/";
+        String db_name = "musicgraphdb?useSSL=false";
+        List<UserStatistic> userStatistics = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(host + db_name, username, password);
+            String query = "SELECT name, retweets, followers, lastTweet, date, artist, verified, relevant FROM userStatistics";
+            java.sql.Statement st = connection.createStatement();
+            ResultSet resultset = st.executeQuery(query);
+            while (resultset.next()) {
+                UserStatistic userStatistic = new UserStatistic();
+                userStatistic.setName(resultset.getString("name"));
+                userStatistic.setRetweets(resultset.getInt("retweets"));
+                userStatistic.setFollowers(resultset.getInt("followers"));
+                userStatistic.setLast_tweet(resultset.getString("lastTweet"));
+                userStatistic.setDate(resultset.getDate("date"));
+                userStatistic.setArtist(resultset.getString("artist"));
+                userStatistic.setVerified(resultset.getInt("verified"));
+                //userStatistic.setRelevant(resultset.getInt("relevant"));
+                userStatistic.relevant = resultset.getInt("relevant");
+                userStatistics.add(userStatistic);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
         for(UserStatistic userStatistic : userStatistics){
             HashMap<String, String> map = new HashMap<>();
             map.put("tipo", "user");
             map.put("name", userStatistic.getName());
-            map.put("retweets", Integer.toString(userStatistic.getRetweets()));
+          //  map.put("retweets", Integer.toString(userStatistic.getRetweets()));
             map.put("followers", Integer.toString(userStatistic.getFollowers()));
             map.put("lastTweet", userStatistic.geLast_tweet());
             map.put("size", Integer.toString(userStatistic.getRelevant()));
@@ -95,8 +125,8 @@ public class UserStatisticService {
     @ResponseBody
     public List<Map<String, String>> getRelationsGraph() {
         List<Map<String, String>> out = new ArrayList<>();
-        //List<UserStatistic> userStatistics = UserStatisticRepository.findAll();
-        List<UserStatistic> userStatistics = new ArrayList<>();
+        List<UserStatistic> userStatistics = UserStatisticRepository.findAll();
+     /*   List<UserStatistic> userStatistics = new ArrayList<>();
         UserStatistic u = new UserStatistic();
         u.setName("pepe_23");
         u.setArtist("Maluma");
@@ -106,7 +136,7 @@ public class UserStatisticService {
         u.setRelevant(1);
         u.setFollowers(200);
         u.setId(1);
-        userStatistics.add(u);
+        userStatistics.add(u);*/
         for (UserStatistic userStatistic : userStatistics) {
             HashMap<String, String> map = new HashMap<>();
             map.put("source", userStatistic.getName());
