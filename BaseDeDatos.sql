@@ -947,3 +947,54 @@ INSERT INTO keywords (word) VALUES ("Ricardo Arjona");
 INSERT INTO keywords (word) VALUES ("Ricardo Montaner");
 INSERT INTO keywords (word) VALUES ("Sebastián Yatra");
 INSERT INTO keywords (word) VALUES ("Sin Bandera");
+
+
+
+INSERT INTO `userStatistics` ( `artist`, `followers`, `lastTweet`, `name`, `retweets`, `relevant`, `verified`)
+VALUES ( 'Drake', 312, 'Genial el nuevo album de Drake!', 'cleopatra12', 2, 6, 1 ),
+( 'Gorillaz', 125, 'The Not Now de Gorillaz, buenisimo', 'juanye', 12, 6, 1 ),
+( 'Post Malone', 243, 'Post Malone tremendo artista', 'ato_perrochico', 12, 6, 1 ),
+( 'Travis Scott', 12, 'Medio disco saco Travis Scott', 'auka12', 15, 6, 1 ),
+( 'Gorillaz', 76, 'Buen album el nuevo de Gorillaz', 'motero666', 22, 6, 1 ),
+( 'Queen', 1087, 'Faltan bandas buenas como Queen', 'sopadilla7', 28, 6, 1 ),
+( 'Michael Jackson', 1200, 'Michael Jackson el mejor artista de todos los tiempos', 'hectorgordofeo', 12, 6, 1 ),
+( 'Drake', 1476, 'temazos los de drake', 'malone91', 14, 6, 1 ),
+( 'Travis Scott', 47, 'no me gusto el album de travis Scott', 'durox88', 15, 6, 1 ),
+( 'Soda Stereo', 478, 'soda stereo la mejor banda latina', 'cifu43', 19, 6, 1 ),
+( 'Pink Floyd', 491, 'fumandome unos cañitos con pik floyd', 'chosi12', 12, 6, 1 ),
+( 'Nirvana', 691, 'escuchando Nirvana a toda raja', 'gon8', 21, 6, 1 ),
+( 'Led Zepellin', 191, 'aguante led zepellin', 'ulisesmota', 26, 6, 1 ),
+( 'Ariana Grande', 144, 'Ariana grande saco el medio tema', 'lddc', 28, 6, 1 ),
+( 'Justin Bieber', 446, 'Aguante Justin biever vieja', 'walterwhite99', 25, 6, 1 ),
+( 'Martin Garrix', 546, 'Martin Garrix lo mejor de la electronica', 'rapero3', 22, 6, 1 ),
+( 'Drake', 540, 'geniales los temas de drake', 'zhinge2', 13, 6, 1 ),
+( 'Nicky Minaj', 4980, 'Nicky Minaj tiene la media raja', 'durox78', 21, 6, 1 ),
+( 'Eminem', 3989, 'eminem el mejor rapero', 'suazo3', 26, 6, 1 ),
+( 'Bad Bunny', 7698, 'bad bunny terrible weno', 'conejo16', 24, 6, 1 ),
+( 'Metallica', 7392, 'ire a ver a metallica!', 'weed817', 29, 6, 1 ),
+( 'Iron Maiden', 6393, 'aca escuchando iron maiden', 'vodoo12', 21, 6, 1 ),
+( 'Oasis', 6393, 'oasis mi banda favorita!', 'dania20', 22, 6, 1 ),
+( 'Arctic Monkeys', 8393, 'aguanten los arctic monkeys', 'seba6', 12, 6, 1 ),
+( 'Ozuna', 393, 'ozuna medio temazo', 'roberto75', 13, 6, 1 ),
+( 'J Balvin', 638, 'J balvin el mejor artista de todos los tiempos', 'ruben2314', 18, 6, 1 ),
+( 'Maluma', 923, 'maluma sera gay?', 'adolfo654', 16, 6, 1 ),
+( 'Drake', 485, 'albumazo de drake', 'berlin1', 10, 6, 1 ),
+( 'Travis Scott', 918, 'Travis Scott buenisimo', 'chambea', 18, 6, 1 ),
+( 'Post Malone', 12, 'Sus chelitas y post malone', 'goro32', 19, 6, 1 ),
+( 'Selena Gomez', 184, 'Escuchando lo nuevo de selena gomez', 'freezer7', 29, 6, 1 ),
+( 'Cardi B', 583, 'Cardi B la lleva', 'arthas45678', 19, 6, 1 ),
+( 'Martin Garrix', 294, 'genial martin Garrix', 'guatonql', 18, 6, 1 ),
+( 'Arcangel', 193, 'Arcangel terrible maliante', 'sd643', 13, 6, 1 ),
+( 'Yandel', 182, 'excelente el tema de yandel', 'naranja81', 14, 6, 1 ),
+( 'Drake', 184, 'drake mi artista favorito', 'tiuque77', 19, 6, 1 ),
+( 'Justin Bieber', 184, 'Justin biever terrible bueno', 'sopero2', 29, 6, 1 ),
+( 'Jay Z', 173, 'escuchando Jay Z', 'conde87', 39, 6, 1 ),
+( 'Eminem', 1787, 'faltan temas como los de eminem', 'verdeazulnegro', 29, 6, 1 ),
+( 'Vicentico', 182, 'Vicentico tremendo artista', 'gorro32', 27, 6, 1 ),
+( 'Calvin Harris', 99, 'Temazos de calvin harris', 'mosca55', 21, 6, 1 ),
+( 'Dua Lipa', 121, 'dua lipa gran artista', 'camila76', 22, 6, 1 ),
+( 'Post Malone', 111, 'puta que es weno post malone', 'constanza8', 28, 6, 1 )
+;
+
+
+
