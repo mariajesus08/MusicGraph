@@ -1,14 +1,12 @@
 package tbd.restapi;
 
-import org.neo4j.driver.v1.AuthTokens;
+import org.neo4j.driver.v1.*;
 import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.GraphDatabase;
-import org.neo4j.driver.v1.Record;
-import org.neo4j.driver.v1.Session;
 import tbd.restapi.models.Artist;
 import tbd.restapi.models.UserStatistic;
 
 import java.sql.*;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +87,13 @@ public class Neo4j {
             session.run("match (u:User) where u.name='"+ nombreUsuario+ "' "
                     + "  match (a:Artist) where a.name='" + nombreArtista + "' "
                     + "  create (u)-[r:comenta]->(a)");
+        }
+
+        StatementResult result = session.run( "MATCH (n:Artist) RETURN n");
+        while ( result.hasNext() )
+        {
+            Record record = result.next();
+            System.out.println( record.get("name") );
         }
         session.close();
         driver.close();
