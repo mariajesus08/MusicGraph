@@ -42,10 +42,5 @@ public class UserStatisticService {
     public UserStatistic createUserStatistic(@RequestBody UserStatistic statistic){ return UserStatisticRepository.save(statistic); }
 
 
-    
-
-    
-
-
 }
 

@@ -4,9 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import javax.persistence.*;
 import java.util.*;
+
 
 @Entity
 @Table(name = "userStatistics")
@@ -28,7 +32,16 @@ public class UserStatistic {
     @Column(name = "relevant")
     private int relevant;
     private Date date;
+    @Column(name = "artist")
+    private String artist;
 
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
 
     public int getId() {
         return id;
