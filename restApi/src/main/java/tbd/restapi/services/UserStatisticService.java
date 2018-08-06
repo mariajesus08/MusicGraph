@@ -29,7 +29,7 @@ public class UserStatisticService {
 
     @Autowired
     private ArtistRepository artistRepository;
-    
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
@@ -56,7 +56,7 @@ public class UserStatisticService {
         //List<String> artistas = new ArrayList<>();
         //List<UserStatistic> userStatistics ;
         //= UserStatisticRepository.findAll();
-      //  List<UserStatistic> userStatistics = new ArrayList<>();
+        //  List<UserStatistic> userStatistics = new ArrayList<>();
        /* UserStatistic u = new UserStatistic();
         u.setName("pepe_23");
         u.setArtist("Maluma");
@@ -99,23 +99,23 @@ public class UserStatisticService {
             HashMap<String, String> map = new HashMap<>();
             map.put("tipo", "user");
             map.put("name", userStatistic.getName());
-          //  map.put("retweets", Integer.toString(userStatistic.getRetweets()));
+            //  map.put("retweets", Integer.toString(userStatistic.getRetweets()));
             map.put("followers", Integer.toString(userStatistic.getFollowers()));
             map.put("lastTweet", userStatistic.geLast_tweet());
             map.put("size", Integer.toString(userStatistic.getRelevant()));
             out.add(map);
-          //  for(String artista : artistas) {
+            //  for(String artista : artistas) {
             //    if (artista == userStatistic.getArtist())
-                    ;
-              //  else {
-                    HashMap<String, String> map2 = new HashMap<>();
-                    map2.put("tipo", "artist");
-                    map2.put("name", userStatistic.getArtist());
-                    map2.put("genre", artistRepository.findFirstArtistByName(userStatistic.getArtist()).getGenre().getName());
-                    map2.put("size", "10");
-                    out.add(map2);
-               // }
-          //  }
+            ;
+            //  else {
+            HashMap<String, String> map2 = new HashMap<>();
+            map2.put("tipo", "artist");
+            map2.put("name", userStatistic.getArtist());
+            map2.put("genre", artistRepository.findFirstArtistByName(userStatistic.getArtist()).getGenre().getName());
+            map2.put("size", "10");
+            out.add(map2);
+            // }
+            //  }
         }
         return out;
     }
