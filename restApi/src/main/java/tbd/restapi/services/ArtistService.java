@@ -14,12 +14,14 @@ import java.util.List;
 public class ArtistService {
     @Autowired
     private ArtistRepository artistRepository;
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Iterable<Artist> getAllArtists(){
-        return this.artistRepository.findAll();
+    public List<Artist> getAllArtists(){
+        return this.artistRepository.getAllByOrderByNameAsc();
     }
+
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -34,7 +36,6 @@ public class ArtistService {
     public String getGenreArtist(@PathVariable String name)
     {
         Artist artista = artistRepository.findFirstArtistByName(name);
-
         return artista.getGenre().getName();
     }
 
@@ -46,6 +47,15 @@ public class ArtistService {
         return artistRepository.save(artist);
 
     }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteArtist(@RequestBody String name){
+        artistRepository.deleteArtistsByName(name);
+    }
+
+
 
 }
 
