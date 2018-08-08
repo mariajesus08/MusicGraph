@@ -3,9 +3,9 @@ package tbd.restapi.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "admins")
 
-public class User {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

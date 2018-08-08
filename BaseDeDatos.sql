@@ -5,9 +5,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 USE `musicgraphdb` ;
 
 
-DROP TABLE IF EXISTS `users` ;
+DROP TABLE IF EXISTS `admins` ;
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE IF NOT EXISTS `admins` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) ,
@@ -83,7 +83,7 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-INSERT INTO users (name, password, email, is_active) VALUES ("admin", "tbd", "admin@usach.cl", 1);
+INSERT INTO admins (name, password, email, is_active) VALUES ("admin", "tbd", "admin@usach.cl", 1);
 
 INSERT INTO genres (name) VALUES ("Rock");
 INSERT INTO genres (name) VALUES ("Metal");
