@@ -78,6 +78,59 @@ CREATE TABLE IF NOT EXISTS `user_statistics` (
   references artists(`id`)
   );
 
+DROP TABLE IF EXISTS `influyent_user` ;
+
+CREATE TABLE IF NOT EXISTS `influyent_user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `followers` INT NULL,
+  PRIMARY KEY(`id`)
+  );
+
+DROP TABLE IF EXISTS `common_user` ;
+
+CREATE TABLE IF NOT EXISTS `common_user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `id_influyent_user` INT NULL,
+  PRIMARY KEY(`id`),
+  FOREIGN KEY (`id_influyent_user`)
+  references influyent_user(`id`)
+  );
+
+DROP TABLE IF EXISTS `influyent_user_artist` ;
+
+CREATE TABLE IF NOT EXISTS `influyent_user_artist` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `last_tweet` VARCHAR(255) NULL,
+  `retweets` INT NULL,
+  `date` TIMESTAMP NULL,
+  `id_influyent_user` INT NULL,
+  `id_artist` INT NULL,
+  PRIMARY KEY(`id`),
+  FOREIGN KEY (`id_influyent_user`)
+  references influyent_user(`id`),
+  FOREIGN KEY (`id_artist`)
+  REFERENCES artists(`id`)
+  );
+
+DROP TABLE IF EXISTS `common_user_artist` ;
+
+CREATE TABLE IF NOT EXISTS `common_user_artist` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `last_tweet` VARCHAR(255) NULL,
+  `retweets` INT NULL,
+  `date` TIMESTAMP NULL,
+  `id_common_user` INT NULL,
+  `id_artist` INT NULL,
+  PRIMARY KEY(`id`),
+  FOREIGN KEY (`id_common_user`)
+  references common_user(`id`),
+  FOREIGN KEY (`id_artist`)
+  REFERENCES artists(`id`)
+  );
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
