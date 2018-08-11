@@ -31,6 +31,14 @@ public class ArtistService {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+    @ResponseBody
+    public Artist getArtist(@PathVariable String name)
+    {
+        return artistRepository.findArtistByName(name);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/getGenre/{name}", method = RequestMethod.GET)
     @ResponseBody
     public String getGenreArtist(@PathVariable String name)
@@ -39,6 +47,8 @@ public class ArtistService {
         return artista.getGenre().getName();
     }
 
+
+   
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody

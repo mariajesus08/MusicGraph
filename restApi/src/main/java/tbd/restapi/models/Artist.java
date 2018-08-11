@@ -56,7 +56,7 @@ public class Artist {
         return this.genre;
     }
     public List<Statistic> getStatistic() {
-        return statistic;
+        return this.statistic;
     }
 
     public void setStatistic(List<Statistic> statistic) {

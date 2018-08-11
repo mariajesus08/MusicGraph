@@ -44,19 +44,27 @@ public class StatisticService {
     {
         return statisticRepository.findStatisticById(id);
     }
+    
     @CrossOrigin
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public Statistic getUser(@PathVariable String name)
-    {
-        return statisticRepository.findStatisticByName(name);
+    public Map<String,Object> createStatistic(@RequestBody Statistic statistic){
+        Map<String,Object> response = new HashMap<>();
+        if(this.artistRepository.findArtistByName(statistic.getName())== null){
+            response.put("Error", "No se encontro el artista");
+            return response;
+        }
+        response.put("Status", "Se ha agregado la estadistica");
+        statistic.setArtist(this.artistRepository.findArtistByName(statistic.getName()));
+        statistic.setGenre(this.artistRepository.findArtistByName(statistic.getName()).getGenre());
+        System.out.println(statistic);
+        this.artistRepository.findArtistByName(statistic.getName()).getStatistic().add(statistic);
+        this.statisticRepository.save(statistic);
+        return response;
+
     }
-    @CrossOrigin
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseBody
-    public Statistic createStatistic(@RequestBody Statistic statistic){ 
-        return statisticRepository.save(statistic); 
-    }
+
+   
 
 
     @CrossOrigin

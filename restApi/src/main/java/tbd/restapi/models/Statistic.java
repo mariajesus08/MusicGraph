@@ -13,8 +13,8 @@ import java.util.*;
 
 public class Statistic {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private int id;
     private String name;
     @Column(name = "positive_tweets")

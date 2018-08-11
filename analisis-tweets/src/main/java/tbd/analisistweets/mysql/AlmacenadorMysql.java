@@ -25,8 +25,8 @@ public class AlmacenadorMysql {
         
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
-            HttpGet httpget = new HttpGet("http://165.227.12.119:9091/statistics/");
-
+            HttpPost httpPost = new HttpPost("http://165.227.12.119:9091/statistics/create");
+ 
             System.out.println("Executing request " + httpget.getRequestLine());
 
             // Create a custom response handler
