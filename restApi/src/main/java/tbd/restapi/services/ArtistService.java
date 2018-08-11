@@ -28,7 +28,12 @@ public class ArtistService {
     public Statistic getArtistStatistic(@PathVariable int id)
     {
         Artist artista = artistRepository.findArtistById(id);
-        Statistic estadistica = artista.getStatistic().get(artista.getStatistic().size()-1);
+        Statistic estadistica = new Statistic();
+        if(artista.getStatistic().size()>0){
+            estadistica = artista.getStatistic().get(artista.getStatistic().size()-1);
+        } else {
+            estadistica = null;
+        }
         return estadistica;
     }
     @CrossOrigin

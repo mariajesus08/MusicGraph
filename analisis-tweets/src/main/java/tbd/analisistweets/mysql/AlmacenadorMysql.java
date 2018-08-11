@@ -87,7 +87,7 @@ public class AlmacenadorMysql {
         .build();
         String idArtista = Integer.toString(id);
         try {
-            HttpGet httpget = new HttpGet("http://165.227.12.119:9091/artists/"+idArtista);
+            HttpGet httpget = new HttpGet("http://165.227.12.119:9091/artists/lastStatistic/"+idArtista);
 
 
             // Create a custom response handler

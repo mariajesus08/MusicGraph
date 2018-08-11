@@ -198,7 +198,6 @@ INSERT INTO artists (name, id_genre) VALUES ("Alice In Chains", 2);
 INSERT INTO artists (name, id_genre) VALUES ("Ghost", 2);
 INSERT INTO artists (name, id_genre) VALUES ("Bullet For My Valentine", 2);
 INSERT INTO artists (name, id_genre) VALUES ("Shinedown", 2);
-INSERT INTO artists (name, id_genre) VALUES ("Marilyn Manson", 2);
 
 
 INSERT INTO artists (name, id_genre) VALUES ("Sex pistols", 3);
@@ -639,7 +638,6 @@ INSERT INTO keywords (word) VALUES ("Alice In Chains");
 INSERT INTO keywords (word) VALUES ("Ghost");
 INSERT INTO keywords (word) VALUES ("Bullet For My Valentine");
 INSERT INTO keywords (word) VALUES ("Shinedown");
-INSERT INTO keywords (word) VALUES ("Marilyn Manson");
 INSERT INTO keywords (word) VALUES ("Sex pistols");
 INSERT INTO keywords (word) VALUES ("Ramones");
 INSERT INTO keywords (word) VALUES ("The clash");
