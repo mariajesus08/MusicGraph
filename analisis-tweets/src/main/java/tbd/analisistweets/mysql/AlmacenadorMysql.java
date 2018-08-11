@@ -23,29 +23,35 @@ import org.apache.http.util.EntityUtils;
 public class AlmacenadorMysql {
     public void insertarEstadistica(String artista, List<String> nombreTweeteros,List<String> lastestTweets,List<Integer> followersCount,List<Integer> retweetsCount, Float positivos, Float negativos, Integer totales) throws Exception{
         
+
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://165.227.12.119:9091/statistics/");
+        HttpResponse response = client.execute(request);
+
+        // Get the response
+        BufferedReader rd = new BufferedReader
+            (new InputStreamReader(
+            response.getEntity().getContent()));
+
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            textView.append(line);
+        }
+
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
             HttpPost httpPost = new HttpPost("http://165.227.12.119:9091/statistics/create");
  
-            System.out.println("Executing request " + httpget.getRequestLine());
-
-            // Create a custom response handler
-            ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-                @Override
-                public String handleResponse(
-                        final HttpResponse response) throws ClientProtocolException, IOException {
-                    int status = response.getStatusLine().getStatusCode();
-                    if (status >= 200 && status < 300) {
-                        HttpEntity entity = response.getEntity();
-                        return entity != null ? EntityUtils.toString(entity) : null;
-                    } else {
-                        throw new ClientProtocolException("Unexpected response status: " + status);
-                    }
-                }
-            };
-            String responseBody = httpclient.execute(httpget, responseHandler);
-            System.out.println("----------------------------------------");
-            System.out.println(responseBody);
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("name", artista));
+            params.add(new BasicNameValuePair("positiveTweets", positivos));
+            params.add(new BasicNameValuePair("negativeTweets", negativos));
+            params.add(new BasicNameValuePair("total_tweets", total_tweets));
+            httpPost.setEntity(new UrlEncodedFormEntity(params));
+         
+            CloseableHttpResponse response = client.execute(httpPost);
+            assertThat(response.getStatusLine().getStatusCode(), equalTo(200));
+            client.close();
         } finally {
             httpclient.close();
         }
