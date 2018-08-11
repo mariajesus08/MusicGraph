@@ -83,9 +83,7 @@ public class AlmacenadorMysql {
         CloseableHttpClient httpclient = HttpClientBuilder.create()
         .setDefaultCredentialsProvider(provider)
         .build();
-        System.out.println(artista);
         String idArtista = Integer.toString(id);
-        System.out.println(idArtista);
         try {
             HttpGet httpget = new HttpGet("http://165.227.12.119:9091/artists/lastStatistic/"+idArtista);
 
@@ -129,22 +127,38 @@ public class AlmacenadorMysql {
             
             for(int i = 0; i<nombreTweeteros.size(); i++){
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
-                String nombreAux = nombreTweeteros.get(i);
-                int retweets = retweetsCount.get(i);
-                String lastTweet = lastestTweets.get(i);
-                if(relevancia>200000){
-                    
-                } else {
+
+                if(relevancia<200000){
                     HttpPost httpPostCommonUser = new HttpPost("http://165.227.12.119:9091/CommonUser/create");
-                    httpPost.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+                    httpPostCommonUser.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
                     Map<String,String> params2 = new HashMap<>(); 
-                    params.put("name", nombreTweeteros.get(i));
-                    StringEntity se2 = new StringEntity(jsonMap.toString(), "UTF-8");
-                    httpPost.setEntity(se2);
+                    params2.put("name", nombreTweeteros.get(i));
+                    params2.put("followers", String.valueOf(followersCount.get(i)));
+                    String jsonMap2 = new Gson().toJson(params2);
+                    StringEntity se2 = new StringEntity(jsonMap2.toString(), "UTF-8");
+                    httpPostCommonUser.setEntity(se2);
                     
                     String responseBody2 = httpclient.execute(httpPostCommonUser, responseHandler);
                     
-                }            
+                }          
+            }
+
+            for(int i = 0; i<nombreTweeteros.size(); i++){
+                int relevancia = followersCount.get(i)+retweetsCount.get(i);
+ 
+                if(relevancia>200000){
+                    HttpPost httpPostInfluyentUser = new HttpPost("http://165.227.12.119:9091/InfluyentUser/create");
+                    httpPostInfluyentUser.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+                    Map<String,String> params3 = new HashMap<>(); 
+                    params3.put("name", nombreTweeteros.get(i));
+                    params3.put("followers", String.valueOf(followersCount.get(i)));
+                    String jsonMap3 = new Gson().toJson(params3);
+                    StringEntity se3 = new StringEntity(jsonMap3.toString(), "UTF-8");
+                    httpPostInfluyentUser.setEntity(se3);
+                    
+                    String responseBody2 = httpclient.execute(httpPostInfluyentUser, responseHandler);
+                    
+                }          
             }
         } finally {
             httpclient.close();

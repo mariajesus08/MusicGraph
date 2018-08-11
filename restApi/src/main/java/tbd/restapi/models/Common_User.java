@@ -17,6 +17,8 @@ public class Common_User {
 
     private String name;
 
+    @Column(name = "followers")
+    private int followers;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_influyent_user", nullable = false)
@@ -49,6 +51,14 @@ public class Common_User {
 
     public String getName() {
         return name;
+    }
+
+    public int getFollowers(){
+        return this.followers;
+    }
+
+    public void setFollowers(int followers){
+        this.followers = followers; 
     }
 }
 
