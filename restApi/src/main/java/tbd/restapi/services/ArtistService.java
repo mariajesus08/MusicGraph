@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tbd.restapi.models.Artist;
 import tbd.restapi.models.Genre;
+import tbd.restapi.models.Statistic;
 import tbd.restapi.repositories.ArtistRepository;
 
 import java.util.List;
@@ -21,7 +22,15 @@ public class ArtistService {
     public List<Artist> getAllArtists(){
         return this.artistRepository.getAllByOrderByNameAsc();
     }
-
+    @CrossOrigin
+    @RequestMapping(value = "lastStatistic/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Statistic getArtistStatistic(@PathVariable int id)
+    {
+        Artist artista = artistRepository.findArtistById(id);
+        Statistic estadistica = artista.getStatistic().get(artista.getStatistic().size()-1);
+        return estadistica;
+    }
     @CrossOrigin
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody

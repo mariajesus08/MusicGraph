@@ -32,6 +32,7 @@ dependencies {
     compile group: 'commons-io',name: 'commons-io',version: '2.5'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
     compile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.6'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
     compile group: 'org.apache.lucene', name: 'lucene-core', version: '7.0.1'
     compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.0.1'
     compile group: 'org.apache.lucene', name: 'lucene-codecs', version: '7.0.1'

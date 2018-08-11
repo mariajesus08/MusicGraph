@@ -38,15 +38,15 @@ public class AnalisisArtista {
         }catch (SQLException e) {
             e.printStackTrace();
         }
-
+        int aux = 1;
         for(String artista: palabras){
             Buscador buscador = new Buscador();
             buscador.buscarArtista(artista);
             buscador.obtenerValoracionArtista();
             AlmacenadorMysql almacenadorMysql = new AlmacenadorMysql();
-            almacenadorMysql.insertarEstadistica(artista, buscador.getTweetersName(),buscador.getLastestTweets(),buscador.getFollowersCount(),buscador.getRetweetsCount(), buscador.getNroComentariosPositivos(),
+            almacenadorMysql.insertarEstadistica(aux, artista, buscador.getTweetersName(),buscador.getLastestTweets(),buscador.getFollowersCount(),buscador.getRetweetsCount(), buscador.getNroComentariosPositivos(),
             buscador.getNroComentariosNegativos(), buscador.getCantidadComentarios());
-
+            
         }
 
         System.out.println("Finalizó análisis de tweets");
