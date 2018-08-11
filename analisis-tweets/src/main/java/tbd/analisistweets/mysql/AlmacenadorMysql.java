@@ -42,21 +42,19 @@ public class AlmacenadorMysql {
     
 
     public void insertarEstadistica(int id, String artista, List<String> nombreTweeteros,List<String> lastestTweets,List<Integer> followersCount,List<Integer> retweetsCount, Float positivos, Float negativos, Integer totales) throws Exception{
-        /*if((artista.equals("Guachupé"))||(artista.equals("Jack Ü"))||(artista.equals("Beyoncé"))||(artista.equals("Till Brönner"))||(artista.equals("Marilyn Manson"))||(artista.equals("Florence + The Machine"))||(artista.equals("The Killers"))){
-            return;
-        }*/
+        
         System.out.println("Ingresando estadisticas de: "+artista);
-        if(artista.equals("Shawn Mendes")){
-            System.out.println("** Artista N°100, quedan 295 **");
+        if(id == 100){
+            System.out.println("** Artista N°100, quedan 288 **");
         }
-        if(artista.equals("Ray Charles")){
-            System.out.println("** Artista N°200, quedan 195 **");
+        if(id == 200){
+            System.out.println("** Artista N°200, quedan 288 **");
         }
-        if(artista.equals("Inna de Yard")){
-            System.out.println("** Artista N°300, quedan 95 **");
+        if(id == 300){
+            System.out.println("** Artista N°300, quedan 88 **");
         }
-        if(artista.equals("La India")){
-            System.out.println("** Artista N°350, quedan 45 **");
+        if(id == 350){
+            System.out.println("** Artista N°350, quedan 38 **");
         }
 
         CredentialsProvider provider = new BasicCredentialsProvider();
@@ -85,39 +83,37 @@ public class AlmacenadorMysql {
         CloseableHttpClient httpclient = HttpClientBuilder.create()
         .setDefaultCredentialsProvider(provider)
         .build();
+        System.out.println(artista);
         String idArtista = Integer.toString(id);
+        System.out.println(idArtista);
         try {
             HttpGet httpget = new HttpGet("http://165.227.12.119:9091/artists/lastStatistic/"+idArtista);
 
 
             // Create a custom response handler
            
-            String responseBody = httpclient.execute(httpget, responseHandler);
-            if(responseBody.isEmpty()){
+            String responseBodyGet = httpclient.execute(httpget, responseHandler);
+            if(responseBodyGet.isEmpty()){
                 tweetsTotales = 0;
                 tweetsPositivos = 0.5f;
                 tweetsNegativos = 0.5f;
             } else {
                 Gson gson = new GsonBuilder().create();
-                Statistic p = gson.fromJson(responseBody, Statistic.class);
+                Statistic p = gson.fromJson(responseBodyGet, Statistic.class);
                 tweetsTotales = p.getTotal_tweets();
                 tweetsPositivos = p.getPositiveTweets();
                 tweetsNegativos = p.getNegativeTweets();
             }
             
-        } finally {
-        }
-        tweetsTotales = totales+tweetsTotales;
-        if(positivos != 0f){
-            tweetsPositivos = (positivos+tweetsPositivos)/2;
-        }
-        if(negativos != 0f){
-            tweetsNegativos = (negativos+tweetsNegativos)/2;
-        }
-        
-
-        /*
-        try {
+            
+            tweetsTotales = totales+tweetsTotales;
+            if(positivos != 0f){
+                tweetsPositivos = (positivos+tweetsPositivos)/2;
+            }
+            if(negativos != 0f){
+                tweetsNegativos = (negativos+tweetsNegativos)/2;
+            }
+            
             HttpPost httpPost = new HttpPost("http://165.227.12.119:9091/statistics/create");
             httpPost.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
             Map<String,String> params = new HashMap<>(); 
@@ -126,15 +122,35 @@ public class AlmacenadorMysql {
             params.put("negativeTweets", String.valueOf(tweetsNegativos));
             params.put("total_tweets", String.valueOf(tweetsTotales));
             String jsonMap = new Gson().toJson(params);
-            StringEntity se = new StringEntity(jsonMap.toString());
+            StringEntity se = new StringEntity(jsonMap.toString(), "UTF-8");
             httpPost.setEntity(se);
-         
+            
             String responseBody = httpclient.execute(httpPost, responseHandler);
+            
+            for(int i = 0; i<nombreTweeteros.size(); i++){
+                int relevancia = followersCount.get(i)+retweetsCount.get(i);
+                String nombreAux = nombreTweeteros.get(i);
+                int retweets = retweetsCount.get(i);
+                String lastTweet = lastestTweets.get(i);
+                if(relevancia>200000){
+                    
+                } else {
+                    HttpPost httpPostCommonUser = new HttpPost("http://165.227.12.119:9091/CommonUser/create");
+                    httpPost.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+                    Map<String,String> params2 = new HashMap<>(); 
+                    params.put("name", nombreTweeteros.get(i));
+                    StringEntity se2 = new StringEntity(jsonMap.toString(), "UTF-8");
+                    httpPost.setEntity(se2);
+                    
+                    String responseBody2 = httpclient.execute(httpPostCommonUser, responseHandler);
+                    
+                }            
+            }
         } finally {
             httpclient.close();
         }
-        */
-        httpclient.close();
+        
+        
         
         
     }

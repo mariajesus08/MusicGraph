@@ -7,7 +7,9 @@ import tbd.restapi.models.Common_User;
 import tbd.restapi.models.Influyent_User;
 import tbd.restapi.repositories.CommonUserRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/CommonUser")
@@ -42,11 +44,21 @@ public class CommonUserService {
     
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public Common_User createCommonUser(@RequestBody Common_User commonUser){
+    public Map<String,Object> createCommonUser(@RequestBody Common_User commonUser){
 
-        return commonUserRepository.save(commonUser);
+        Map<String,Object> response = new HashMap<>();
+        if(this.commonUserRepository.findFirstCommon_UserByName(commonUser.getName())==null){
+            response.put("Status", "Se debe crear influyent user");
+            this.commonUserRepository.save(commonUser);
+           
+        } else {
+            response.put("Status", "Se debe actualizar influyent user");
+        }
+        
+        return response;
+
 
     }
 

@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tbd.restapi.models.Influyent_User;
 import tbd.restapi.models.Common_User;
+import tbd.restapi.repositories.CommonUserRepository;
 import tbd.restapi.repositories.InfluyentUserRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/InfluyentUser")
@@ -14,6 +17,7 @@ import java.util.List;
 public class InfluyentUserService {
     @Autowired
     private InfluyentUserRepository incfluyentUserRepository;
+    private CommonUserRepository commonUserRepository;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
@@ -41,11 +45,25 @@ public class InfluyentUserService {
     
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public Influyent_User createInfluyentUser(@RequestBody Influyent_User commonUser){
+    public Map<String,Object> createInfluyentUser(@RequestBody Influyent_User influyentUser){
 
-        return incfluyentUserRepository.save(commonUser);
+        Map<String,Object> response = new HashMap<>();
+        if(this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName())==null){
+            response.put("Status", "Se debe crear influyent user");
+            this.incfluyentUserRepository.save(influyentUser);
+            
+        }
+        for(Common_User usuariosComunes: influyentUser.getCommonUsers()){
+            this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName()).getCommonUsers().
+            add(this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()));
+            this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()).setInfluyentUser(influyentUser);
+            
+        }
+        
+        return response;
+
 
     }
 
