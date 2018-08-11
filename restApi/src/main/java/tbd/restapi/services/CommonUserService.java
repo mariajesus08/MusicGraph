@@ -26,7 +26,7 @@ public class CommonUserService {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
     @ResponseBody
     public Common_User getCommonUser(@PathVariable String name)
     {
@@ -51,11 +51,11 @@ public class CommonUserService {
 
         Map<String,Object> response = new HashMap<>();
         if(this.commonUserRepository.findFirstCommon_UserByName(commonUser.getName())==null){
-            response.put("Status", "Se debe crear influyent user");
+            response.put("Status", "Se debe crear common user");
             this.commonUserRepository.save(commonUser);
            
         } else {
-            response.put("Status", "Se debe actualizar influyent user");
+            response.put("Status", "Se debe actualizar common user");
         }
         
         return response;

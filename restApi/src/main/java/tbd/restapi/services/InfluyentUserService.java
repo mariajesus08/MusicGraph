@@ -18,6 +18,7 @@ public class InfluyentUserService {
     @Autowired
     private InfluyentUserRepository incfluyentUserRepository;
     private CommonUserRepository commonUserRepository;
+    private CommonUserService commonUserService;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
@@ -50,26 +51,24 @@ public class InfluyentUserService {
     public Map<String,Object> createInfluyentUser(@RequestBody Influyent_User influyentUser){
         Map<String,Object> response = new HashMap<>();
         if(this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName())==null){
-            response.put("Status", "Se debe crear influyent user");
             this.incfluyentUserRepository.save(influyentUser);
             
         }
         if(influyentUser.getCommonUsers()!= null){
             if(this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName()).getCommonUsers()!=null){
-                response.put("Status", "Ya tenia common user");
-                /*
+                
                 for(Common_User usuariosComunes: influyentUser.getCommonUsers()){
-                    if(this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName())!= null){
-                        this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName()).getCommonUsers().
-                        add(this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()));
-                        this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()).setInfluyentUser(influyentUser);
-                    } else {
-                        response.put("Error", "Usuario comun no encontrado");
-        
-                    }
+                    String nombre = usuariosComunes.getName();
+                    Common_User userAux = this.commonUserRepository.findFirstCommon_UserById(1);
+                    System.out.println(userAux.getName());
+                    //System.out.println(userAux);
+                    /*this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()).setInfluyentUser(influyentUser);
+                    this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName()).getCommonUsers().
+                    add(this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()));
+                */
                 }
     
-                */
+                
              } else {
                 
                 response.put("Status", "Primer common user");

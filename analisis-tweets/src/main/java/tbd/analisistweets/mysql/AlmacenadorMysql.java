@@ -124,7 +124,7 @@ public class AlmacenadorMysql {
             httpPost.setEntity(se);
             
             String responseBody = httpclient.execute(httpPost, responseHandler);
-            
+            /*
             for(int i = 0; i<nombreTweeteros.size(); i++){
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
 
@@ -160,6 +160,7 @@ public class AlmacenadorMysql {
                     
                 }          
             }
+            */
         } finally {
             httpclient.close();
         }
