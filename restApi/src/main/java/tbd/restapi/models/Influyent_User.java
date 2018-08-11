@@ -20,7 +20,7 @@ public class Influyent_User {
     private int followers;
 
     @OneToMany(mappedBy = "influyent_user")
-    private List<Common_User> common_users;
+    private List<Common_User> commonUsers;
 
 
     @OneToMany(mappedBy = "influyent_user_artist")
@@ -37,7 +37,7 @@ public class Influyent_User {
 
 
     public List<Common_User> getCommonUsers() {
-        return common_users;
+        return commonUsers;
     }
 
     public void setInfluyentUserArtist(List<Influyent_User_Artist> influyent_user_artist) {
@@ -48,8 +48,8 @@ public class Influyent_User {
         return influyent_user_artist;
     }
 
-    public void setCommonUser(List<Common_User> common_users) {
-        this.common_users = common_users;
+    public void setCommonUser(List<Common_User> commonUsers) {
+        this.commonUsers = commonUsers;
     }
 
     public int getId() {

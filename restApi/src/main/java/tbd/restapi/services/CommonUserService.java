@@ -30,6 +30,7 @@ public class CommonUserService {
     @ResponseBody
     public Common_User getCommonUser(@PathVariable String name)
     {
+        
         return commonUserRepository.findFirstCommon_UserByName(name);
     }
 

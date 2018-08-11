@@ -48,20 +48,38 @@ public class InfluyentUserService {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> createInfluyentUser(@RequestBody Influyent_User influyentUser){
-
         Map<String,Object> response = new HashMap<>();
         if(this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName())==null){
             response.put("Status", "Se debe crear influyent user");
             this.incfluyentUserRepository.save(influyentUser);
             
         }
-        for(Common_User usuariosComunes: influyentUser.getCommonUsers()){
-            this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName()).getCommonUsers().
-            add(this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()));
-            this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()).setInfluyentUser(influyentUser);
-            
-        }
+        if(influyentUser.getCommonUsers()!= null){
+            if(this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName()).getCommonUsers()!=null){
+                response.put("Status", "Ya tenia common user");
+                /*
+                for(Common_User usuariosComunes: influyentUser.getCommonUsers()){
+                    if(this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName())!= null){
+                        this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName()).getCommonUsers().
+                        add(this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()));
+                        this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName()).setInfluyentUser(influyentUser);
+                    } else {
+                        response.put("Error", "Usuario comun no encontrado");
         
+                    }
+                }
+    
+                */
+             } else {
+                
+                response.put("Status", "Primer common user");
+                 
+             }
+
+        } else {
+            response.put("Status", "No hay common user para agregar");
+
+        }
         return response;
 
 
