@@ -42,9 +42,11 @@ public class Index {
                 Object user = cursor.get("user");
                 String userString = user.toString();
                 String location = getLocation(userString);
-
-
                 Document doc = new Document();
+                doc.add(new TextField("artistName", getName(userString), Field.Store.YES));
+                doc.add(new TextField("followers", getFollowers(userString), Field.Store.YES));
+                doc.add(new StringField("retweets", cursor.get("retweetCount").toString(),Field.Store.YES));
+                doc.add(new TextField("text", cursor.get("text").toString(), Field.Store.YES));
                 doc.add(new TextField("text", cursor.get("text").toString(), Field.Store.YES));
                 doc.add(new StringField("_id", cursor.get("_id").toString(), Field.Store.YES));
                 doc.add(new StringField("createdAt", cursor.get("createdAt").toString(),Field.Store.YES));
@@ -58,7 +60,7 @@ public class Index {
                 }
             }
             writer.close();
-            coleccion.drop();
+            //coleccion.drop();
         System.out.println("Creado índice Lucene");
 
     }
@@ -69,6 +71,20 @@ public class Index {
         Integer indiceLocation = userInformation.indexOf("location");
         Integer indiceEndLocation = userInformation.indexOf("\"", indiceLocation+13);
         location = userInformation.substring(indiceLocation+13, indiceEndLocation);
+        return location;
+    }
+    public String getFollowers(String userInformation){
+        String location = "";
+        Integer indiceLocation = userInformation.indexOf("followersCount");
+        Integer indiceEndLocation = userInformation.indexOf("\"", indiceLocation+18);
+        location = userInformation.substring(indiceLocation+18, indiceEndLocation-3);
+        return location;
+    }
+    public String getName(String userInformation){
+        String location = "";
+        Integer indiceLocation = userInformation.indexOf("screenName");
+        Integer indiceEndLocation = userInformation.indexOf("\"", indiceLocation+15);
+        location = userInformation.substring(indiceLocation+15, indiceEndLocation);
         return location;
     }
 }

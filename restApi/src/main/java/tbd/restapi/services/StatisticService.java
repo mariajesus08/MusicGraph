@@ -45,9 +45,18 @@ public class StatisticService {
         return statisticRepository.findStatisticById(id);
     }
     @CrossOrigin
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    @ResponseBody
+    public Statistic getUser(@PathVariable String name)
+    {
+        return statisticRepository.findStatisticByName(name);
+    }
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Statistic createUser(@RequestBody Statistic statistic){ return statisticRepository.save(statistic); }
+    public Statistic createStatistic(@RequestBody Statistic statistic){ 
+        return statisticRepository.save(statistic); 
+    }
 
 
     @CrossOrigin
