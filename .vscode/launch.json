@@ -1,0 +1,69 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SentimentAnalysisApplication<SentimentAnalysis>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.tbd.sentimentanalysis.SentimentAnalysisApplication",
+            "args": "",
+            "projectName": "SentimentAnalysis"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TwitterApplication<Twitter>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.tbd.twitter.TwitterApplication",
+            "args": "",
+            "projectName": "Twitter"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-AnalisistweetsApplication<analisistweets>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "tbd.analisistweets.AnalisistweetsApplication",
+            "args": "",
+            "projectName": "analisistweets"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-RestapiApplication<restapi>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "tbd.restapi.RestapiApplication",
+            "args": "",
+            "projectName": "restapi"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Attach)",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": "<debug port of remote debuggee>"
+        }
+    ]
+}

@@ -29,7 +29,28 @@ public class Artist {
     @OneToMany(mappedBy = "artist")
     private List<Statistic> statistic;
 
+    @OneToMany(mappedBy = "artist_influyent_user")
+    private List<Influyent_User_Artist> artist_influyent_user;
 
+    @OneToMany(mappedBy = "artist_common_user")
+    private List<Common_User_Artist> artist_common_user;
+
+
+    public List<Common_User_Artist> getCommonUsers(){
+        return this.artist_common_user;
+    }
+
+    public void setCommonUsers(List<Common_User_Artist> userArtist){
+        this.artist_common_user = userArtist;
+    }
+
+    public List<Influyent_User_Artist> getInfluyentUsers(){
+        return this.artist_influyent_user;
+    }
+
+    public void setInfluyentUsers(List<Influyent_User_Artist> userArtist){
+        this.artist_influyent_user = userArtist;
+    }
 
     public Genre getGenre(){
         return this.genre;
