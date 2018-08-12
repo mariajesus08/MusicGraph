@@ -162,7 +162,7 @@ public class AlmacenadorMysql {
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
                 if(relevancia>=1000){
                     
-                    HttpPost httpPostInfluyentUser = new HttpPost("http://localhost:9091/InfluyentUser/create");
+                    HttpPost httpPostInfluyentUser = new HttpPost("http://165.227.12.119:9091/InfluyentUser/create");
                     httpPostInfluyentUser.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
                     Influyent_User user = new Influyent_User();
                     user.setName(nombreTweeteros.get(i));
@@ -177,15 +177,13 @@ public class AlmacenadorMysql {
                     //Relacion Influyent User con artista
                     Influyent_User_Artist relacionUsuarioInfluyente = new Influyent_User_Artist();
                     relacionUsuarioInfluyente.nombreArtista=artista;
-                    relacionUsuarioInfluyente.setRetweets(retweetsCount.get(i));
-                    relacionUsuarioInfluyente.setLast_tweet(lastestTweets.get(i));
+                    relacionUsuarioInfluyente.retweets=retweetsCount.get(i);
+                    relacionUsuarioInfluyente.lastTweet=lastestTweets.get(i);
                     relacionUsuarioInfluyente.nombreUsuarioInfluyente=nombreTweeteros.get(i);
                     HttpPost httpPostInfluyentRelation = new HttpPost("http://localhost:9091/InfluyentUserArtist/create");
                     httpPostInfluyentRelation.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
                     String jsonMap4 = new Gson().toJson(relacionUsuarioInfluyente);
 
-
-                    System.out.println(jsonMap4);
                     StringEntity se4 = new StringEntity(jsonMap4.toString(), "UTF-8");
                     httpPostInfluyentRelation.setEntity(se4);
                     String responseBody4 = httpclient.execute(httpPostInfluyentRelation, responseHandler);

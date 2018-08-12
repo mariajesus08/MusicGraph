@@ -8,10 +8,10 @@ public class Influyent_User_Artist {
     private int id;
 
 
-    private String lastTweet;
+    public String lastTweet;
 
-    private int retweets;
-
+    public int retweets;
+    
     private Date date;
     public String nombreArtista;
     public String nombreUsuarioInfluyente;

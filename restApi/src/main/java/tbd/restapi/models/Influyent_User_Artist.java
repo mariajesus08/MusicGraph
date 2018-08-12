@@ -17,11 +17,9 @@ public class Influyent_User_Artist {
     private int id;
 
 
-    @Column(name = "last_tweet")
-    private String lastTweet;
-    @Column(name = "retweets")
+    public String lastTweet;
 
-    private int retweets;
+    public int retweets;
     @Column(name = "date")
 
     private Date date;
