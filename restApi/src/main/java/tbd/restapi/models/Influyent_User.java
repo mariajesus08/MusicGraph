@@ -1,12 +1,16 @@
 package tbd.restapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.neo4j.ogm.annotation.NodeEntity;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Inheritance
 @Table(name = "influyent_user")
 public class Influyent_User {
 
@@ -35,7 +39,7 @@ public class Influyent_User {
         this.followers = followers; 
     }
 
-
+    @JsonManagedReference
     public List<Common_User> getCommonUsers() {
         return commonUsers;
     }

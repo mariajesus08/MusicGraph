@@ -55,6 +55,8 @@ public class CommonUserService {
             this.commonUserRepository.save(commonUser);
            
         } else {
+            Common_User user = this.commonUserRepository.findFirstCommon_UserByName(commonUser.getName());
+            this.commonUserRepository.save(user);
             response.put("Status", "Se debe actualizar common user");
         }
         

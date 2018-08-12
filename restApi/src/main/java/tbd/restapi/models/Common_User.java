@@ -1,12 +1,16 @@
 package tbd.restapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.neo4j.ogm.annotation.NodeEntity;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Inheritance
 @Table(name = "common_user")
 public class Common_User {
 
@@ -19,16 +23,16 @@ public class Common_User {
 
     @Column(name = "followers")
     private int followers;
-
+    
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_influyent_user", nullable = false)
-    @JsonIgnore
     private Influyent_User influyent_user;
 
     
 
 
-
+    @JsonBackReference
     public Influyent_User getInfluyentUser(){
         return this.influyent_user;
     }

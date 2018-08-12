@@ -67,7 +67,6 @@ public class StatisticService {
         response.put("Status", "Se ha agregado la estadistica");
         statistic.setArtist(this.artistRepository.findArtistByName(statistic.getName()));
         statistic.setGenre(this.artistRepository.findArtistByName(statistic.getName()).getGenre());
-        System.out.println(statistic);
         this.artistRepository.findArtistByName(statistic.getName()).getStatistic().add(statistic);
         this.statisticRepository.save(statistic);
         return response;
