@@ -26,7 +26,7 @@ public class Common_User {
     
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_influyent_user", nullable = false)
+    @JoinColumn(name="id_influyent_user")
     private Influyent_User influyent_user;
 
     

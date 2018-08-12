@@ -124,17 +124,19 @@ public class AlmacenadorMysql {
             httpPost.setEntity(se);
             
             String responseBody = httpclient.execute(httpPost, responseHandler);
-            /*
+            String jsonMap2 = "";
+            List<String> usuariosComunes = new ArrayList<String>();
             for(int i = 0; i<nombreTweeteros.size(); i++){
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
 
-                if(relevancia<200000){
+                if(relevancia<100){
                     HttpPost httpPostCommonUser = new HttpPost("http://165.227.12.119:9091/CommonUser/create");
                     httpPostCommonUser.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
                     Map<String,String> params2 = new HashMap<>(); 
                     params2.put("name", nombreTweeteros.get(i));
                     params2.put("followers", String.valueOf(followersCount.get(i)));
-                    String jsonMap2 = new Gson().toJson(params2);
+                    jsonMap2 = new Gson().toJson(params2);
+                    usuariosComunes.add(jsonMap2);
                     StringEntity se2 = new StringEntity(jsonMap2.toString(), "UTF-8");
                     httpPostCommonUser.setEntity(se2);
                     
@@ -145,22 +147,32 @@ public class AlmacenadorMysql {
 
             for(int i = 0; i<nombreTweeteros.size(); i++){
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
- 
-                if(relevancia>200000){
+                if(relevancia>=100){
+                    
+                    /*for(int x = 0; x<usuariosComunes.size(); x++){
+                        usuariosComunesAux=usuariosComunesAux+usuariosComunes.get(x);
+                        if(x!=usuariosComunes.size()-1){
+                            usuariosComunesAux=usuariosComunesAux+",";
+                        }
+                    }*/
+                    String usuariosComunesAux = new Gson().toJson(usuariosComunes);
+                    
                     HttpPost httpPostInfluyentUser = new HttpPost("http://165.227.12.119:9091/InfluyentUser/create");
                     httpPostInfluyentUser.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
                     Map<String,String> params3 = new HashMap<>(); 
                     params3.put("name", nombreTweeteros.get(i));
                     params3.put("followers", String.valueOf(followersCount.get(i)));
+                    if(usuariosComunes.size()!=0){
+                        params3.put("commonUsers", usuariosComunesAux);
+                    }
                     String jsonMap3 = new Gson().toJson(params3);
+                    System.out.println(jsonMap3);
                     StringEntity se3 = new StringEntity(jsonMap3.toString(), "UTF-8");
                     httpPostInfluyentUser.setEntity(se3);
-                    
-                    String responseBody2 = httpclient.execute(httpPostInfluyentUser, responseHandler);
-                    
+                    String responseBody3 = httpclient.execute(httpPostInfluyentUser, responseHandler);
                 }          
             }
-            */
+            
         } finally {
             httpclient.close();
         }
