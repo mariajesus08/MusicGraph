@@ -10,6 +10,7 @@ public class Influyent_User {
     private int followers;
 
     private List<Common_User> commonUsers;
+    private List<Influyent_User_Artist> influyentUserArtist;
 
 
 
@@ -26,7 +27,12 @@ public class Influyent_User {
         return commonUsers;
     }
 
- 
+    public void setInfluyentUserArtist(List<Influyent_User_Artist> influyentUsersArtists) {
+        this.influyentUserArtist = influyentUsersArtists;
+    }
+    public List<Influyent_User_Artist> getInfluyentUserArtist() {
+        return influyentUserArtist;
+    }
 
     public void setCommonUser(List<Common_User> commonUsers) {
         this.commonUsers = commonUsers;

@@ -3,8 +3,12 @@ package tbd.restapi.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tbd.restapi.models.Influyent_User;
+import tbd.restapi.models.Influyent_User_Artist;
 import tbd.restapi.models.Common_User;
+import tbd.restapi.models.Artist;
+import tbd.restapi.repositories.ArtistRepository;
 import tbd.restapi.repositories.CommonUserRepository;
+import tbd.restapi.repositories.InfluyentUserArtistRepository;
 import tbd.restapi.repositories.InfluyentUserRepository;
 
 import java.util.HashMap;
@@ -19,6 +23,11 @@ public class InfluyentUserService {
     private InfluyentUserRepository incfluyentUserRepository;
     @Autowired
     private CommonUserRepository commonUserRepository;
+    @Autowired
+    private InfluyentUserArtistRepository relacionRepository;
+    @Autowired
+    private ArtistRepository artistRepository;
+
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
@@ -49,19 +58,24 @@ public class InfluyentUserService {
         if(this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName())!= null){
             Influyent_User user = this.incfluyentUserRepository.findFirstInfluyent_UserByName(influyentUser.getName());
             Common_User usuarioComun = new Common_User();
+            Artist artistaAux = new Artist();
             for (Common_User usuariosComunes : influyentUser.getCommonUsers()) {
                 usuarioComun = this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName());
                 usuarioComun.setInfluyentUser(user);
             }
             this.incfluyentUserRepository.save(user);
-            response.put("Status", "User influyente actualizado");
+            
         } else {
+            Artist artistaAux = new Artist();
             Common_User usuarioComun = new Common_User();
             for (Common_User usuariosComunes : influyentUser.getCommonUsers()) {
                 usuarioComun = this.commonUserRepository.findFirstCommon_UserByName(usuariosComunes.getName());
                 usuarioComun.setInfluyentUser(influyentUser);
             }
+
             this.incfluyentUserRepository.save(influyentUser);
+            
+            
             response.put("Status", "User influyente agregado");            
         }
         return response;

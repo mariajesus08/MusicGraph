@@ -2,10 +2,17 @@ package tbd.restapi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tbd.restapi.models.Influyent_User_Artist;
-import tbd.restapi.repositories.InfluyentUserArtistRepository;
 
+import tbd.restapi.models.Artist;
+import tbd.restapi.models.Influyent_User;
+import tbd.restapi.models.Influyent_User_Artist;
+import tbd.restapi.repositories.ArtistRepository;
+import tbd.restapi.repositories.InfluyentUserArtistRepository;
+import tbd.restapi.repositories.InfluyentUserRepository;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/InfluyentUserArtist")
@@ -13,6 +20,10 @@ import java.util.List;
 public class InfluyentUserArtistService {
     @Autowired
     private InfluyentUserArtistRepository influyentUserArtistRepository;
+    @Autowired
+    private InfluyentUserRepository influyentArtist;
+    @Autowired
+    private ArtistRepository artist;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
@@ -34,11 +45,15 @@ public class InfluyentUserArtistService {
     
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public Influyent_User_Artist createInfluyentUser(@RequestBody Influyent_User_Artist commonUser){
+    public Map<String, Object> createInfluyentUserRelation(@RequestBody Influyent_User_Artist influyentUser) {
+        Map<String, Object> response = new HashMap<>();
 
-        return influyentUserArtistRepository.save(commonUser);
+        this.artist.findArtistByName(influyentUser.nombreArtista).getInfluyentUsers().add(influyentUser);
+        this.influyentArtist.findFirstInfluyent_UserByName(influyentUser.nombreUsuarioInfluyente).getInfluyentUserArtist().add(influyentUser);
+        influyentUserArtistRepository.save(influyentUser);
+        return response;
 
     }
 

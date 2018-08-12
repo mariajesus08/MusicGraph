@@ -1,43 +1,23 @@
-package tbd.restapi.models;
+package tbd.analisistweets.mysql;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.neo4j.ogm.annotation.NodeEntity;
-
-import javax.persistence.*;
 import java.util.*;
 
-@Entity
-@Table(name = "Common_User_Artist")
 public class Common_User_Artist {
 
-    @Id
-    @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
 
-    @Column(name = "last_tweet")
     private String last_tweet;
-    @Column(name = "retweets")
 
     private int retweets;
-    @Column(name = "date")
 
     private Date date;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_common_user", nullable = false)
-    @JsonIgnore
     private Common_User Common_User_Artist;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_artist", nullable = false)
-    @JsonIgnore
     private Artist artist_common_user;
 
-    @JsonBackReference 
     public Common_User getInfluyentUser(){
         return this.Common_User_Artist;
     }
@@ -45,7 +25,7 @@ public class Common_User_Artist {
     public void setInfluyentUser(Common_User user){
         this.Common_User_Artist = user;
     }
-    @JsonBackReference(value="artist-common-relation")   
+
     public Artist getArtist(){
         return this.artist_common_user;
     }
