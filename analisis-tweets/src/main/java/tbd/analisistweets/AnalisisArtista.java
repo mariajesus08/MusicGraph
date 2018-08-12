@@ -29,12 +29,12 @@ public class AnalisisArtista {
 
         }
         List<String> palabras = new ArrayList<String>();;
-        String palabrasQuery = "SELECT word FROM keywords";
+        String palabrasQuery = "SELECT name FROM artists";
         try{
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(palabrasQuery);
             while(resultSet.next())
-                palabras.add(resultSet.getString("word"));
+                palabras.add(resultSet.getString("name"));
         }catch (SQLException e) {
             e.printStackTrace();
         }

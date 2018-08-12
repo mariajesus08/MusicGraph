@@ -2,8 +2,8 @@ package com.tbd.twitter;
 
 import javax.annotation.PostConstruct;
 
-import com.tbd.twitter.words.Keyword;
-import com.tbd.twitter.words.KeywordRepository;
+import com.tbd.twitter.words.Artist;
+import com.tbd.twitter.words.ArtistRepository;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -37,7 +37,7 @@ public class TwitterListener {
 	@Autowired
 	private MongoTemplate mongo;
 	@Autowired
-	private KeywordRepository keywordRepository;
+	private ArtistRepository artistRepository;
 	private Set<String> bolsaPalabras;
 		
 	@PostConstruct
@@ -108,10 +108,10 @@ public class TwitterListener {
 								
 			}			
 		});
-		Iterable<Keyword> keywords = keywordRepository.findAll();
+		Iterable<Artist> artists = artistRepository.findAll();
 		bolsaPalabras = new HashSet<>();
-		for(Keyword key: keywords)
-			bolsaPalabras.add(key.getWord());
+		for(Artist artist: artists)
+			bolsaPalabras.add(artist.getName());
 		ClassLoader classLoader = getClass().getClassLoader();
 		FilterQuery filter = new FilterQuery();
 		filter.track(bolsaPalabras.toArray(new String[0]));
