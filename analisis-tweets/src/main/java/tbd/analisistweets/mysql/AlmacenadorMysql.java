@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.io.IOException;
 import java.net.URI;
@@ -125,18 +126,21 @@ public class AlmacenadorMysql {
             
             String responseBody = httpclient.execute(httpPost, responseHandler);
             String jsonMap2 = "";
-            List<String> usuariosComunes = new ArrayList<String>();
+            List<Common_User> usuariosComunes = new ArrayList<Common_User>();
             for(int i = 0; i<nombreTweeteros.size(); i++){
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
 
-                if(relevancia<100){
+                if(relevancia<10000){
+                    Common_User usuarioComun = new Common_User();
+                    usuarioComun.setName(nombreTweeteros.get(i));
+                    usuarioComun.setFollowers(followersCount.get(i));
                     HttpPost httpPostCommonUser = new HttpPost("http://165.227.12.119:9091/CommonUser/create");
                     httpPostCommonUser.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
                     Map<String,String> params2 = new HashMap<>(); 
                     params2.put("name", nombreTweeteros.get(i));
                     params2.put("followers", String.valueOf(followersCount.get(i)));
                     jsonMap2 = new Gson().toJson(params2);
-                    usuariosComunes.add(jsonMap2);
+                    usuariosComunes.add(usuarioComun);
                     StringEntity se2 = new StringEntity(jsonMap2.toString(), "UTF-8");
                     httpPostCommonUser.setEntity(se2);
                     
@@ -147,7 +151,7 @@ public class AlmacenadorMysql {
 
             for(int i = 0; i<nombreTweeteros.size(); i++){
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
-                if(relevancia>=100){
+                if(relevancia>=10000){
                     
                     /*for(int x = 0; x<usuariosComunes.size(); x++){
                         usuariosComunesAux=usuariosComunesAux+usuariosComunes.get(x);
@@ -159,14 +163,11 @@ public class AlmacenadorMysql {
                     
                     HttpPost httpPostInfluyentUser = new HttpPost("http://165.227.12.119:9091/InfluyentUser/create");
                     httpPostInfluyentUser.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-                    Map<String,String> params3 = new HashMap<>(); 
-                    params3.put("name", nombreTweeteros.get(i));
-                    params3.put("followers", String.valueOf(followersCount.get(i)));
-                    if(usuariosComunes.size()!=0){
-                        params3.put("commonUsers", usuariosComunesAux);
-                    }
-                    String jsonMap3 = new Gson().toJson(params3);
-                    System.out.println(jsonMap3);
+                    Influyent_User user = new Influyent_User();
+                    user.setName(nombreTweeteros.get(i));
+                    user.setFollowers(followersCount.get(i));
+                    user.setCommonUser(usuariosComunes);
+                    String jsonMap3 = new Gson().toJson(user);
                     StringEntity se3 = new StringEntity(jsonMap3.toString(), "UTF-8");
                     httpPostInfluyentUser.setEntity(se3);
                     String responseBody3 = httpclient.execute(httpPostInfluyentUser, responseHandler);
@@ -182,81 +183,6 @@ public class AlmacenadorMysql {
         
     }
 }
-    /*
-        
-        Connection connection = null;
-        //TODO: cambiar según nombre de la base de datos
-        String username = "root";
-        String password = "secret1234";
-        String host = "jdbc:mysql://165.227.12.119:3306/";
-        String db_name = "musicgraphdb?useSSL=false";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(host + db_name, username, password);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
 
-        }
 
-        String query = "INSERT INTO statistics (name,negative_tweets,positive_tweets, total_tweets) VALUES (?,?,?,?)";
-        String queryCommonUser = "INSERT INTO common_user (name,id_influyent_user) VALUES (?,?,?,?)";
-        String queryInfluyentUser = "INSERT INTO influyent_user (name,followers) VALUES (?,?,?,?)";
-        String setIds =  "UPDATE statistics, artists SET statistics.id_artist = artists.id WHERE artists.name = statistics.name;";
-        String setGenres =  "UPDATE statistics, artists SET statistics.id_genre = artists.id_genre WHERE artists.id = statistics.id_artist;";
-        String queryGet = "SELECT * FROM statistics WHERE statistics.name = \""+artista+"\";";
-        
-        try{
-            for(int i = 0; i<nombreTweeteros.size(); i++){
-                int relevancia = followersCount.get(i)+retweetsCount.get(i);
-                if(relevancia>200000){
-                    String nombreAux = nombreTweeteros.get(i);
-                    int retweets = retweetsCount.get(i);
-                    String lastTweet = lastestTweets.get(i);
-                } else {
-    
-                }            
-            }
 
-            PreparedStatement ps = connection.prepareStatement(query);
-            Statement ps2 = connection.createStatement();
-            Statement ps3 = connection.createStatement();
-            
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(queryGet);
-            int total_tweetsAux = 0;
-            float positivosAux = 0f;
-            float negativosAux = 0f;
-            while(rs.next()){
-                total_tweetsAux = rs.getInt("total_tweets");
-                positivosAux = rs.getInt("positive_tweets");
-                negativosAux = rs.getInt("negative_tweets");
-            }
-            totales = totales + total_tweetsAux;
-            if(positivos != 0f){
-                positivos = (positivos+positivosAux)/2;
-            } else {
-                positivos = positivosAux;
-            }
-            if(negativos != 0f){
-                negativos = (negativos+negativosAux)/2;
-            } else {
-                negativos = negativosAux;
-            }
-            ps.setString(1, artista);
-            ps.setFloat(2, negativos);
-            ps.setFloat(3, positivos);
-            ps.setInt(4, totales);
-            ps.execute();
-            ps2.executeUpdate(setIds);
-            ps3.executeUpdate(setGenres);
-            
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }finally{
-            try { connection.close(); } catch (Exception e) {  }
-        }
-        
-
-    }
-}
-*/
