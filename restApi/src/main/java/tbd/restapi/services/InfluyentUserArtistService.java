@@ -106,13 +106,15 @@ public class InfluyentUserArtistService {
 
         for(Influyent_User influyent_user : influyent_users) {
             HashMap<String, String> map = new HashMap<>();
-            map.put("type", "InfluyentUser");
-            map.put("name", influyent_user.getName());
+            map.put("tipo", "usuario_influyente");
+            map.put("nombre", influyent_user.getName());
             map.put("followers", Integer.toString(influyent_user.getFollowers()));
             Integer size = influyent_user.getFollowers() % 30;
             if(size < 10)
                 size = 10;
-            map.put("size", Integer.toString(size));
+            map.put("tamaño", Integer.toString(size));
+            String text = getLastTweet(influyent_user.getId());
+            map.put("ultimo_tweet", text);
             resultado.add(map);
         }
         List<Influyent_User_Artist> influyent_user_artists = influyentUserArtistRepository.findAll();
@@ -124,10 +126,10 @@ public class InfluyentUserArtistService {
             }
             else{
                 artistasId.add(influyent_user_artist.getArtist().getId());
-                map2.put("type", "artist");
-                map2.put("name", influyent_user_artist.getArtist().getName());
-                map2.put("genre", influyent_user_artist.getArtist().getGenre().getName());
-                map2.put("size", "10");
+                map2.put("tipo", "artista");
+                map2.put("nombre", influyent_user_artist.getArtist().getName());
+                map2.put("genero", influyent_user_artist.getArtist().getGenre().getName());
+                map2.put("tamaño", "10");
                 resultado.add(map2);
             }
         }
@@ -149,5 +151,27 @@ public class InfluyentUserArtistService {
         return resultado;
     }
 
+    public String getLastTweet(int idInfluyentUser){
+        String last_tweet = "";
+        Connection connection = null;
+        String username = "root";
+        String password = "secret1234";
+        String host = "jdbc:mysql://165.227.12.119:3306/";
+        String db_name = "musicgraphdb?useSSL=false";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(host + db_name, username, password);
+            String query = "SELECT last_tweet FROM influyent_user_artist WHERE id="+ idInfluyentUser;
+            java.sql.Statement st = connection.createStatement();
+            ResultSet resultset = st.executeQuery(query);
+            while (resultset.next()) {
+                last_tweet = resultset.getString("last_tweet");
+
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return  last_tweet;
+    }
 }
 
