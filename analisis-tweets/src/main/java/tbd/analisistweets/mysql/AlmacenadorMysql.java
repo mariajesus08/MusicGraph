@@ -124,21 +124,21 @@ public class AlmacenadorMysql {
             StringEntity se = new StringEntity(jsonMap.toString(), "UTF-8");
             httpPost.setEntity(se);
             //Se ejecuta post de estadistica
-            //String responseBody = httpclient.execute(httpPost, responseHandler);
+            String responseBody = httpclient.execute(httpPost, responseHandler);
             
+            //Comentar desde aqui hasta la linea 193 para solo agregar estadisticas 
 
             //Artista
             Artist artistaActual = new Artist();
             artistaActual.setName(artista);
             
 
-
             String jsonMap2 = "";
             List<Common_User> usuariosComunes = new ArrayList<Common_User>();
             for(int i = 0; i<nombreTweeteros.size(); i++){
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
 
-                if(relevancia<1000){
+                if(relevancia<100000){
                     Common_User usuarioComun = new Common_User();
                     usuarioComun.setName(nombreTweeteros.get(i));
                     usuarioComun.setFollowers(followersCount.get(i));
@@ -160,7 +160,7 @@ public class AlmacenadorMysql {
 
             for(int i = 0; i<nombreTweeteros.size(); i++){
                 int relevancia = followersCount.get(i)+retweetsCount.get(i);
-                if(relevancia>=1000){
+                if(relevancia>=100000){
                     
                     HttpPost httpPostInfluyentUser = new HttpPost("http://165.227.12.119:9091/InfluyentUser/create");
                     httpPostInfluyentUser.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
@@ -180,7 +180,7 @@ public class AlmacenadorMysql {
                     relacionUsuarioInfluyente.retweets=retweetsCount.get(i);
                     relacionUsuarioInfluyente.lastTweet=lastestTweets.get(i);
                     relacionUsuarioInfluyente.nombreUsuarioInfluyente=nombreTweeteros.get(i);
-                    HttpPost httpPostInfluyentRelation = new HttpPost("http://localhost:9091/InfluyentUserArtist/create");
+                    HttpPost httpPostInfluyentRelation = new HttpPost("http://165.227.12.119:9091/InfluyentUserArtist/create");
                     httpPostInfluyentRelation.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
                     String jsonMap4 = new Gson().toJson(relacionUsuarioInfluyente);
 
@@ -190,7 +190,9 @@ public class AlmacenadorMysql {
                 }          
             }
             
-        } finally {
+
+        // ***
+    }finally {
             httpclient.close();
         }
         
