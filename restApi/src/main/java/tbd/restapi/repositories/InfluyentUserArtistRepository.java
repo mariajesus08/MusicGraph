@@ -13,5 +13,4 @@ public interface InfluyentUserArtistRepository extends JpaRepository<Influyent_U
     Influyent_User_Artist findFirstInfluyent_User_ArtistByNombreUsuarioInfluyente(String name);
     void deleteInfluyent_User_ArtistById (int id);
     Influyent_User_Artist findFirstInfluyent_User_ArtistById (int id);
-
 }
