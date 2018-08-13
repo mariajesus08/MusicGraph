@@ -74,11 +74,15 @@ public class ArtistService {
     @ResponseBody
     public Artist createArtist(@RequestParam("name") String name, @RequestParam("genre") String genre) {
 
-        Artist artist = new Artist();
-        Genre artistGenre = genreRepository.findGenreByName(genre);
-        artist.setName(name);
-        artist.setGenre(artistGenre);
-        return artistRepository.save(artist);
+        if (!artistRepository.existsByName(name)) {
+            Artist artist = new Artist();
+            Genre artistGenre = genreRepository.findGenreByName(genre);
+            artist.setName(name);
+            artist.setGenre(artistGenre);
+            return artistRepository.save(artist);
+        }
+        else return null;
+        
 
     }
 
