@@ -70,7 +70,7 @@ public class ArtistService {
 
 
     @CrossOrigin
-    @RequestMapping(value = "/artists", params = {"name", "genre"}, method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Artist createArtist(@RequestParam("name") String name, @RequestParam("genre") String genre) {
 
@@ -82,7 +82,7 @@ public class ArtistService {
             return artistRepository.save(artist);
         }
         else return null;
-        
+
 
     }
 
