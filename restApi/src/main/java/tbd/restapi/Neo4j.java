@@ -33,7 +33,7 @@ public class Neo4j {
 
     public void crearGrafo(){
 
-        Driver driver = GraphDatabase.driver("bolt://165.227.12.119:7687", AuthTokens.basic("neo4j", "root123"));
+       /* Driver driver = GraphDatabase.driver("bolt://165.227.12.119:7687", AuthTokens.basic("neo4j", "root123"));
         Session session = driver.session();
         session.run("match (a)-[r]->(b) delete r");
         session.run("match (n) delete n");
@@ -51,7 +51,7 @@ public class Neo4j {
             session.run("CREATE (a:Artist {name:'" + artist.getName() + "'"
                      +
                     "})");
-        }
+        }*/
 
    /*     for(UserStatistic userStatistic : userStatistics) {
             String nombreUsuario = userStatistic.getName();
@@ -62,7 +62,7 @@ public class Neo4j {
                     + "  match (a:Artist) where a.name='" + nombreArtista + "' "
                     + "  create (u)-[r:comenta]->(a)");
         }*/
-        session.close();
-        driver.close();
+      //  session.close();
+      //  driver.close();
     }
 }
