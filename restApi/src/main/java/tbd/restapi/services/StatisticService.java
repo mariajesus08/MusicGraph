@@ -135,7 +135,7 @@ public class StatisticService {
             String name = artista.getName();
             float crecimiento = 0;
             List<Statistic> artistStatistic = this.statisticRepository.findStatisticsByNameOrderByDateDesc(name);
-            if(artistStatistic.size()>0){
+            if(artistStatistic.size()>5){
                 crecimiento = artistStatistic.get(0).getTotal_tweets() - artistStatistic.get(5).getTotal_tweets();
                 crecimientoList.add(crecimiento);
                 statisticsAux.add(artistStatistic);
