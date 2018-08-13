@@ -27,8 +27,8 @@ public class Influyent_User {
     private List<Common_User> commonUsers;
 
 
-    @OneToMany(mappedBy = "influyent_user_artist")
-    private List<Influyent_User_Artist> influyent_user_artist;
+    @OneToMany(mappedBy = "influyentUserArtist")
+    private List<Influyent_User_Artist> influyentUserArtist;
 
     
     public int getFollowers(){
@@ -39,17 +39,17 @@ public class Influyent_User {
         this.followers = followers; 
     }
 
-    @JsonManagedReference
+    @JsonManagedReference(value="influyent-common")
     public List<Common_User> getCommonUsers() {
         return commonUsers;
     }
 
-    public void setInfluyentUserArtist(List<Influyent_User_Artist> influyent_user_artist) {
-        this.influyent_user_artist = influyent_user_artist;
+    public void setInfluyentUserArtist(List<Influyent_User_Artist> influyentUsersArtists) {
+        this.influyentUserArtist = influyentUsersArtists;
     }
-
+    @JsonManagedReference(value="influyent-artist-relation")
     public List<Influyent_User_Artist> getInfluyentUserArtist() {
-        return influyent_user_artist;
+        return this.influyentUserArtist;
     }
 
     public void setCommonUser(List<Common_User> commonUsers) {

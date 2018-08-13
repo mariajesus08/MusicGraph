@@ -24,6 +24,10 @@ import java.util.Map;
 public class InfluyentUserArtistService {
     @Autowired
     private InfluyentUserArtistRepository influyentUserArtistRepository;
+    @Autowired
+    private InfluyentUserRepository influyentArtist;
+    @Autowired
+    private ArtistRepository artist;
 
     @Autowired
     private ArtistRepository artistRepository;
@@ -46,11 +50,22 @@ public class InfluyentUserArtistService {
     }
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public Influyent_User_Artist createInfluyentUser(@RequestBody Influyent_User_Artist commonUser){
-
-        return influyentUserArtistRepository.save(commonUser);
+    public Map<String, Object> createInfluyentUserRelation(@RequestBody Influyent_User_Artist influyentUser) {
+        Map<String, Object> response = new HashMap<>();
+        if((this.influyentUserArtistRepository.findFirstInfluyent_User_ArtistByNombreArtista(influyentUser.nombreArtista)!=null)&&(this.influyentUserArtistRepository.findFirstInfluyent_User_ArtistByNombreUsuarioInfluyente(influyentUser.nombreUsuarioInfluyente)!=null)){
+            return response;
+        }
+        System.out.println("\n");
+        System.out.println(influyentUser.getLast_tweet());
+        System.out.println("\n");
+        this.artist.findArtistByName(influyentUser.nombreArtista).getInfluyentUsers().add(influyentUser);
+        this.influyentArtist.findFirstInfluyent_UserByName(influyentUser.nombreUsuarioInfluyente).getInfluyentUserArtist().add(influyentUser);
+        influyentUser.setArtist(this.artist.findArtistByName(influyentUser.nombreArtista));
+        influyentUser.setInfluyentUser(this.influyentArtist.findFirstInfluyent_UserByName(influyentUser.nombreUsuarioInfluyente));
+        influyentUserArtistRepository.save(influyentUser);
+        return response;
 
     }
 

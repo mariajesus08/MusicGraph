@@ -1,13 +1,17 @@
 package tbd.restapi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tbd.restapi.models.Artist;
 import tbd.restapi.models.Genre;
 import tbd.restapi.models.Statistic;
 import tbd.restapi.repositories.ArtistRepository;
+import tbd.restapi.repositories.GenreRepository;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/artists")
@@ -15,7 +19,8 @@ import java.util.List;
 public class ArtistService {
     @Autowired
     private ArtistRepository artistRepository;
-
+    @Autowired
+    private GenreRepository genreRepository;
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
@@ -62,15 +67,29 @@ public class ArtistService {
     }
 
 
-   
+
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Artist createArtist(@RequestBody Artist artist){
+    public Artist createArtist(@RequestParam("name") String name, @RequestParam("genre") String genre) {
 
-        return artistRepository.save(artist);
+        if (!artistRepository.existsByName(name)) {
+            Artist artist = new Artist();
+            Genre artistGenre = genreRepository.findGenreByName(genre);
+            artist.setName(name);
+            artist.setGenre(artistGenre);
+            return artistRepository.save(artist);
+        }
+        else return null;
+
 
     }
+
+
+
+
+
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.DELETE)

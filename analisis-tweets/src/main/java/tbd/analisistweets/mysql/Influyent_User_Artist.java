@@ -1,59 +1,40 @@
-package tbd.restapi.models;
+package tbd.analisistweets.mysql;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.neo4j.ogm.annotation.NodeEntity;
-
-import javax.persistence.*;
 import java.util.*;
 
-@Entity
-@Table(name = "Influyent_User_Artist")
 public class Influyent_User_Artist {
 
-    @Id
-    @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
 
 
     public String lastTweet;
 
     public int retweets;
-    @Column(name = "date")
-
+    
     private Date date;
     public String nombreArtista;
     public String nombreUsuarioInfluyente;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_influyent_user")
-    @JsonIgnore
+
     private Influyent_User influyentUserArtist;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_artist")
-    @JsonIgnore
     private Artist artistInfluyentUser;
 
-    @JsonBackReference(value="influyent-artist-relation")
     public Influyent_User getInfluyentUser(){
         return this.influyentUserArtist;
-    }
-
-    public void setInfluyentUser(Influyent_User user){
-        this.influyentUserArtist = user;
     }
 
     public String getLast_tweet(){
         return this.lastTweet;
     }
-
-    public void setLast_tweet(String tweet){
-        this.lastTweet = tweet;
+    public void setLast_tweet(String lastTweet){
+        this.lastTweet = lastTweet;
+    }
+    public void setInfluyentUser(Influyent_User user){
+        this.influyentUserArtist = user;
     }
     
-    @JsonBackReference(value="artist-influyent-relation")
     public Artist getArtist(){
         return this.artistInfluyentUser;
     }

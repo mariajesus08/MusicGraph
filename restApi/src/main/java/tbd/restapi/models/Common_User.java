@@ -32,7 +32,7 @@ public class Common_User {
     
 
 
-    @JsonBackReference
+    @JsonBackReference(value="influyent-common")
     public Influyent_User getInfluyentUser(){
         return this.influyent_user;
     }

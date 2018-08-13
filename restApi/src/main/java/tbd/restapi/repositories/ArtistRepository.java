@@ -12,4 +12,5 @@ public interface ArtistRepository extends JpaRepository<Artist,Integer> {
      Artist findFirstArtistByName(String name);
      void deleteArtistsByName (String name);
      List<Artist> getAllByOrderByNameAsc();
+     boolean existsByName(String name);
 }
