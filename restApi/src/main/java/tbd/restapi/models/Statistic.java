@@ -24,6 +24,10 @@ public class Statistic {
     private int total_tweets;
     private Date date;
 
+    private String region;
+
+    private String commune;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_artist", nullable = false)
@@ -40,7 +44,35 @@ public class Statistic {
         return artist;
     }
 
-    public void setArtist(Artist artist) {
+    /**
+	 * @return the commune
+	 */
+	public String getCommune() {
+		return commune;
+	}
+
+	/**
+	 * @param commune the commune to set
+	 */
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
+
+	/**
+	 * @return the region
+	 */
+	public String getRegion() {
+		return region;
+	}
+
+	/**
+	 * @param region the region to set
+	 */
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public void setArtist(Artist artist) {
         this.artist = artist;
     }
 
