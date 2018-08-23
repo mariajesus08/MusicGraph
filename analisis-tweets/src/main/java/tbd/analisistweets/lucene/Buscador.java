@@ -112,7 +112,6 @@ public class Buscador {
             Document d = searcher.doc(idTweetsArtista.get(i));
             String tweet = d.get("text");
             String artistAux = d.get("artistName");
-            this.locations.add(d.get("location"));
             int followersAux = Integer.parseInt(d.get("followers"));
             int retweet = Integer.parseInt(d.get("retweets"));
             this.tweetersName.add(artistAux);
@@ -121,8 +120,20 @@ public class Buscador {
             this.lastestTweets.add(tweet);
             List<Float> resultado = new ArrayList<Float>();
             resultado = analisis.analisisSentimientoTweet(tweet);
-            this.listaComentariosPositivos.add(resultado.get(0));
-            this.listaComentariosNegativos.add(resultado.get(1));
+            String locationAux = d.get("location");
+            locationAux.toLowerCase();
+            if((locationAux.indexOf("santiago")!=-1) || (locationAux.indexOf("metropolitana")!=-1) || (locationAux.indexOf("arica")!=-1) || (locationAux.indexOf("parinacota")!=-1)
+             || (locationAux.indexOf("tarapaca")!=-1) || (locationAux.indexOf("tarapacá")!=-1) || (locationAux.indexOf("antofagasta")!=-1) || (locationAux.indexOf("atacama")!=-1)
+            || (locationAux.indexOf("coquimbo")!=-1) || (locationAux.indexOf("valparaiso")!=-1) || (locationAux.indexOf("viña")!=-1) || (locationAux.indexOf("higgins")!=-1) 
+            || (locationAux.indexOf("maule")!=-1) || (locationAux.indexOf("biobio")!=-1) || (locationAux.indexOf("biobío")!=-1) || (locationAux.indexOf("araucania")!=-1) 
+            || (locationAux.indexOf("araucanía")!=-1) || (locationAux.indexOf("rios")!=-1) || (locationAux.indexOf("ríos")!=-1) || (locationAux.indexOf("lagos")!=-1) 
+            || (locationAux.indexOf("aysen")!=-1) || (locationAux.indexOf("aysén")!=-1) || (locationAux.indexOf("magallanes")!=-1) || (locationAux.indexOf("antartica")!=-1) 
+            || (locationAux.indexOf("antártica")!=-1)){
+                this.locations.add(locationAux);
+                this.listaComentariosPositivos.add(resultado.get(0));
+                this.listaComentariosNegativos.add(resultado.get(1));
+
+            }
             if(auxPositivos == 0f){
                 auxPositivos = resultado.get(0);
             } else {

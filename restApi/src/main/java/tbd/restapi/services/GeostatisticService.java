@@ -72,6 +72,27 @@ public class GeostatisticService {
         return response;
 
     }
+    @CrossOrigin
+    @RequestMapping(value = "/genre/{genre_name}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Geostatistic> obtenerDiezMejorValoradosPorGenero( @PathVariable("genre_name") String genre_name)
+    {
+        List<Artist> allArtists= artistRepository.findAll();
+        List<Geostatistic> response = new ArrayList<Geostatistic>();
+        List<Geostatistic> statisticsAux = new ArrayList<Geostatistic>();
+        List<Float> positiveTweets = new ArrayList<Float>();
+        for(Artist artista: allArtists){
+            if(artista.getGenre().getName().equals(genre_name)){
+                String name = artista.getName();
+                
+                List<Geostatistic> artistStatistic = this.GeostatisticRepository.findGeostatisticByName(name);
+                response = artistStatistic;
+                break;
+            }
+        }
+        return response;
+
+    }
 
    
 

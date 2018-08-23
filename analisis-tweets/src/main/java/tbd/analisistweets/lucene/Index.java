@@ -62,7 +62,7 @@ public class Index {
                 }
             }
             writer.close();
-            //coleccion.drop();
+            coleccion.drop();
         System.out.println("Creado índice Lucene");
 
     }

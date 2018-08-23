@@ -88,12 +88,10 @@ public class AlmacenadorMysql {
         .setDefaultCredentialsProvider(provider)
         .build();
         String idArtista = Integer.toString(id);
-        System.out.println("\nPASA POR AQUI\n");
 
         try {
             HttpGet httpget = new HttpGet("http://165.227.12.119:9091/artists/lastStatistic/"+idArtista);
 
-            System.out.println("\nPASA POR AQUI\n");
 
             // Create a custom response handler
            
@@ -130,13 +128,14 @@ public class AlmacenadorMysql {
             StringEntity se = new StringEntity(jsonMap.toString(), "UTF-8");
             httpPost.setEntity(se);
             //Se ejecuta post de estadistica
-            //String responseBody = httpclient.execute(httpPost, responseHandler);
+            String responseBody = httpclient.execute(httpPost, responseHandler);
             //Regiones
             String region="";
             int i = 0;
+            //Para no tener tantos datos
             for(String locacionAux:locacion){
                 int aux = 0;
-                locacionAux = locacionAux.toLowerCase();
+                
                 
                 if((locacionAux.indexOf("santiago") != -1)||(locacionAux.indexOf("metropolitana")!=-1)){
                     region = "Metropolitana";
@@ -207,10 +206,12 @@ public class AlmacenadorMysql {
                     paramsGeo.put("negativeTweets", String.valueOf(listaNegativos.get(i)));
                     paramsGeo.put("region", region);
                     String jsonMapGeo = new Gson().toJson(paramsGeo);
-                    System.out.println(jsonMapGeo);
                     StringEntity seGeo = new StringEntity(jsonMapGeo.toString(), "UTF-8");
                     httpPostGeo.setEntity(seGeo);
+                    String responseBodyGeo = httpclient.execute(httpPostGeo, responseHandler);
+
                 }
+                
                 i++;
             }
 
