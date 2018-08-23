@@ -79,15 +79,14 @@ public class GeostatisticService {
     {
         List<Artist> allArtists= artistRepository.findAll();
         List<Geostatistic> response = new ArrayList<Geostatistic>();
-        List<Geostatistic> statisticsAux = new ArrayList<Geostatistic>();
-        List<Float> positiveTweets = new ArrayList<Float>();
         for(Artist artista: allArtists){
             if(artista.getGenre().getName().equals(genre_name)){
                 String name = artista.getName();
                 
                 List<Geostatistic> artistStatistic = this.GeostatisticRepository.findGeostatisticByName(name);
-                response = artistStatistic;
-                break;
+                for(Geostatistic aux: artistStatistic){
+                    response.add(aux);
+                }
             }
         }
         return response;
