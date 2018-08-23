@@ -37,12 +37,15 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.impl.client.HttpClientBuilder;
 import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 public class AlmacenadorMysql {
 
     
 
-    public void insertarEstadistica(int id, String artista, List<String> nombreTweeteros,List<String> lastestTweets,List<Integer> followersCount,List<Integer> retweetsCount, Float positivos, Float negativos, Integer totales) throws Exception{
+    public void insertarEstadistica(int id, String artista, List<String> nombreTweeteros,List<String> lastestTweets,List<Integer> followersCount,List<Integer> retweetsCount, Float positivos, Float negativos, Integer totales, List<String> locacion, List<Float> listaPositivos, List<Float> listaNegativos) throws Exception{
+        //Random primero
+        
         
         System.out.println("Ingresando estadisticas de: "+artista);
         if(id == 100){
@@ -124,10 +127,72 @@ public class AlmacenadorMysql {
             StringEntity se = new StringEntity(jsonMap.toString(), "UTF-8");
             httpPost.setEntity(se);
             //Se ejecuta post de estadistica
-            String responseBody = httpclient.execute(httpPost, responseHandler);
-            
-            //Comentar desde aqui hasta la linea 193 para solo agregar estadisticas 
+            //String responseBody = httpclient.execute(httpPost, responseHandler);
+            //Regiones
+            String region="";
+            int i = 0;
+            for(String locacionAux:locacion){
+                locacionAux = locacionAux.toLowerCase();
+                HttpPost httpPostGeo = new HttpPost("http://165.227.12.119:9091/geostatistic/create");
+                httpPostGeo.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+                Map<String,String> paramsGeo = new HashMap<>(); 
+                paramsGeo.put("name", artista);
+                paramsGeo.put("positiveTweets", String.valueOf(tweetsPositivos));
+                paramsGeo.put("negativeTweets", String.valueOf(tweetsNegativos));
+                String jsonMapGeo = new Gson().toJson(paramsGeo);
+                StringEntity seGeo = new StringEntity(jsonMapGeo.toString(), "UTF-8");
+                httpPostGeo.setEntity(seGeo);
+                if((locacionAux.indexOf("santiago") != -1)||(locacionAux.indexOf("metropolitana")!=-1)){
+                    region = "Metropolitana";
+                }
+                if((locacionAux.indexOf("arica") != -1)||(locacionAux.indexOf("parinacota") != -1)){
+                    region = "XV";
+                }
+                if((locacionAux.indexOf("tarapaca") != -1)||(locacionAux.indexOf("tarapacá") != -1)){
+                    region = "I";
+                }
+                if(locacionAux.indexOf("antofagasta") != -1){
+                    region = "II";
+                }
+                if(locacionAux.indexOf("atacama") != -1){
+                    region = "III";
+                }
+                if(locacionAux.indexOf("coquimbo") != -1){
+                    region = "IV";
+                }
+                if((locacionAux.indexOf("valparaiso") != -1)||(locacionAux.indexOf("viña")!=-1)){
+                    region = "V";
+                }
+                if(locacionAux.indexOf("higgins") != -1){
+                    region = "VI";
+                }
+                if(locacionAux.indexOf("maule") != -1){
+                    region = "VII";
+                }
+                if((locacionAux.indexOf("biobio") != -1)||(locacionAux.indexOf("biobío")!=-1)){
+                    region = "VIII";
+                }
+                if((locacionAux.indexOf("araucania") != -1)||(locacionAux.indexOf("araucanía")!=-1)){
+                    region = "IX";
+                }
+                if((locacionAux.indexOf("rios") != -1)||(locacionAux.indexOf("ríos")!=-1)){
+                    region = "XIV";
+                }
+                if(locacionAux.indexOf("lagos") != -1){
+                    region = "X";
+                }
+                if((locacionAux.indexOf("aysen") != -1)||(locacionAux.indexOf("aysén")!=-1)){
+                    region = "XI";
+                }
+                if((locacionAux.indexOf("magallanes") != -1)||(locacionAux.indexOf("antartica")!=-1)||(locacionAux.indexOf("antártica")!=-1)){
+                    region = "XII";
+                }
+                i++;
+            }
 
+
+            //Comentar desde aqui hasta la linea 193 para solo agregar estadisticas 
+            /*
             //Artista
             Artist artistaActual = new Artist();
             artistaActual.setName(artista);
@@ -190,7 +255,7 @@ public class AlmacenadorMysql {
                 }          
             }
             
-
+            */
         // ***
     }finally {
             httpclient.close();

@@ -26,8 +26,11 @@ public class Buscador {
     private Float nroComentariosPositivos;
     private Float nroComentariosNegativos;
     private List<String> tweetersName;
+    private List<String> locations;
     private List<String> lastestTweets;
     private List<Integer> followersCount;
+    private List<Float> listaComentariosPositivos;
+    private List<Float> listaComentariosNegativos;
     private List<Integer> retweetsCount;
     public List<Integer> idTweetsArtista;
     private Analisis analisis;
@@ -40,6 +43,9 @@ public class Buscador {
         followersCount = new ArrayList<Integer> ();
         retweetsCount = new ArrayList<Integer> ();
         lastestTweets = new ArrayList<String> ();
+        listaComentariosNegativos = new ArrayList<Float> ();
+        listaComentariosPositivos = new ArrayList<Float> ();
+        locations = new ArrayList<String>();
         cantidadComentarios = 0;
         nroComentariosPositivos = 0f;
         nroComentariosNegativos = 0f;
@@ -50,7 +56,45 @@ public class Buscador {
         analyzer = new StandardAnalyzer();
     }
 
-    public void buscarArtista(String artista) throws Exception {
+    
+
+	/**
+	 * @return the listaComentariosNegativos
+	 */
+	public List<Float> getListaComentariosNegativos() {
+		return listaComentariosNegativos;
+	}
+
+
+
+	/**
+	 * @param listaComentariosNegativos the listaComentariosNegativos to set
+	 */
+	public void setListaComentariosNegativos(List<Float> listaComentariosNegativos) {
+		this.listaComentariosNegativos = listaComentariosNegativos;
+	}
+
+
+
+	/**
+	 * @return the listaComentariosPositivos
+	 */
+	public List<Float> getListaComentariosPositivos() {
+		return listaComentariosPositivos;
+	}
+
+
+
+	/**
+	 * @param listaComentariosPositivos the listaComentariosPositivos to set
+	 */
+	public void setListaComentariosPositivos(List<Float> listaComentariosPositivos) {
+		this.listaComentariosPositivos = listaComentariosPositivos;
+	}
+
+
+
+	public void buscarArtista(String artista) throws Exception {
         cantidadComentarios = 0;
         QueryParser parser = new QueryParser("text", analyzer);
         Query query = parser.parse(artista);
@@ -68,6 +112,7 @@ public class Buscador {
             Document d = searcher.doc(idTweetsArtista.get(i));
             String tweet = d.get("text");
             String artistAux = d.get("artistName");
+            this.locations.add(d.get("location"));
             int followersAux = Integer.parseInt(d.get("followers"));
             int retweet = Integer.parseInt(d.get("retweets"));
             this.tweetersName.add(artistAux);
@@ -75,6 +120,8 @@ public class Buscador {
             this.retweetsCount.add(retweet);
             this.lastestTweets.add(tweet);
             List<Float> resultado = new ArrayList<Float>();
+            this.listaComentariosPositivos.add(resultado.get(0));
+            this.listaComentariosNegativos.add(resultado.get(1));
             resultado = analisis.analisisSentimientoTweet(tweet);
             if(auxPositivos == 0f){
                 auxPositivos = resultado.get(0);
@@ -94,6 +141,9 @@ public class Buscador {
     public List<String> getLastestTweets(){
         return this.lastestTweets;
     }
+    public List<String> getLocation(){
+        return this.locations;
+    }
     public List<String> getTweetersName(){
         return this.tweetersName;
     }
@@ -111,6 +161,8 @@ public class Buscador {
     public void setCantidadComentarios(Integer cantidadComentarios) {
         this.cantidadComentarios = cantidadComentarios;
     }
+    
+
 
     public Float getNroComentariosPositivos() {
         return nroComentariosPositivos;

@@ -14,12 +14,27 @@ public class Genre {
 
 
     private List<Statistic> statistic;
+    private List<Statistic> geostatistic;
 
     public List<Statistic> getStatistic() {
         return statistic;
     }
 
-    public void setStatistic(List<Statistic> statistic) {
+    /**
+	 * @return the geostatistic
+	 */
+	public List<Statistic> getGeostatistic() {
+		return geostatistic;
+	}
+
+	/**
+	 * @param geostatistic the geostatistic to set
+	 */
+	public void setGeostatistic(List<Statistic> geostatistic) {
+		this.geostatistic = geostatistic;
+	}
+
+	public void setStatistic(List<Statistic> statistic) {
         this.statistic = statistic;
     }
 

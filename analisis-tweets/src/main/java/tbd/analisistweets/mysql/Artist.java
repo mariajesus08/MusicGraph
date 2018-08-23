@@ -12,9 +12,24 @@ public class Artist {
         this.genre = genre;
     }
 
-    private Genre genre;
+    /**
+	 * @return the geostatistic
+	 */
+	public List<Statistic> getGeostatistic() {
+		return geostatistic;
+	}
+
+	/**
+	 * @param geostatistic the geostatistic to set
+	 */
+	public void setGeostatistic(List<Statistic> geostatistic) {
+		this.geostatistic = geostatistic;
+	}
+
+	private Genre genre;
 
     private List<Statistic> statistic;
+    private List<Statistic> geostatistic;
 
     private List<Influyent_User_Artist> artistInfluyentUser;
 

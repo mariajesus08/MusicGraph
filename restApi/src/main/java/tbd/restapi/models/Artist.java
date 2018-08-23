@@ -31,6 +31,9 @@ public class Artist {
     @OneToMany(mappedBy = "artist")
     private List<Statistic> statistic;
 
+    @OneToMany(mappedBy = "artist")
+    private List<Geostatistic> geostatistic;
+
     @OneToMany(mappedBy = "artistInfluyentUser")
     private List<Influyent_User_Artist> artistInfluyentUsers;
 
@@ -61,9 +64,15 @@ public class Artist {
     public List<Statistic> getStatistic() {
         return this.statistic;
     }
-
-    public void setStatistic(List<Statistic> statistic) {
+    public void setStatistic(List<Geostatistic> geostatistic) {
         this.statistic = statistic;
+    }
+
+    public void setGeoStatistic(List<Geostatistic> geostatistic) {
+        this.geostatistic = geostatistic;
+    }
+    public List<Geostatistic> getGeoStatistic() {
+        return this.geostatistic;
     }
 
     public int getId() {

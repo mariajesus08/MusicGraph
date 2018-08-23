@@ -31,6 +31,8 @@ public class Index {
 
             IndexWriter writer = new IndexWriter(dir, iwc);
            MongoCredential mongoCredential = MongoCredential.createCredential("root", "admin","secret1234".toCharArray());
+            MongoClientOptions.Builder options_builder = new MongoClientOptions.Builder();
+            options_builder.maxConnectionIdleTime(600000);
             ServerAddress address = new ServerAddress("165.227.12.119", 27017);
             MongoClient mongoClient = new MongoClient(address, Arrays.asList(mongoCredential));
             DB baseDeDatos = mongoClient.getDB("musicgraphdb");

@@ -23,6 +23,8 @@ public class Genre {
 
     private List<Statistic> statistic;
 
+    private List<Geostatistic> geostatistic;
+
     public List<Statistic> getStatistic() {
         return statistic;
     }
@@ -30,6 +32,14 @@ public class Genre {
     public void setStatistic(List<Statistic> statistic) {
         this.statistic = statistic;
     }
+    public List<Geostatistic> getGeoStatistic() {
+        return geostatistic;
+    }
+
+    public void setGeoStatistic(List<Geostatistic> geostatistic) {
+        this.geostatistic = geostatistic;
+    }
+
 
     public int getId() {
         return id;

@@ -124,6 +124,24 @@ CREATE TABLE IF NOT EXISTS `common_user_artist` (
   REFERENCES artists(`id`)
   );
 
+DROP TABLE IF EXISTS `geostatistics` ;
+
+CREATE TABLE IF NOT EXISTS `geostatistic` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `positive_tweets` FLOAT NULL,
+  `negative_tweets` FLOAT NULL,
+  `region` VARCHAR(255) NULL,
+  `commune` VARCHAR(255) NULL,
+  `id_artist` INT NULL,
+  `id_genre` INT NULL,
+  PRIMARY KEY(`id`),
+  FOREIGN KEY (`id_artist`)
+  references artists(`id`),
+  FOREIGN KEY (`id_genre`)
+  REFERENCES genres(`id`)
+  );
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
