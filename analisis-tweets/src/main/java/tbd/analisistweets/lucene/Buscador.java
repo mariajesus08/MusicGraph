@@ -120,9 +120,9 @@ public class Buscador {
             this.retweetsCount.add(retweet);
             this.lastestTweets.add(tweet);
             List<Float> resultado = new ArrayList<Float>();
+            resultado = analisis.analisisSentimientoTweet(tweet);
             this.listaComentariosPositivos.add(resultado.get(0));
             this.listaComentariosNegativos.add(resultado.get(1));
-            resultado = analisis.analisisSentimientoTweet(tweet);
             if(auxPositivos == 0f){
                 auxPositivos = resultado.get(0);
             } else {

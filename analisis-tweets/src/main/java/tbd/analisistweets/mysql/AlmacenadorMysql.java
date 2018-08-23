@@ -88,9 +88,12 @@ public class AlmacenadorMysql {
         .setDefaultCredentialsProvider(provider)
         .build();
         String idArtista = Integer.toString(id);
+        System.out.println("\nPASA POR AQUI\n");
+
         try {
             HttpGet httpget = new HttpGet("http://165.227.12.119:9091/artists/lastStatistic/"+idArtista);
 
+            System.out.println("\nPASA POR AQUI\n");
 
             // Create a custom response handler
            
@@ -196,14 +199,15 @@ public class AlmacenadorMysql {
                     aux = 1;
                 }
                 if(aux == 1){
-                    HttpPost httpPostGeo = new HttpPost("http://165.227.12.119:9091/geostatistic/create");
+                    HttpPost httpPostGeo = new HttpPost("http://165.227.12.119:9091/Geostatistics/create");
                     httpPostGeo.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
                     Map<String,String> paramsGeo = new HashMap<>(); 
                     paramsGeo.put("name", artista);
                     paramsGeo.put("positiveTweets", String.valueOf(listaPositivos.get(i)));
                     paramsGeo.put("negativeTweets", String.valueOf(listaNegativos.get(i)));
-                    paramsGeo.put("region", String.valueOf(listaNegativos.get(i)));
+                    paramsGeo.put("region", region);
                     String jsonMapGeo = new Gson().toJson(paramsGeo);
+                    System.out.println(jsonMapGeo);
                     StringEntity seGeo = new StringEntity(jsonMapGeo.toString(), "UTF-8");
                     httpPostGeo.setEntity(seGeo);
                 }
