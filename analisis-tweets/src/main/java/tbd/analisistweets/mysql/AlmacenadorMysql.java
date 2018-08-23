@@ -132,60 +132,80 @@ public class AlmacenadorMysql {
             String region="";
             int i = 0;
             for(String locacionAux:locacion){
+                int aux = 0;
                 locacionAux = locacionAux.toLowerCase();
-                HttpPost httpPostGeo = new HttpPost("http://165.227.12.119:9091/geostatistic/create");
-                httpPostGeo.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-                Map<String,String> paramsGeo = new HashMap<>(); 
-                paramsGeo.put("name", artista);
-                paramsGeo.put("positiveTweets", String.valueOf(tweetsPositivos));
-                paramsGeo.put("negativeTweets", String.valueOf(tweetsNegativos));
-                String jsonMapGeo = new Gson().toJson(paramsGeo);
-                StringEntity seGeo = new StringEntity(jsonMapGeo.toString(), "UTF-8");
-                httpPostGeo.setEntity(seGeo);
+                
                 if((locacionAux.indexOf("santiago") != -1)||(locacionAux.indexOf("metropolitana")!=-1)){
                     region = "Metropolitana";
+                    aux = 1;
                 }
                 if((locacionAux.indexOf("arica") != -1)||(locacionAux.indexOf("parinacota") != -1)){
                     region = "XV";
+                    aux = 1;
                 }
                 if((locacionAux.indexOf("tarapaca") != -1)||(locacionAux.indexOf("tarapacá") != -1)){
                     region = "I";
+                    aux = 1;
                 }
                 if(locacionAux.indexOf("antofagasta") != -1){
                     region = "II";
+                    aux = 1;
                 }
                 if(locacionAux.indexOf("atacama") != -1){
                     region = "III";
+                    aux = 1;
                 }
                 if(locacionAux.indexOf("coquimbo") != -1){
                     region = "IV";
+                    aux = 1;
                 }
                 if((locacionAux.indexOf("valparaiso") != -1)||(locacionAux.indexOf("viña")!=-1)){
                     region = "V";
+                    aux = 1;
                 }
                 if(locacionAux.indexOf("higgins") != -1){
                     region = "VI";
+                    aux = 1;
                 }
                 if(locacionAux.indexOf("maule") != -1){
                     region = "VII";
+                    aux = 1;
                 }
                 if((locacionAux.indexOf("biobio") != -1)||(locacionAux.indexOf("biobío")!=-1)){
                     region = "VIII";
+                    aux = 1;
                 }
                 if((locacionAux.indexOf("araucania") != -1)||(locacionAux.indexOf("araucanía")!=-1)){
                     region = "IX";
+                    aux = 1;
                 }
                 if((locacionAux.indexOf("rios") != -1)||(locacionAux.indexOf("ríos")!=-1)){
                     region = "XIV";
+                    aux = 1;
                 }
                 if(locacionAux.indexOf("lagos") != -1){
                     region = "X";
+                    aux = 1;
                 }
                 if((locacionAux.indexOf("aysen") != -1)||(locacionAux.indexOf("aysén")!=-1)){
                     region = "XI";
+                    aux = 1;
                 }
                 if((locacionAux.indexOf("magallanes") != -1)||(locacionAux.indexOf("antartica")!=-1)||(locacionAux.indexOf("antártica")!=-1)){
                     region = "XII";
+                    aux = 1;
+                }
+                if(aux == 1){
+                    HttpPost httpPostGeo = new HttpPost("http://165.227.12.119:9091/geostatistic/create");
+                    httpPostGeo.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+                    Map<String,String> paramsGeo = new HashMap<>(); 
+                    paramsGeo.put("name", artista);
+                    paramsGeo.put("positiveTweets", String.valueOf(listaPositivos.get(i)));
+                    paramsGeo.put("negativeTweets", String.valueOf(listaNegativos.get(i)));
+                    paramsGeo.put("region", String.valueOf(listaNegativos.get(i)));
+                    String jsonMapGeo = new Gson().toJson(paramsGeo);
+                    StringEntity seGeo = new StringEntity(jsonMapGeo.toString(), "UTF-8");
+                    httpPostGeo.setEntity(seGeo);
                 }
                 i++;
             }

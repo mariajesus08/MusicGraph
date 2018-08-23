@@ -20,9 +20,10 @@ public class Genre {
 
 
     @OneToMany(mappedBy = "genre")
-
+    
     private List<Statistic> statistic;
-
+    
+    @OneToMany(mappedBy = "genre")
     private List<Geostatistic> geostatistic;
 
     public List<Statistic> getStatistic() {
