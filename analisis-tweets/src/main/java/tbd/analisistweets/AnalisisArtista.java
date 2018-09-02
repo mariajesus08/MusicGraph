@@ -29,7 +29,18 @@ public class AnalisisArtista {
 
         }
         List<String> palabras = new ArrayList<String>();;
+        List<Integer> ids = new ArrayList<Integer>();;
         String palabrasQuery = "SELECT name FROM artists";
+        String idQuery = "SELECT id FROM artists";
+        try{
+            Statement statement = connection.createStatement();            
+            ResultSet resultSet2 = statement.executeQuery(idQuery);
+            while(resultSet2.next())
+                ids.add(resultSet2.getInt("id"));
+        }catch (SQLException e) {
+                e.printStackTrace();
+        }
+        
         try{
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(palabrasQuery);
@@ -38,13 +49,14 @@ public class AnalisisArtista {
         }catch (SQLException e) {
             e.printStackTrace();
         }
-        int aux = 1;
+        connection.close();
+        int aux = 0;
         for(String artista: palabras){
             Buscador buscador = new Buscador();
             buscador.buscarArtista(artista);
             buscador.obtenerValoracionArtista();
             AlmacenadorMysql almacenadorMysql = new AlmacenadorMysql();
-            almacenadorMysql.insertarEstadistica(aux, artista, buscador.getTweetersName(),buscador.getLastestTweets(),buscador.getFollowersCount(),buscador.getRetweetsCount(), buscador.getNroComentariosPositivos(),
+            almacenadorMysql.insertarEstadistica(ids.get(aux), artista, buscador.getTweetersName(),buscador.getLastestTweets(),buscador.getFollowersCount(),buscador.getRetweetsCount(), buscador.getNroComentariosPositivos(),
             buscador.getNroComentariosNegativos(), buscador.getCantidadComentarios(), buscador.getLocation(), buscador.getListaComentariosPositivos(), buscador.getListaComentariosNegativos());
             aux++;
         }
